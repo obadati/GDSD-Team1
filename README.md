@@ -7,3 +7,7 @@ Name:Obada Altinawi
 Mail: Obada.altinawi@informatik.hs-fulda.de
 UserName: github.com/obadati
 ----------------------------
+Name:Jagadesh Devan
+Mail: jagadesh.devan@informatik.hs-fulda.de
+UserName: github.com/Jagadeshdevan
+----------------------------
