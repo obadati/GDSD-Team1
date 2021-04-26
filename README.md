@@ -3,3 +3,7 @@ Global Distributed Software Development
 summer semester 2021 Team 1
 Class	CTO	and	CEO : Prof. Dr. Rainer Todtenhöfer
 ----------------------------------------------------
+Name:Obada Altinawi
+Mail: Obada.altinawi@informatik.hs-fulda.de
+UserName: github.com/obadati
+----------------------------
