@@ -15,3 +15,7 @@ Name:Rabia Hafeez
 Mail: rabia.hafeez@informatik.hs-fulda.de
 UserName: github.com/missrabia55
 ----------------------------
+Name: Ahmad Yar Khan
+Email: ahmad.yar-khan@informatik.hs-fulda.de
+UserName: <a href="https://github.com/ahmadykhan555">ahmadyarkhan555</a>
+----------------------------
