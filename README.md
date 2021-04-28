@@ -19,3 +19,7 @@ Name: Ahmad Yar Khan
 Email: ahmad.yar-khan@informatik.hs-fulda.de
 UserName: <a href="https://github.com/ahmadykhan555">ahmadyarkhan555</a>
 ----------------------------
+Name:Taha Bin Aziz
+Mail: taha-bin.aziz@informatik.hs-fulda.de
+UserName: github.com/tahabinaziz
+----------------------------
