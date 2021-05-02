@@ -1,0 +1,23 @@
+.about-me-section {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.avatar img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.developer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
