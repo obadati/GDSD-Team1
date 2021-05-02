@@ -1,3 +1,9 @@
+.name {
+    color: black;
+}
+.short-description{
+    color: black;
+}
 .about-me-section {
     padding: 1rem;
     display: flex;
