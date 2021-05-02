@@ -36,8 +36,20 @@
     letter-spacing: 1px;
 }
 
+article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
 .wrapper{
     min-height: 100vh;
+    max-height: 100%;
+    overflow: hidden;
     width: 100%;
     background-image: linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80');
     background-position: center;
@@ -48,21 +60,24 @@
 .wrapper--ayk {
     background-image: linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1526925539332-aa3b66e35444?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1301&q=80');
 }
+
 .text-word{
     padding: 30px 100px;
 }
+
 article h1{
     font-size: 50px;
     font-weight: 800;
     text-transform: uppercase;
 }
+
 article h1:after{
-content:"";
-height: 5px;
-width: 225px;
-background-color: #fff;
-display: block;
-margin:auto ;
+    content:"";
+    height: 5px;
+    width: 225px;
+    background-color: #fff;
+    display: block;
+    margin:auto ;
 }
 
 article h5{
@@ -74,4 +89,10 @@ article h5{
 
 article p{
     font-size: 17px;
+    max-width: 55%;
+    text-align: center;
+}
+
+blockquote {
+    max-width: 55%;
 }
