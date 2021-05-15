@@ -1,0 +1,38 @@
+.landing-page {
+  width: 100%;
+  max-height: 100%;
+  overflow: scroll;
+
+  h3 {
+    text-align: center;
+  }
+
+  .our-team-label {
+    margin-bottom: 4rem !important;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.5rem !important;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 155px;
+      transform: translateX(-50%);
+      height: 2px;
+      background-color: var(--app-color-text);
+    }
+  }
+
+  button {
+    border: none;
+    background-color: #333;
+  }
+
+  .card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,58 @@
+.developer-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 350px;
+  max-width: 350px;
+  margin-right: 1rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &__header {
+    position: relative;
+    display: flex;
+    width: 100%;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .about-link {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-decoration: none;
+
+      button {
+        font-weight: bold;
+        color: var(--app-color-background);
+        box-shadow: none;
+        padding: 0.25rem 2rem;
+        border-radius: 25px;
+        border: 1px solid var(--app-color-background);
+      }
+    }
+  }
+
+  &__content {
+    text-align: center;
+    text-transform: capitalize;
+
+    &--name {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    &--tagline {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    &--description {
+      font-size: 1.2rem;
+    }
+  }
+}
