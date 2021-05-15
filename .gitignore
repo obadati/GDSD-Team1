@@ -3,4 +3,5 @@
 /server/assests/uploads/
 /server/config/
 /server/migrations/
+/client/node_modules
 
