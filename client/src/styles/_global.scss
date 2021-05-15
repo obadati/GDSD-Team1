@@ -18,7 +18,6 @@ body {
     background: var(--app-color-background);
     color: var(--app-color-text);
     max-height: 100vh;
-    padding: 1rem;
     box-sizing: border-box;
 
     @include resetMargins;

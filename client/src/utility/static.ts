@@ -36,3 +36,21 @@ export const getDevelopers = (): Developer[] => {
     },
   ];
 };
+
+export const dummyDeveloper: Developer = {
+  name: "",
+  tagline: "",
+  description: "",
+  imgUrl: "",
+};
+
+const dummyBgImages = [
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80",
+  "https://images.unsplash.com/photo-1526925539332-aa3b66e35444?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1301&q=80",
+];
+
+export const getRandomBg = () => {
+  return dummyBgImages[
+    Math.floor(Math.random() * dummyBgImages.length - 1 + 1)
+  ];
+};
