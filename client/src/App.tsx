@@ -1,12 +1,11 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import "./App.scss";
+import AppRouter from "./containers/Router/AppRouter";
 
 interface OwnProps extends PropsFromRedux {}
 
-const App: React.FC<OwnProps> = () => {
-  return <div className='app'>Hello World</div>;
-};
+const App: React.FC<OwnProps> = () => <AppRouter />;
 
 const mapStateToProps = () => ({});
 const connector = connect(mapStateToProps);
