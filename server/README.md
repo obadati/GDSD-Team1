@@ -1,3 +1,9 @@
+# Configure Node.js
+
+## Step to start the servre.
+
+-------------------------------------------------------------------------------------
+
 1. Install node.js
 
 2. Run npm install in project.
@@ -28,8 +34,9 @@
   }
 }
 
-4. In assests folder add folder `uploads` and in uploads folder add another folder named as `propertyImage` 
+4. Make assests folder add folder `uploads` and in uploads folder add another folder named as `propertyImage` there all property images are stored.
 
 5. After that run the project `npm start main.js`.
 
 
+-----------------------------------------------------------------------------------------------------
