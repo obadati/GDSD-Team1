@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./controller');
 
-router.post("/add",controller.create);
+router.post("/",controller.create);
 
 router.get("/",controller.getAllProperty);
 
-router.get("/search/",controller.searchPropertByText);
+router.get("/data",controller.searchPropertyByText);
 
 router.get("/categoryId/:id",controller.propertyByCategoryId);
 

@@ -1,65 +1,29 @@
-const db = require('../models/category');
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const propertyDetail = sequelize.define("Property_Detail", {
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    categoryId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: false,
-      },
-    },
-    price: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    location: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    fileName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    fileSize: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    filePath: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
+  class propertyDetail extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      propertyDetail.belongsTo(models.category)
+    }
+  };
+  propertyDetail.init({
+    title: DataTypes.STRING,
+    categoryId: DataTypes.INTEGER,
+    description: DataTypes.STRING,
+    price: DataTypes.FLOAT,
+    location: DataTypes.STRING,
+    images: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'propertyDetail',
   });
-  propertyDetail.associate = models =>{
-    propertyDetail.belongsTo(models.Category);
-  }
   return propertyDetail;
 };
