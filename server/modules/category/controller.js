@@ -1,5 +1,5 @@
 const db = require("../../models");
-const Category = db.Category;
+const Category = db.category;
 const date = require("../../utils/date");
 const time = require("../../utils/time");
 
@@ -9,10 +9,11 @@ exports.create = async (req, res) => {
   try {
 
       let data = {
-        category: req.body.category,
+        name:req.body.name,
         createdAt: date + " " + time,
         updatedAt: date + " " + time,
       };
+      console.log(data)
       await Category.create(data);
       return res.status(200).json({ messages: "Category Created Successfully" });
     

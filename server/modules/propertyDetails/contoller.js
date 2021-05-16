@@ -1,5 +1,5 @@
 const db = require("../../models");
-const Property = db.Property_Detail;
+const Property = db.propertyDetail;
 var multer = require("multer");
 const date = require("../../utils/date");
 const time = require("../../utils/time");
@@ -38,22 +38,13 @@ exports.create = async (req, res) => {
           message: err.message + " maximum 2mb",
         });
       } else {
-        let name = req.file.originalname;
-        let size = req.file.size;
-        let path = req.file.path;
-
-        console.log(name);
-        console.log(size);
-        console.log(path);
         let data = {
           title: req.body.title,
           description: req.body.description,
           categoryId: req.body.categoryId,
           price: req.body.price,
           location: req.body.location,
-          fileName: name,
-          fileSize: size,
-          filePath: path,
+          images: req.file.path,
           createdAt: date + " " + time,
           updatedAt: date + " " + time,
         };
@@ -72,11 +63,11 @@ exports.create = async (req, res) => {
 exports.getAllProperty = async (req, res) => {
   try {
     let property = await Property.findAll({
-      attributes:['id','title','description','price','location','filePath','createdAt','categoryId'],
+      attributes:['id','title','description','price','location','images','createdAt','categoryId'],
       order: [["id", "DESC"]],
       include: {
-        model:db.Category,
-        attributes:['id','category']
+        model:db.category,
+        attributes:['id','name']
        }
     });
     return res.status(200).json(property);
@@ -90,12 +81,12 @@ exports.propertyByCategoryId = async (req, res) => {
     const id = req.params.id;
     
     let property = await Property.findAll({
-      attributes:['id','title','description','price','location','filePath','createdAt','categoryId'],
+      attributes:['id','title','description','price','location','images','createdAt','categoryId'],
       where: { categoryId: id },
       order: [["id", "DESC"]],
       include: {
-        model:db.Category,
-        attributes:['id','category']
+        model:db.category,
+        attributes:['id','name']
        }
     });
 
@@ -105,19 +96,19 @@ exports.propertyByCategoryId = async (req, res) => {
   }
 };
 /*Search Property By Text */
-exports.searchPropertByText = async (req, res) => {
+exports.searchPropertyByText = async (req, res) => {
     try {
-      let {text} = req.query;
-      text = text.toLowerCase();
-      console.log(text)
+      let {search} = req.query;
+      search = search.toLowerCase();
+      console.log(search)
       let property = await Property.findAll({
-      where:{ title: { [Op.like]: '%' + text + '%'}},
+      where:{ title: { [Op.like]: '%' + search + '%'}},
        // where:{title:text},
-        attributes:['id','title','description','price','location','filePath','createdAt','categoryId'],
+        attributes:['id','title','description','price','location','images','createdAt','categoryId'],
         order: [["id", "DESC"]],
         include: {
-          model:db.Category,
-          attributes:['id','category']
+          model:db.category,
+          attributes:['id','name']
          }
       });
       return res.status(200).json(property);
