@@ -1,0 +1,39 @@
+/*Categories*/
+
+/*Create Category*/
+[HttpPost]
+http://18.185.96.197:5000/api/categories
+Body:{ name:"" }
+
+/*All Categories (Dropdown)*/
+[HttpGet]
+http://18.185.96.197:5000/api/categories
+
+/*Delete Category*/
+[HttpDelete]
+http://18.185.96.197:5000/api/categories/{id}
+
+
+********************************************************
+/*Properties*/
+
+/*Create Property*/
+[HttpPost]
+Form-Data : [title, description, price, location, categoryId, property(Image)]
+http://18.185.96.197:5000/api/categories
+
+/*All properties*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties
+
+/*All properties By Category Filter*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/category/{id}
+
+/*Get Property By Search (Input Field Text Search)*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/search/?text={text}
+
+/*Delete Property*/
+[HttpDelete]
+http://18.185.96.197:5000/api/properties/{id}
