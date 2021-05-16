@@ -98,11 +98,11 @@ exports.propertyByCategoryId = async (req, res) => {
 /*Search Property By Text */
 exports.searchPropertyByText = async (req, res) => {
     try {
-      let {search} = req.query;
-      search = search.toLowerCase();
-      console.log(search)
+      let {text} = req.query;
+      text = text.toLowerCase();
+      console.log(text)
       let property = await Property.findAll({
-      where:{ title: { [Op.like]: '%' + search + '%'}},
+      where:{ title: { [Op.like]: '%' + text + '%'}},
        // where:{title:text},
         attributes:['id','title','description','price','location','images','createdAt','categoryId'],
         order: [["id", "DESC"]],

@@ -7,12 +7,12 @@ const property = require('./modules/propertyDetails/route');
 const category = require('./modules/category/route');
 const port = 5000
 
-app.use('/', express.static(__dirname + '/build/')); // ← adjust
+app.use('/', express.static(__dirname + '/public/')); // ← adjust
 app.use(express.json());
 
 
-app.use('/api/category', category);
-app.use('/api/property', property);
+app.use('/api/categories', category);
+app.use('/api/properties', property);
 
 app.use(cors());
 //error  handling
