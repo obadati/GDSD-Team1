@@ -7,6 +7,7 @@ const property = require('./modules/propertyDetails/route');
 const category = require('./modules/category/route');
 const port = 5000
 
+app.use('/', express.static(__dirname + '/build/')); // ← adjust
 app.use(express.json());
 
 
@@ -32,8 +33,11 @@ app.use((error, req, res, next) => {
 });
 
 
+
 // app.use('/property', property);
 db.sequelize.sync().then((req)=>{
+
+
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
   })
