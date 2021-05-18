@@ -1,0 +1,17 @@
+.app-navigation {
+  display: flex;
+  padding-top: 1rem;
+
+  &__tab {
+    padding: 0.25rem;
+    width: 200px;
+    border-left: 1px solid;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+
+    &--selected {
+      font-weight: 900;
+    }
+  }
+}
