@@ -7,6 +7,7 @@ const category = require('./modules/category/route');
 const port = 5000
 
 app.use('/', express.static(__dirname + '/public/')); // ← adjust
+app.use('/assests/uploads/propertyImage/', express.static(__dirname + '/assests/uploads/propertyImage/')); // ← adjust
 app.use(express.json());
 
 app.use(cors());
