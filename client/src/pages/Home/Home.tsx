@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import SearchBoxComponent from "../../components/SearchBox/SearchBox";
 import { Property } from "../../store/properties/types";
@@ -6,7 +6,13 @@ import { AppState } from "../../store/rootReducer";
 import "./Home.scss";
 
 const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
-  const [filteredProps, setFilteredProps] = useState<Property[]>(properties);
+  const [filteredProps, setFilteredProps] = useState<Property[]>([]);
+
+  useEffect(() => {
+    if (properties.length > -1) {
+      setFilteredProps(properties);
+    }
+  }, [properties]);
 
   const renderPropertyCard = (property: Property) => {
     return (
@@ -30,9 +36,10 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
         }
       />
       <div className='properties-list'>
-        {(filteredProps as Property[]).map((property) =>
-          renderPropertyCard(property)
-        )}
+        {filteredProps.length > 0 &&
+          (filteredProps as Property[]).map((property) =>
+            renderPropertyCard(property)
+          )}
       </div>
     </div>
   );
