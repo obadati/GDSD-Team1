@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const router = express.Router();
+const cors = require('cors');
 const db = require('./models');
 const property = require('./modules/propertyDetails/route');
 const category = require('./modules/category/route');
@@ -10,7 +10,7 @@ const port = 5000
 app.use('/', express.static(__dirname + '/public/')); // ← adjust
 app.use(express.json());
 
-
+app.use(cors());
 app.use('/api/categories', category);
 app.use('/api/properties', property);
 
