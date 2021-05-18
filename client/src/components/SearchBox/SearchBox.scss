@@ -1,0 +1,12 @@
+.search-box-component {
+  width: 100%;
+  margin-bottom: 1rem;
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--app-color-border);
+    background-color: var(--app-color-background);
+  }
+}
