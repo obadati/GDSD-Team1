@@ -24,15 +24,15 @@ Form-Data : [title, description, price, location, categoryId, property(Image)]
 
 /*All properties*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties
+http://18.185.96.197:5000/api/properties/{pageNumber}
 
 /*All properties By Category Filter*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/category/{id}
+http://18.185.96.197:5000/api/properties/category/{pageNumber}?categoryId={categoryId}
 
 /*Get Property By Search (Input Field Text Search)*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/search/?text={text}
+http://18.185.96.197:5000/api/properties/search/?text={text}&page={pageNumber}
 
 /*Delete Property*/
 [HttpDelete]

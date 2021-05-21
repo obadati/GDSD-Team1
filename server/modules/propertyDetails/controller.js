@@ -5,7 +5,7 @@ const date = require("../../utils/date");
 const time = require("../../utils/time");
 var path = require("path");
 const fs = require("fs");
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 var storage = multer.diskStorage({
@@ -44,6 +44,9 @@ exports.create = async (req, res) => {
           categoryId: req.body.categoryId,
           price: req.body.price,
           location: req.body.location,
+          status: 0,
+          room: req.body.room,
+          size: req.body.size,
           images: req.file.path,
           createdAt: date + " " + time,
           updatedAt: date + " " + time,
@@ -59,63 +62,144 @@ exports.create = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 /*Get All Property */
-exports.getAllProperty = async (req, res) => {
+exports.getAllProperty = (req, res) => {
   try {
-    let property = await Property.findAll({
-      attributes:['id','title','description','price','location','images','createdAt','categoryId'],
-      order: [["id", "DESC"]],
-      include: {
-        model:db.category,
-        attributes:['id','name']
-       }
+    let limit = 8;
+    let offset = 0;
+    Property.findAndCountAll().then((data) => {
+      let page = req.params.page; // page number
+      let pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+
+      Property.findAll({
+        attributes: [
+          "id",
+          "title",
+          "description",
+          "price",
+          "room",
+          "size",
+          "location",
+          "images",
+          "createdAt",
+          "categoryId",
+          "status",
+        ],
+        order: [["id", "DESC"]],
+        include: {
+          model: db.category,
+          attributes: ["id", "name"],
+        },
+        limit: limit,
+        offset: offset,
+      }).then((property) => {
+        return res
+          .status(200)
+          .json({ result: property, count: data.count, pages: pages });
+      });
     });
-    return res.status(200).json(property);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 /*Get Property By  Category Id*/
-exports.propertyByCategoryId = async (req, res) => {
+exports.propertyByCategoryId =  (req, res) => {
   try {
-    const id = req.params.id;
-    
-    let property = await Property.findAll({
-      attributes:['id','title','description','price','location','images','createdAt','categoryId'],
-      where: { categoryId: id },
+
+    let page = req.params.page;
+    const {categoryId}=req.query
+    let limit = 8;
+    let offset = 0;
+    Property.findAndCountAll({
+      where: { categoryId: categoryId },
+    }).then((data) => {
+      // let page = req.params.page; // page number
+      let pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+
+     Property.findAll({
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "price",
+        "room",
+        "size",
+        "location",
+        "images",
+        "createdAt",
+        "categoryId",
+        "status",
+      ],
+      where: { categoryId: categoryId },
       order: [["id", "DESC"]],
       include: {
-        model:db.category,
-        attributes:['id','name']
-       }
+        model: db.category,
+        attributes: ["id", "name"],
+      },
+      limit: limit,
+      offset: offset,
+    }).then((property) => {
+      return res
+        .status(200)
+        .json({ result: property, count: data.count, pages: pages });
     });
-
-    return res.status(200).json(property);
+  });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 /*Search Property By Text */
-exports.searchPropertyByText = async (req, res) => {
-    try {
-      let {text} = req.query;
-      text = text.toLowerCase();
-      console.log(text)
-      let property = await Property.findAll({
-      where:{ title: { [Op.like]: '%' + text + '%'}},
-       // where:{title:text},
-        attributes:['id','title','description','price','location','images','createdAt','categoryId'],
+exports.searchPropertyByText = (req, res) => {
+  try {
+    let { text, page } = req.query;
+    text = text.toLowerCase();
+    console.log(text);
+
+    let limit = 8;
+    let offset = 0;
+    Property.findAndCountAll({
+      where: { title: { [Op.like]: "%" + text + "%" } },
+    }).then((data) => {
+      // let page = req.params.page; // page number
+      let pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+
+      Property.findAll({
+        where: { title: { [Op.like]: "%" + text + "%" } },
+        // where:{title:text},
+        attributes: [
+          "id",
+          "title",
+          "description",
+          "price",
+          "room",
+          "size",
+          "location",
+          "images",
+          "createdAt",
+          "categoryId",
+          "status",
+        ],
         order: [["id", "DESC"]],
         include: {
-          model:db.category,
-          attributes:['id','name']
-         }
+          model: db.category,
+          attributes: ["id", "name"],
+        },
+        limit: limit,
+        offset: offset,
+      }).then((property) => {
+        return res
+          .status(200)
+          .json({ result: property, count: data.count, pages: pages });
       });
-      return res.status(200).json(property);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  };
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 /*Delete Property */
 exports.deleteProperty = async (req, res) => {
   try {

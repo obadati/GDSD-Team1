@@ -18,9 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     categoryId: DataTypes.INTEGER,
     description: DataTypes.STRING,
-    price: DataTypes.FLOAT,
+    price: DataTypes.STRING,
     location: DataTypes.STRING,
-    images: DataTypes.STRING
+    room: DataTypes.STRING,
+    size: DataTypes.STRING,
+    images: DataTypes.STRING,
+    status: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'propertyDetail',
