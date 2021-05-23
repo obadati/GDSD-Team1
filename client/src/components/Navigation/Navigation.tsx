@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import AppLogo from "../../assets/images/logo.png";
 import "./Navigation.scss";
 
 const Navigation: React.FC<any> = () => {
@@ -14,7 +15,6 @@ const Navigation: React.FC<any> = () => {
 
   const renderTabs = () => {
     return tabs.map((tab, index) => (
-      // <Link to={`/${tabs[index]}`}>
       <div
         onClick={() => handleSelectedTab(index)}
         className={`app-navigation__tab app-navigation__tab${
@@ -22,10 +22,16 @@ const Navigation: React.FC<any> = () => {
         }`}>
         {tab}
       </div>
-      // </Link>
     ));
   };
 
-  return <div className='app-navigation'>{renderTabs()}</div>;
+  return (
+    <div className='app-navigation'>
+      <div className='app-logo'>
+        <img src={AppLogo} />
+      </div>
+      {renderTabs()}
+    </div>
+  );
 };
 export default Navigation;

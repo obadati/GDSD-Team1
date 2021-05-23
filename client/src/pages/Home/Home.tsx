@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 import SearchBoxComponent from "../../components/SearchBox/SearchBox";
 import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";
+import PropertyCard from "./components/PropertyCard/PropertyCard";
 import "./Home.scss";
 
 const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
@@ -13,18 +14,6 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
       setFilteredProps(properties);
     }
   }, [properties]);
-
-  const renderPropertyCard = (property: Property) => {
-    return (
-      <div className='property-card'>
-        <div>
-          <p className='property-name'>{property.title}</p>
-          <p className='property-location'>{property.location}</p>
-          <p className='property-category'>{property.category.name}</p>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className='home-page'>
@@ -37,9 +26,10 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
       />
       <div className='properties-list'>
         {filteredProps.length > 0 &&
-          (filteredProps as Property[]).map((property) =>
-            renderPropertyCard(property)
-          )}
+          (filteredProps as Property[]).map((property) => (
+            <PropertyCard property={property} />
+          ))}
+        <button>See More...</button>
       </div>
     </div>
   );

@@ -15,4 +15,5 @@ export interface Property {
   location: string;
   images: string;
   category: Category;
+  size: string;
 }
