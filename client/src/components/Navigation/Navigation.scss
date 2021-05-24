@@ -1,16 +1,28 @@
 .app-navigation {
+  .app-logo {
+    margin-right: 1rem;
+    width: 150px;
+    height: 150px;
+    img {
+      width: 100%;
+      object-fit: contain;
+      height: 100%;
+    }
+  }
+
   display: flex;
   padding-top: 1rem;
+  align-items: center;
 
   &__tab {
-    padding: 0.25rem;
-    width: 200px;
-    border-left: 1px solid;
+    padding: 0.5rem;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
+    margin-right: 1rem;
 
     &--selected {
+      border-bottom: 1px solid;
       font-weight: 900;
     }
   }

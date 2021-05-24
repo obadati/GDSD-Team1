@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import Filters from "../../components/Filters/Filters";
 import SearchBoxComponent from "../../components/SearchBox/SearchBox";
 import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";
+import PropertyCard from "./components/PropertyCard/PropertyCard";
+import PropertyList from "./components/PropertyList/PropertyList";
 import "./Home.scss";
 
 const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
@@ -14,32 +17,22 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
     }
   }, [properties]);
 
-  const renderPropertyCard = (property: Property) => {
-    return (
-      <div className='property-card'>
-        <div>
-          <p className='property-name'>{property.title}</p>
-          <p className='property-location'>{property.location}</p>
-          <p className='property-category'>{property.category.name}</p>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className='home-page'>
-      <SearchBoxComponent
-        list={properties}
-        searchFor={["location", "title", "category.name"]}
-        onSearchComplete={(list: Property[]) =>
-          setFilteredProps(list.length > 0 ? list : properties)
-        }
-      />
-      <div className='properties-list'>
-        {filteredProps.length > 0 &&
-          (filteredProps as Property[]).map((property) =>
-            renderPropertyCard(property)
-          )}
+      <div className='aside'>
+        <Filters />
+      </div>
+      <div className='center'>
+        <div className='search-box-wrapper'>
+          <SearchBoxComponent
+            list={properties}
+            searchFor={["location", "title", "category.name"]}
+            onSearchComplete={(list: Property[]) =>
+              setFilteredProps(list.length > 0 ? list : properties)
+            }
+          />
+        </div>
+        <PropertyList properties={filteredProps} />
       </div>
     </div>
   );

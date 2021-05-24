@@ -15,8 +15,8 @@ const App: React.FC<OwnProps> = ({ dispatch }) => {
   }, []);
 
   const loadData = async () => {
-    const properties = await getAllProperties();
-    dispatch(setAllProperties(properties));
+    const { result } = await getAllProperties();
+    dispatch(setAllProperties(result));
   };
 
   return (

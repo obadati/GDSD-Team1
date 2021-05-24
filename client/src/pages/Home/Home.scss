@@ -1,29 +1,24 @@
-.properties-list {
+.home-page {
+  max-height: calc(100% - 50px);
   display: flex;
-  margin: 1rem;
 
-  .property-card {
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
-    height: 300px;
-    width: 300px;
-    margin: 1rem;
+  .center {
+    flex: 1;
     display: flex;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.404);
+    flex-direction: column;
+  }
 
-    .property-name {
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .property-location {
-      font-size: 1rem;
-    }
-    .property-category {
-      font-size: 0.85rem;
-    }
+  .aside {
+    width: 250px;
+  }
+}
 
-    div {
-      margin: auto;
-    }
+.search-box-wrapper {
+  width: 400px;
+  padding-right: 2rem;
+  align-self: center;
+  input {
+    border-radius: 25px;
+    border: 2px solid;
   }
 }
