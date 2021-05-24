@@ -1,6 +1,8 @@
 .search-box-component {
   width: 100%;
   margin-bottom: 1rem;
+  display: flex;
+
   input {
     width: 100%;
     padding: 0.75rem;
@@ -8,5 +10,15 @@
     border: none;
     border-bottom: 1px solid var(--app-color-border);
     background-color: var(--app-color-background);
+  }
+
+  button {
+    margin-left: 0.5rem;
+    padding: 0.25 0.5rem;
+    width: 100px;
+    border-radius: 8px;
+    color: var(--app-color-background);
+    background: var(--app--color-secondary);
+    border: none;
   }
 }

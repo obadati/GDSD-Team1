@@ -1,10 +1,11 @@
 import "./SearchBox.scss";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { configureSearcher } from "../../utility/search";
 import fuse from "fuse.js";
 import { DEBOUNCE_DURATION } from "../../constants/constants";
+import { searchForProperties } from "../../api/properties";
 
 interface OwnProps {
   onSearchComplete: Function;
@@ -20,7 +21,8 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
   onSearchComplete,
 }) => {
   const [searcher, setSearcher] = useState<fuse<any>>();
-  const handleSearch = debounce((query = "") => {
+  const inputRef = useRef<any>();
+  const handleFuzzySearch = debounce((query = "") => {
     if (!query.trim()) {
       onSearchComplete([]);
       return;
@@ -34,12 +36,25 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
       setSearcher(configureSearcher(list, searchFor));
     }
   }, [list]);
+
+  const handleCustomSearch = (event: any) => {
+    event.preventDefault();
+    if (inputRef.current) {
+      const query = (inputRef.current as HTMLInputElement).value;
+      searchForProperties(query);
+    }
+  };
+
   return (
     <div className='search-box-component'>
       <input
+        ref={inputRef}
         type='search'
         placeholder={placeholderText || "Type to start searching"}
-        onChange={(e) => handleSearch(e.target.value)}></input>
+        onChange={(e) => handleFuzzySearch(e.target.value)}
+      />
+
+      <button onClick={handleCustomSearch}>Go!</button>
     </div>
   );
 };
