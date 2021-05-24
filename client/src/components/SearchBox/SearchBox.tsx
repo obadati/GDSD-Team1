@@ -37,11 +37,12 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
     }
   }, [list]);
 
-  const handleCustomSearch = (event: any) => {
+  const handleCustomSearch = async (event: any) => {
     event.preventDefault();
     if (inputRef.current) {
       const query = (inputRef.current as HTMLInputElement).value;
-      searchForProperties(query);
+      const { result } = await searchForProperties(query);
+      onSearchComplete(result);
     }
   };
 
@@ -51,9 +52,7 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
         ref={inputRef}
         type='search'
         placeholder={placeholderText || "Type to start searching"}
-        onChange={(e) => handleFuzzySearch(e.target.value)}
       />
-
       <button onClick={handleCustomSearch}>Go!</button>
     </div>
   );
