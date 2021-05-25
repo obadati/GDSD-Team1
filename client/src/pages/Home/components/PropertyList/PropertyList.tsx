@@ -11,12 +11,12 @@ const PropertyList: React.FC<OwnProps> = ({ properties }) => {
   return (
     <>
       <div className='properties-list'>
-        {properties.length > 0 &&
-          (properties as Property[]).map((property) => (
-            <PropertyCard property={property} />
-          ))}
+        {properties.length > 0
+          ? (properties as Property[]).map((property) => (
+              <PropertyCard property={property} />
+            ))
+          : "No Records"}
       </div>
-      <button>See More...</button>
     </>
   );
 };

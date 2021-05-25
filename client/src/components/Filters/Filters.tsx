@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Filters.scss";
 
-const filterTypes = ["city", "size", "rooms", "price"];
+const filterTypes = ["rent", "house", "apartment"];
 
-const Filters: React.FC<any> = () => {
+interface OwnProps {
+  onFilterSelected: (selected: number) => void;
+}
+const Filters: React.FC<OwnProps> = ({ onFilterSelected }) => {
+  const [selected, setSelected] = useState<number | null>(null);
+  useEffect(() => onFilterSelected(selected as number), [selected]);
+
   return (
     <div className='app-filters'>
-      {filterTypes.map((filter) => (
-        <div className='app-filter-type'>{filter}</div>
+      {filterTypes.map((filter, index) => (
+        <div
+          onClick={() => setSelected(index)}
+          className={`app-filter-type ${
+            index === selected ? `app-filter-type--selected` : ""
+          }`}>
+          {filter}
+        </div>
       ))}
     </div>
   );
