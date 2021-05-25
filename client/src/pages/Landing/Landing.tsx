@@ -32,7 +32,6 @@ const LandingPage: React.FC<any> = () => {
   return (
     <div className='landing-page'>
       <section className='team'>
-        {renderIntro()}
         <hr></hr>
         <h1 className='our-team-label'>OUR TEAM</h1>
         {renderDeveloperCards()}

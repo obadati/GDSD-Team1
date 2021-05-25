@@ -25,12 +25,24 @@ const Navigation: React.FC<any> = () => {
     ));
   };
 
+  const renderIntro = (): JSX.Element => (
+    <>
+      <h3>Global Distributed Software Development</h3>
+      <h3>Summer 2021</h3>
+      <h3>Team 1</h3>
+      <h3>Milestone 0 : (About Page)</h3>
+    </>
+  );
+
   return (
     <div className='app-navigation'>
       <div className='app-logo'>
         <img src={AppLogo} />
       </div>
       {renderTabs()}
+      <div className='intro' style={{ textAlign: "center" }}>
+        {renderIntro()}
+      </div>
     </div>
   );
 };

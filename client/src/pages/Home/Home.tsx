@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { searchByCategory } from "../../api/properties";
 import Filters from "../../components/Filters/Filters";
 import SearchBoxComponent from "../../components/SearchBox/SearchBox";
 import { Property } from "../../store/properties/types";
@@ -17,10 +18,15 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
     }
   }, [properties]);
 
+  const handleFilterSelection = async (selected: number) => {
+    const { result } = await searchByCategory(selected + 1);
+    setFilteredProps(result);
+  };
+
   return (
     <div className='home-page'>
       <div className='aside'>
-        <Filters />
+        <Filters onFilterSelected={handleFilterSelection} />
       </div>
       <div className='center'>
         <div className='search-box-wrapper'>
