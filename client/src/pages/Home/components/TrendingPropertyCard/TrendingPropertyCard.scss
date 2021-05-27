@@ -1,5 +1,6 @@
 .trending-property-card {
   width: 450px;
+  max-height: 400px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--app-color-border);
