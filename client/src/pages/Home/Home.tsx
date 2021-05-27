@@ -30,7 +30,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
     eius? Possimus, quos culpa officia neque voluptas exercitationem
     tempora, consequuntur consequatur et alias dolorum dolores repellat
     officiis impedit?`,
-      cta: { label: "CTA", handler: () => {} },
+      cta: { label: "Read More", handler: () => {} },
     },
     {
       heading: "Heading",
@@ -40,7 +40,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
     eius? Possimus, quos culpa officia neque voluptas exercitationem
     tempora, consequuntur consequatur et alias dolorum dolores repellat
     officiis impedit?`,
-      cta: { label: "CTA", handler: () => {} },
+      cta: { label: "Read More", handler: () => {} },
     },
   ];
   return (
