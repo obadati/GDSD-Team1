@@ -31,7 +31,7 @@ exports.getAllCategory = async (req, res) => {
 
     return res.status(200).json({category});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+   return res.status(500).json({ error: err.message });
   }
 };
 /*Get Property By CategoryId & Text */
@@ -49,7 +49,7 @@ exports.searchPropertyByCategoryText = async(req,res)=>{
       return res.status(200).json(properties);
   }
   catch(err){
-    res.status(500).json({ error: err.message });
+   return res.status(500).json({ error: err.message });
   }
 }
 /*Delete Property */
