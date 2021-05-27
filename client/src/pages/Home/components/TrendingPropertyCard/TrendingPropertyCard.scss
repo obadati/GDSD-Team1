@@ -1,0 +1,44 @@
+.trending-property-card {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--app-color-border);
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  border-radius: 25px;
+  margin-right: 5rem;
+  background: white;
+
+  &:last-child {
+    margin-right: 0 !important;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    &__description {
+      flex: 1;
+    }
+
+    &__image-wrapper {
+      flex: 1;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__cta {
+      margin-top: 1rem;
+      max-width: 150px;
+      padding: 0.5rem;
+      background: var(--app-color-secondary);
+      border: none;
+      font-weight: bold;
+      color: white;
+      border-radius: 8px;
+    }
+  }
+}

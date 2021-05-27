@@ -1,0 +1,9 @@
+.home-page {
+  .trending {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  max-height: calc(100vh - 150px);
+  overflow: scroll;
+}

@@ -20,12 +20,12 @@ const App: React.FC<OwnProps> = ({ dispatch }) => {
   };
 
   return (
-    <>
+    <div className='app-wrapper'>
       <Router>
         <Navigation />
         <AppRouter />
       </Router>
-    </>
+    </div>
   );
 };
 
