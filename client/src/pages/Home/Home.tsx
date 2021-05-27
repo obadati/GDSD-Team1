@@ -1,44 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { searchByCategory } from "../../api/properties";
-import Filters from "../../components/Filters/Filters";
-import SearchBoxComponent from "../../components/SearchBox/SearchBox";
+import { useHistory } from "react-router";
+import { BASE_URL } from "../../api/properties";
+import { AppRoutes } from "../../containers/Router/routes";
 import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";
-import PropertyCard from "./components/PropertyCard/PropertyCard";
-import PropertyList from "./components/PropertyList/PropertyList";
+import Hero, { HeroProps } from "./components/Hero/Hero";
+import TrendingPropertyCard, {
+  TrendingCardProps,
+} from "./components/TrendingPropertyCard/TrendingPropertyCard";
 import "./Home.scss";
 
 const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
-  const [filteredProps, setFilteredProps] = useState<Property[]>([]);
+  const heroProps: HeroProps = {
+    heading: "Get real time market average prices based on your preferences",
+    description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
+    quaerat eos nihil repudiandae nulla vero in, aut officia cumque
+    dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
+    eius? Possimus, quos culpa officia neque voluptas exercitationem
+    tempora, consequuntur consequatur et alias dolorum dolores repellat
+    officiis impedit? Magni consequuntur animi in veritatis vitae,
+    necessitatibus earum itaque saepe aut placeat aliquid! Excepturi culpa,
+    minima ipsa veniam suscipit commodi`,
+    cta: { label: "get avg prices", handler: () => {} },
+  };
 
-  useEffect(() => {
-    if (properties.length > -1) {
-      setFilteredProps(properties);
-    }
-  }, [properties]);
+  const trendingProperties: TrendingCardProps[] = [
+    {
+      heading: "Nice house 45km away from city center",
+      description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
+    quaerat eos nihil repudiandae nulla vero in, aut officia cumque
+    dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
+    eius? Possimus, quos culpa officia neque voluptas exercitationem
+    tempora, consequuntur consequatur et alias dolorum dolores repellat
+    officiis impedit?`,
+      cta: { label: "Read More", handler: () => {} },
+    },
+    {
+      heading: "5 room house for sharing",
+      description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
+    quaerat eos nihil repudiandae nulla vero in, aut officia cumque
+    dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
+    eius? Possimus, quos culpa officia neque voluptas exercitationem
+    tempora, consequuntur consequatur et alias dolorum dolores repellat
+    officiis impedit?`,
+      cta: { label: "Read More", handler: () => {} },
+    },
+  ];
 
-  const handleFilterSelection = async (selected: number) => {
-    const { result } = await searchByCategory(selected + 1);
-    setFilteredProps(result);
+  const history = useHistory();
+
+  const handleReadMore = () => {
+    history.push(AppRoutes.Properties);
   };
 
   return (
     <div className='home-page'>
-      <div className='aside'>
-        <Filters onFilterSelected={handleFilterSelection} />
-      </div>
-      <div className='center'>
-        <div className='search-box-wrapper'>
-          <SearchBoxComponent
-            list={properties}
-            searchFor={["location", "title", "category.name"]}
-            onSearchComplete={(list: Property[]) =>
-              setFilteredProps(list.length > 0 ? list : properties)
-            }
+      <Hero {...heroProps} />
+      <div className='trending'>
+        {/* select top 2 */}
+        {properties.slice(0, 2).map((property: Property) => (
+          <TrendingPropertyCard
+            heading={property.title}
+            description={property.description}
+            thumbnail={`${BASE_URL}/${property.images}`}
+            cta={{ label: "See More", handler: handleReadMore }}
           />
-        </div>
-        <PropertyList properties={filteredProps} />
+        ))}
       </div>
     </div>
   );
@@ -47,8 +75,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
 const mapStateToProps = (state: AppState) => ({
   properties: state.properties.properties,
 });
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const connecter = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connecter>;
-
-export default connecter(HomePage);
+export default connector(HomePage);

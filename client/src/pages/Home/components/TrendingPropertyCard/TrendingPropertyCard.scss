@@ -1,0 +1,58 @@
+.trending-property-card {
+  width: 450px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--app-color-border);
+  padding: 1.5rem;
+  box-sizing: border-box;
+  border-radius: 25px;
+  margin-right: 5rem;
+  background: white;
+
+  &:last-child {
+    margin-right: 0 !important;
+  }
+
+  &__heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem !important;
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+
+    &__description {
+      flex: 1;
+      font-size: 0.8rem;
+      margin-right: 10px;
+    }
+
+    &__image-wrapper {
+      flex: 1;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__cta {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      max-width: 150px;
+      padding: 0.5rem;
+      background: var(--app-color-secondary);
+      border: none;
+      font-weight: bold;
+      color: white;
+      border-radius: 8px;
+    }
+  }
+}
