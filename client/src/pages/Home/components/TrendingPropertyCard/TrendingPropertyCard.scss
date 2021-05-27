@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid var(--app-color-border);
-  padding: 2rem 1.5rem;
+  padding: 1.5rem;
   box-sizing: border-box;
   border-radius: 25px;
   margin-right: 5rem;
@@ -16,6 +16,10 @@
   &__heading {
     font-size: 1.25rem;
     font-weight: bold;
+    margin-bottom: 0.5rem !important;
+    &::first-letter {
+      text-transform: capitalize;
+    }
   }
 
   &__content {

@@ -23,7 +23,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
 
   const trendingProperties: TrendingCardProps[] = [
     {
-      heading: "Heading",
+      heading: "Nice house 45km away from city center",
       description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
     quaerat eos nihil repudiandae nulla vero in, aut officia cumque
     dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
@@ -33,7 +33,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
       cta: { label: "Read More", handler: () => {} },
     },
     {
-      heading: "Heading",
+      heading: "5 room house for sharing",
       description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
     quaerat eos nihil repudiandae nulla vero in, aut officia cumque
     dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
