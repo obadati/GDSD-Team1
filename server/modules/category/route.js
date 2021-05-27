@@ -8,6 +8,9 @@ router.post("/",controller.create);
 /*Get All Categories */
 router.get("/",controller.getAllCategory);
 
+/*Get Single Category By Properties */
+router.get("/:id/search/",controller.searchPropertyByCategoryText);
+
 /*Delete Category */
 router.delete("/:id",controller.deleteCategory);
 

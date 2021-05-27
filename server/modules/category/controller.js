@@ -1,7 +1,10 @@
 const db = require("../../models");
 const Category = db.category;
+const Property =db.propertyDetail;
 const date = require("../../utils/date");
 const time = require("../../utils/time");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 
 //Create Property
@@ -31,6 +34,24 @@ exports.getAllCategory = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+/*Get Property By CategoryId & Text */
+exports.searchPropertyByCategoryText = async(req,res)=>{
+  try{
+      const {query}= req.query;
+      console.log(query)
+      let properties = await Property.findAll({
+        where:{categoryId:req.params.id, title:{ [Op.like]: "%" + query + "%" } }
+      });
+      console.log(properties.length)
+      if(properties.length==0){
+      return  res.status(404).json({message:"Not Found"});
+      }
+      return res.status(200).json(properties);
+  }
+  catch(err){
+    res.status(500).json({ error: err.message });
+  }
+}
 /*Delete Property */
 exports.deleteCategory = async (req, res) => {
     try {

@@ -9,6 +9,10 @@ Body:{ name:"" }
 [HttpGet]
 http://18.185.96.197:5000/api/categories
 
+/*Get Property By CategoryId and Search Query*/
+[HttpGet]
+http://18.185.96.197:5000/api/categories/3/search?query=Trier
+
 /*Delete Category*/
 [HttpDelete]
 http://18.185.96.197:5000/api/categories/{id}
