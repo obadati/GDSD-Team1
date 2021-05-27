@@ -18,8 +18,10 @@ const PropertiesPage: React.FC<PropsFromRedux> = ({ properties }) => {
   }, [properties]);
 
   const handleFilterSelection = async (selected: number) => {
-    const { result } = await searchByCategory(selected + 1);
-    setFilteredProps(result);
+    if (selected && selected > -1) {
+      const { result } = await searchByCategory(selected + 1);
+      setFilteredProps(result);
+    }
   };
 
   return (

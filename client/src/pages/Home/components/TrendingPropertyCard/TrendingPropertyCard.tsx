@@ -8,12 +8,14 @@ export interface TrendingCardProps {
   heading: string;
   description: string;
   cta?: CTA;
+  thumbnail?: string;
 }
 
 const TrendingPropertyCard: React.FC<TrendingCardProps> = ({
   heading,
   description,
   cta,
+  thumbnail,
 }) => {
   return (
     <div className='trending-property-card'>
@@ -23,11 +25,13 @@ const TrendingPropertyCard: React.FC<TrendingCardProps> = ({
           {description}
         </div>
         <div className='trending-property-card__content__image-wrapper'>
-          <img src={fallbackImg} alt='' />
+          <img src={thumbnail || fallbackImg} alt='' />
         </div>
       </div>
       {cta && (
-        <button className='trending-property-card__content__cta'>
+        <button
+          onClick={cta.handler}
+          className='trending-property-card__content__cta'>
           {cta.label}
         </button>
       )}

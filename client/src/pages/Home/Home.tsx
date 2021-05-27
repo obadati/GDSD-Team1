@@ -1,5 +1,9 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { useHistory } from "react-router";
+import { BASE_URL } from "../../api/properties";
+import { AppRoutes } from "../../containers/Router/routes";
+import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";
 import Hero, { HeroProps } from "./components/Hero/Hero";
 import TrendingPropertyCard, {
@@ -43,12 +47,25 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
       cta: { label: "Read More", handler: () => {} },
     },
   ];
+
+  const history = useHistory();
+
+  const handleReadMore = () => {
+    history.push(AppRoutes.Properties);
+  };
+
   return (
     <div className='home-page'>
       <Hero {...heroProps} />
       <div className='trending'>
-        {trendingProperties.map((card) => (
-          <TrendingPropertyCard {...card} />
+        {/* select top 2 */}
+        {properties.slice(0, 2).map((property: Property) => (
+          <TrendingPropertyCard
+            heading={property.title}
+            description={property.description}
+            thumbnail={`${BASE_URL}/${property.images}`}
+            cta={{ label: "See More", handler: handleReadMore }}
+          />
         ))}
       </div>
     </div>
