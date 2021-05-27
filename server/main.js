@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const db = require('./models');
+const admin = require('./modules/admin/route');
 const property = require('./modules/propertyDetails/route');
 const category = require('./modules/category/route');
 const port = 5000
@@ -13,6 +14,8 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/categories', category);
 app.use('/api/properties', property);
+app.use('/api/admin', admin);
+
 
 app.use(cors());
 //error  handling
