@@ -3,6 +3,7 @@
     margin-top: 1rem;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
   }
   max-height: calc(100vh - 150px);
   overflow: scroll;

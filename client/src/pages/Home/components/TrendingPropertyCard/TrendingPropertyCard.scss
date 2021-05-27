@@ -1,5 +1,5 @@
 .trending-property-card {
-  max-width: 500px;
+  width: 450px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--app-color-border);
@@ -13,11 +13,19 @@
     margin-right: 0 !important;
   }
 
+  &__heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
   &__content {
     flex: 1;
     display: flex;
+
     &__description {
       flex: 1;
+      font-size: 0.8rem;
+      margin-right: 10px;
     }
 
     &__image-wrapper {
