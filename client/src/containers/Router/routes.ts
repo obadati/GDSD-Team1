@@ -3,4 +3,5 @@ export enum AppRoutes {
   About = "/about",
   Home = "/home",
   Team = "/team",
+  Properties = "/properties",
 }

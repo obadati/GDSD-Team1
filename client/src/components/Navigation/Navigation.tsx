@@ -36,23 +36,29 @@ const Navigation: React.FC<any> = () => {
   };
 
   const renderIntro = (): JSX.Element => (
-    <>
+    <div className='app-intro'>
       <h3>Global Distributed Software Development</h3>
       <h3>Summer 2021</h3>
       <h3>Team 1</h3>
-      <h3>Milestone 0 : (About Page)</h3>
-    </>
+      <h3>Milestone 3</h3>
+    </div>
   );
+
+  const renderTabsWrapper = (): JSX.Element => {
+    return (
+      <div className='tabs-wrapper'>
+        <div className='app-logo'>
+          <img src={AppLogo} />
+        </div>
+        {renderTabs()}
+      </div>
+    );
+  };
 
   return (
     <div className='app-navigation'>
-      <div className='app-logo'>
-        <img src={AppLogo} />
-      </div>
-      {renderTabs()}
-      <div className='intro' style={{ textAlign: "center" }}>
-        {renderIntro()}
-      </div>
+      {renderIntro()}
+      {renderTabsWrapper()}
     </div>
   );
 };

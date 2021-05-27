@@ -1,6 +1,6 @@
 import React from "react";
+import { PropertyCard } from "..";
 import { Property } from "../../../../store/properties/types";
-import PropertyCard from "../PropertyCard/PropertyCard";
 import "./PropertyList.scss";
 
 interface OwnProps {

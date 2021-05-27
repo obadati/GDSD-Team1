@@ -10,7 +10,15 @@
     }
   }
 
+  .app-intro {
+    display: flex;
+    h3 {
+      margin-right: 10px !important;
+    }
+  }
+
   display: flex;
+  flex-direction: column;
   padding-top: 1rem;
   align-items: center;
 
@@ -26,4 +34,10 @@
       font-weight: 900;
     }
   }
+}
+
+.tabs-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
 }
