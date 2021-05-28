@@ -1,34 +1,33 @@
 import React, { useEffect, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import AppLogo from "../../assets/images/logo.png";
 import { AppRoutes } from "../../containers/Router/routes";
+import { setActiveTab } from "../../store/navigation/actions";
+import { NavigationTab } from "../../store/navigation/types";
+import { AppState } from "../../store/rootReducer";
 import "./Navigation.scss";
 
-export interface NavigationTab {
-  label: string;
-  to: AppRoutes;
-}
-
-const Navigation: React.FC<any> = () => {
+const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
   const tabs: NavigationTab[] = [
-    { label: "home", to: AppRoutes.Home },
+    { label: "home", to: AppRoutes.Landing },
     { label: "about", to: AppRoutes.About },
     { label: "find property", to: AppRoutes.Properties },
   ];
-  const [selectedTab, setSelectedTab] = useState<number>(0);
   const history = useHistory();
 
   const handleSelectedTab = (tab: NavigationTab, index: number) => {
-    setSelectedTab(index);
+    dispatch(setActiveTab(tab));
     history.push(tab.to);
   };
 
   const renderTabs = () => {
     return tabs.map((tab, index) => (
       <div
+        key={`navigation-tab-${index}`}
         onClick={() => handleSelectedTab(tab, index)}
         className={`app-navigation__tab app-navigation__tab${
-          selectedTab === index ? "--selected" : ""
+          activeTab.label === tab.label ? "--selected" : ""
         }`}>
         {tab.label}
       </div>
@@ -62,4 +61,11 @@ const Navigation: React.FC<any> = () => {
     </div>
   );
 };
-export default Navigation;
+
+const mapStateToProps = (state: AppState) => ({
+  activeTab: state.navigation.activeTab,
+});
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+export default connector(Navigation);
