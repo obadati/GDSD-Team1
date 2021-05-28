@@ -7,7 +7,6 @@ const AppRouter: React.FC<any> = () => {
   return (
     <Switch>
       <Route path={AppRoutes.Landing} exact component={HomePage}></Route>
-      <Route path={AppRoutes.Home} exact component={HomePage}></Route>
       <Route path={AppRoutes.About} exact component={LandingPage}></Route>
       <Route
         path={AppRoutes.Properties}
