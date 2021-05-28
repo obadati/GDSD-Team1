@@ -55,7 +55,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
   };
 
   return (
-    <div className='home-page'>
+    <div className='home-page app-page'>
       <Hero {...heroProps} />
       <div className='trending'>
         {/* select top 2 */}
