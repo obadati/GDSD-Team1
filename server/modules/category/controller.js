@@ -7,7 +7,7 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 
-//Create Property
+/*Create Category*/
 exports.create = async (req, res) => {
   try {
 
@@ -25,6 +25,7 @@ exports.create = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+/*Get All Category */
 exports.getAllCategory = async (req, res) => {
   try {
     let category = await Category.findAll({});
@@ -38,11 +39,9 @@ exports.getAllCategory = async (req, res) => {
 exports.searchPropertyByCategoryText = async(req,res)=>{
   try{
       const {query}= req.query;
-      console.log(query)
       let properties = await Property.findAll({
         where:{categoryId:req.params.id, title:{ [Op.like]: "%" + query + "%" } }
       });
-      console.log(properties.length)
       if(properties.length==0){
       return  res.status(404).json({message:"Not Found"});
       }
