@@ -8,4 +8,10 @@ router.post("/",controller.create);
 /*Login User */
 router.post("/login",controller.login);
 
+/*Get User Image*/
+router.get("/userImage/:id",controller.image);
+
+/*Update User Image */
+router.patch("/updateImage/:id",controller.updateImage);
+
 module.exports = router;

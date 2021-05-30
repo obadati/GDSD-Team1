@@ -11,6 +11,7 @@ const port = 5000
 app.use('/', express.static(__dirname + '/public/')); // ← adjust
 app.use('/assests/uploads/propertyImage/', express.static(__dirname + '/assests/uploads/propertyImage/')); // ← adjust
 app.use('/assests/uploads/avatar/', express.static(__dirname + '/assests/uploads/avatar/')); // ← adjust
+app.use('/assests/uploads/userImage/', express.static(__dirname + '/assests/uploads/userImage/')); // ← adjust
 app.use(express.json());
 
 app.use(cors());
