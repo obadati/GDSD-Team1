@@ -4,7 +4,7 @@
 /server/assests/uploads/
 /server/config/
 /server/migrations/
-
+.vscode/
 # Client
 # dependencies
 /client/node_modules

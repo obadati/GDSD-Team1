@@ -2,7 +2,6 @@ const db = require("../../models");
 const Property = db.propertyDetail;
 var multer = require("multer");
 const date = require("../../utils/date");
-const time = require("../../utils/time");
 var path = require("path");
 const fs = require("fs");
 const Sequelize = require("sequelize");
@@ -48,8 +47,7 @@ exports.create = async (req, res) => {
           room: req.body.room,
           size: req.body.size,
           images: req.file.path,
-          createdAt: date + " " + time,
-          updatedAt: date + " " + time,
+          date:date
         };
         console.log(data);
         await Property.create(data);
