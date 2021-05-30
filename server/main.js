@@ -5,16 +5,19 @@ const db = require('./models');
 const admin = require('./modules/admin/route');
 const property = require('./modules/propertyDetails/route');
 const category = require('./modules/category/route');
+const user = require('./modules/user/route');
 const port = 5000
 
 app.use('/', express.static(__dirname + '/public/')); // ← adjust
 app.use('/assests/uploads/propertyImage/', express.static(__dirname + '/assests/uploads/propertyImage/')); // ← adjust
+app.use('/assests/uploads/avatar/', express.static(__dirname + '/assests/uploads/avatar/')); // ← adjust
 app.use(express.json());
 
 app.use(cors());
 app.use('/api/categories', category);
 app.use('/api/properties', property);
 app.use('/api/admin', admin);
+app.use('/api/user', user);
 
 
 app.use(cors());

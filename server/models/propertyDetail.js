@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     room: DataTypes.STRING,
     size: DataTypes.STRING,
     images: DataTypes.STRING,
-    status: DataTypes.INTEGER
+    status: DataTypes.INTEGER,
+    date:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'propertyDetail',

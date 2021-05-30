@@ -62,14 +62,14 @@ exports.Login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: admin._id, username: admin.username, role: "Admin" },
+      { id: admin.id, username: admin.username, role: "Admin" },
       secret
     );
 
     res.json({
       token,
-      adminId: admin._id,
-      email: admin.email,
+      adminId: admin.id,
+      username: admin.username,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
