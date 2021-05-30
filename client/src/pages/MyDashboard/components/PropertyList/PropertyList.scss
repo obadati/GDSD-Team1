@@ -1,0 +1,7 @@
+.properties-list {
+  display: flex;
+  margin: 1rem;
+  flex-wrap: wrap;
+  height: calc(85vh - 120px);
+  overflow-y: scroll;
+}
