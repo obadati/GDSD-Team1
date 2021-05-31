@@ -5,6 +5,7 @@ const db = require('./models');
 const admin = require('./modules/admin/route');
 const property = require('./modules/propertyDetails/route');
 const category = require('./modules/category/route');
+const company = require('./modules/company/route');
 const user = require('./modules/user/route');
 const port = 5000
 
@@ -19,6 +20,7 @@ app.use('/api/categories', category);
 app.use('/api/properties', property);
 app.use('/api/admin', admin);
 app.use('/api/user', user);
+app.use('/api/company', company);
 
 
 app.use(cors());
@@ -33,16 +35,16 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
 
-      error: {
-          message: error.message
-      }
+    error: {
+      message: error.message
+    }
   });
 });
 
 
 
 // app.use('/property', property);
-db.sequelize.sync().then((req)=>{
+db.sequelize.sync().then((req) => {
 
 
   app.listen(port, () => {
