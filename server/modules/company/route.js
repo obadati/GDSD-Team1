@@ -6,4 +6,6 @@ router.post("/", controller.createCompany);
 
 router.delete("/:id", controller.deleteCompany);
 
+router.get("/:page", controller.getAllCompanies);
+
 module.exports = router;

@@ -56,6 +56,37 @@ exports.createCompany = async (req, res) => {
     }
 };
 
+exports.getAllCompanies = (req, res) => {
+    try {
+        let limit = 8;
+        let offset = 0;
+        Company.findAndCountAll().then((data) => {
+            let page = req.params.page; // page number
+            let pages = Math.ceil(data.count / limit);
+            offset = limit * (page - 1);
+
+            Company.findAll({
+                attributes: [
+                    "id",
+                    "name",
+                    "registrationNumber",
+                    "logo",
+                    "createdAt",
+                ],
+                order: [["id", "DESC"]],
+                limit: limit,
+                offset: offset,
+            }).then((company) => {
+                return res
+                    .status(200)
+                    .json({ result: company, count: data.count, pages: pages });
+            });
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 exports.deleteCompany = async (req, res) => {
     try {
         const id = req.params.id;
