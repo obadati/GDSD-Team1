@@ -11,6 +11,10 @@
       max-height: 100%;
     }
   }
+
+  &--rounded {
+    border-radius: inherit;
+  }
 }
 
 .slide {
