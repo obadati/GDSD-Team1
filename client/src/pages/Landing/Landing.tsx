@@ -20,6 +20,7 @@ const LandingPage: React.FC<any> = () => {
     <div className='card-wrapper'>
       {developers.map((developer) => (
         <DeveloperCard
+          key={`developer-card-${developer.name}`}
           name={developer.name}
           tagline={developer.tagline}
           description={developer.description}

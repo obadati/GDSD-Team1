@@ -2,14 +2,24 @@ import React from "react";
 import { Property } from "../../../../store/properties/types";
 import { BASE_URL } from "../../../../api/properties";
 import "./PropertyCard.scss";
+import { useHistory } from "react-router";
+import { AppRoutes } from "../../../../containers/Router/routes";
 
 interface OwnProps {
   property: Property;
 }
 
 const PropertyCard: React.FC<OwnProps> = ({ property }) => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(AppRoutes.PropertyDetail.replace(":uid", property.id), {
+      property,
+    });
+  };
+
   return (
-    <div className='property-card'>
+    <div className='property-card' onClick={handleClick}>
       <div className='property-card__thumbnail'>
         <img src={`${BASE_URL}/${property.images}`} alt='no img' />
       </div>

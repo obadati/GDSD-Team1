@@ -61,6 +61,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
         {/* select top 2 */}
         {properties.slice(0, 2).map((property: Property) => (
           <TrendingPropertyCard
+            key={`trending-card-${property.id}`}
             heading={property.title}
             description={property.description}
             thumbnail={`${BASE_URL}/${property.images}`}
