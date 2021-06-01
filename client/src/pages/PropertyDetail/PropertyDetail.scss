@@ -3,7 +3,54 @@
 
   &__title {
     margin-bottom: 1rem !important;
-    padding: 0 1rem !important;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .aside {
+    border: 1px solid var(--app-color-border);
+    width: 300px;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    max-height: calc(100% - 60px);
+    background: white;
+    flex-direction: column;
+
+    > div {
+      flex: 1;
+    }
+
+    .seller-info {
+      display: flex;
+
+      p {
+        margin: auto !important;
+        font-weight: bold;
+      }
+    }
+
+    .property-tags {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2rem;
+      &__tag {
+        text-align: center;
+        padding: 0.35rem 1rem !important;
+        border-radius: 25px;
+        background: var(--app-color-secondary);
+        color: var(--app-color-background);
+        font-weight: bold;
+        border: none;
+        display: inline;
+        margin-right: 0.5rem;
+        font-size: 0.85rem;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1rem;
+      }
+    }
   }
 
   .center {
@@ -13,23 +60,25 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    background: white;
+    border-radius: 10px;
+    max-height: calc(100% - 60px);
+    border: 1px solid var(--app-color-border);
+    padding: 2rem;
 
     .image-gallery-wrapper {
-      border: 1px solid var(--app-color-border);
-      height: 500px;
+      height: 450px;
       overflow: hidden;
       border-radius: 10px;
-      padding: 1rem;
       background: white;
     }
 
     .description {
-      background: white;
       border-radius: 10px;
-      border: 1px solid var(--app-color-border);
-      padding: 1rem !important;
       margin-top: 1rem !important;
       min-height: calc(100% - (700px));
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       h3 {
         font-weight: bold;
@@ -37,9 +86,5 @@
         margin-bottom: 0.75rem !important;
       }
     }
-  }
-
-  .aside {
-    width: 300px;
   }
 }
