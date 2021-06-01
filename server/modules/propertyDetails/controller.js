@@ -1,15 +1,17 @@
 const db = require("../../models");
 const Property = db.propertyDetail;
+const PropertyImage = db.imageProperty;
 var multer = require("multer");
 const date = require("../../utils/date");
 var path = require("path");
 const fs = require("fs");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+const status = "Approved";
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "assests/uploads/propertyImage");
+    cb(null, path.join(__dirname, "../../assests/uploads/propertyImage/"));
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + "-" + Date.now() + ".jpg");
@@ -27,6 +29,18 @@ var upload = multer({
     callback(null, true);
   },
 }).single("property");
+
+var uploadMultipleImage = multer({
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== ".jpeg") {
+      return callback(new Error("Only images are allowed"));
+    }
+    callback(null, true);
+  },
+}).array("image",12);
 
 /*Create Property*/
 exports.create = async (req, res) => {
@@ -66,7 +80,7 @@ exports.getAllProperty = (req, res) => {
   try {
     let limit = 8;
     let offset = 0;
-    Property.findAndCountAll().then((data) => {
+    Property.findAndCountAll({where:{status:status}}).then((data) => {
       let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
@@ -93,6 +107,7 @@ exports.getAllProperty = (req, res) => {
         },
         limit: limit,
         offset: offset,
+        where:{status:status}
       }).then((property) => {
         return res
           .status(200)
@@ -112,7 +127,7 @@ exports.propertyByCategoryId =  (req, res) => {
     let limit = 8;
     let offset = 0;
     Property.findAndCountAll({
-      where: { categoryId: categoryId },
+      where: { categoryId: categoryId,status:status },
     }).then((data) => {
       // let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
@@ -133,7 +148,7 @@ exports.propertyByCategoryId =  (req, res) => {
         "categoryId",
         "status",
       ],
-      where: { categoryId: categoryId },
+      where: { categoryId: categoryId, status:status },
       order: [["id", "DESC"]],
       include: {
         model: db.category,
@@ -161,14 +176,14 @@ exports.searchPropertyByText = (req, res) => {
     let limit = 8;
     let offset = 0;
     Property.findAndCountAll({
-      where: { title: { [Op.like]: "%" + text + "%" } },
+      where: { title: { [Op.like]: "%" + text + "%" }, status:status },
     }).then((data) => {
       // let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
       Property.findAll({
-        where: { title: { [Op.like]: "%" + text + "%" } },
+        where: { title: { [Op.like]: "%" + text + "%" },status:status },
         // where:{title:text},
         attributes: [
           "id",
@@ -217,3 +232,32 @@ exports.deleteProperty = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+/*Add Property Images in Property*/
+exports.addPropertyImage = async (req,res) =>{
+  try{
+
+    upload(req, res, async function (err) {
+      if (err) {
+      return  res.status(400).json({
+          message: err.message + " maximum 2mb",
+        });
+        console.log("data");
+      } else {
+        let data = {
+          propertId: req.params.propertId,
+          images:   req.file.path
+        };
+        console.log(data);
+        await PropertyImage.create(data);
+        return res
+          .status(200)
+          .json({ messages: "Property Created Successfully" });
+      }
+    });
+  }
+  catch(err){
+    res.status(500).json({ error: err.message });
+  }
+ 
+}

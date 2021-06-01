@@ -14,6 +14,10 @@ router.get("/:page",controller.getAllProperty);
 /*Filter Property By Category */
 router.get("/category/:page",controller.propertyByCategoryId);
 
+
+/*Add Property Image*/
+router.post("/images/:id",controller.addPropertyImage);
+
 /*Delete Property */
 router.delete("/:id",controller.deleteProperty)
 
