@@ -55,12 +55,13 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
   };
 
   return (
-    <div className='home-page'>
+    <div className='home-page app-page'>
       <Hero {...heroProps} />
       <div className='trending'>
         {/* select top 2 */}
         {properties.slice(0, 2).map((property: Property) => (
           <TrendingPropertyCard
+            key={`trending-card-${property.id}`}
             heading={property.title}
             description={property.description}
             thumbnail={`${BASE_URL}/${property.images}`}

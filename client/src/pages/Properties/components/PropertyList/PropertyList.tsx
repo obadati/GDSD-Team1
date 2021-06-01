@@ -13,7 +13,10 @@ const PropertyList: React.FC<OwnProps> = ({ properties }) => {
       <div className='properties-list'>
         {properties.length > 0
           ? (properties as Property[]).map((property) => (
-              <PropertyCard property={property} />
+              <PropertyCard
+                key={`property-card-${property.id}`}
+                property={property}
+              />
             ))
           : "No Records"}
       </div>

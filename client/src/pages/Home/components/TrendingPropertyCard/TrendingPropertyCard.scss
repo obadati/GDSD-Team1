@@ -8,6 +8,10 @@
   box-sizing: border-box;
   border-radius: 25px;
   margin-right: 5rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
   background: white;
 
   &:last-child {
@@ -54,5 +58,11 @@
       color: white;
       border-radius: 8px;
     }
+  }
+}
+@media (max-width: 1350px) {
+  .trending-property-card {
+    margin-right: 0;
+    margin-bottom: 1rem;
   }
 }

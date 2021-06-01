@@ -1,11 +1,9 @@
 .home-page {
-  margin-top: 1.5rem;
   .trending {
     margin-top: 2rem;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
   }
-  max-height: calc(100vh - 150px);
   overflow: scroll;
 }
