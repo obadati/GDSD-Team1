@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./controller');
 
-router.post("/", controller.create);
+router.post("/", controller.createCompany);
 
-router.delete("/:id", controller.delete);
+router.delete("/:id", controller.deleteCompany);
 
 module.exports = router;

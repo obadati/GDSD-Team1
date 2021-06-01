@@ -9,7 +9,7 @@ var storage = multer.diskStorage({
         cb(null, "assests/uploads/company");
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + "-" + Date.now() + ".jpg");
+        cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname).toLocaleLowerCase());
     },
 });
 
@@ -17,23 +17,25 @@ var upload = multer({
     storage: storage,
     limits: { fileSize: 2 * 1024 * 1024 },
     fileFilter: function (req, file, callback) {
-        var ext = path.extname(file.originalname);
+        var ext = path.extname(file.originalname).toLocaleLowerCase();
         if (ext !== ".png" && ext !== ".jpg" && ext !== ".jpeg") {
-            return callback(new Error("Only images are allowed"));
+            return callback(new Error("Only png, jpg, jpeg images are allowed"));
         }
         callback(null, true);
     },
 }).single("logo");
 
 
-exports.create = async (req, res) => {
+exports.createCompany = async (req, res) => {
     try {
 
         upload(req, res, async function (err) {
             if (err) {
                 res.status(400).json({
-                    message: err.message + " maximum 2mb",
+
+                    message: (err.message == "File too large") ? err.message + " the maximum is 2 Mb" : err.message
                 });
+
             } else {
                 let data = {
                     name: req.body.name,
@@ -54,22 +56,24 @@ exports.create = async (req, res) => {
     }
 };
 
-exports.delete = async (req, res) => {
+exports.deleteCompany = async (req, res) => {
     try {
         const id = req.params.id;
 
         let company = await Company.findOne({ where: { id: id } });
+        if (company == null) {
+            return res
+                .status(400)
+                .json({ msg: "Company Not Found" });
+        }
         await Company.destroy({
             where: { id: id },
         });
-        await fs.unlink(company.filePath, (err) => {
+        await fs.unlink(company.logo, (err) => {
 
             if (err) {
-
                 console.log(err);
-
             }
-
         });
         return res.status(200).json({
             message: "Company Delete Successfully",
