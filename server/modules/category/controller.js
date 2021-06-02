@@ -7,6 +7,8 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const status = "Approved";
 
+/****************************************************Define Controller***********************************/
+
 /*Create Category*/
 exports.create = async (req, res) => {
   try {

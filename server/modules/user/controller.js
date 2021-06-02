@@ -7,14 +7,23 @@ const fs = require("fs");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = require("../../utils/token").tokenEncryptionSecret;
+const Approved = "Approved";
+const Pending = "Pending";
+const Agent = "Agent";
+const Buyer = "Buyer";
+
+/****************************************************Define Controller***********************************/
 
 /*Image Storage */
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../assests/uploads/userImage/"));
+    cb(null, "assests/uploads/userImage/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now() + ".jpg");
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
   },
 });
 
@@ -103,29 +112,70 @@ exports.login = async (req, res) => {
         .status(400)
         .json({ message: "Not all fields have been entered." });
     }
-    const user = await User.findOne({ where: { email: email } });
-
-    if (!user) {
+    const userPending = await User.findOne({
+      where: { email: email, status: Pending, postType: Agent },
+    });
+    /*Agent Login */
+    const user = await User.findOne({
+      where: { email: email, status: Approved, postType: Agent },
+    });
+    if (user) {
+      if (!user) {
+        return res
+          .status(400)
+          .json({ message: "No account with this email has been registered." });
+      }
+      const isMatch = await bcrypt.compareSync(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: "Invalid creadentials." });
+      }
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.postType },
+        secret
+      );
+      res.json({
+        token,
+        id: user.id,
+        email: user.email,
+      });
+    } 
+    else if(userPending){
+      return res
+      .status(400)
+      .json({
+        message: "Your account is not approved by the admin yet!",
+      });
+    }
+    
+    else if (!user) {
+      const user = await User.findOne({ where: { email: email } });
+      
+        if (!user) {
+          return res
+            .status(400)
+            .json({
+              message: "No account with this email has been registered.",
+            });
+        }
+        const isMatch = await bcrypt.compareSync(password, user.password);
+        if (!isMatch) {
+          return res.status(400).json({ message: "Invalid creadentials." });
+        }
+        const token = jwt.sign(
+          { id: user.id, email: user.email, role: user.postType },
+          secret
+        );
+        res.json({
+          token,
+          id: user.id,
+          email: user.email,
+        });
+      
+    } else {
       return res
         .status(400)
         .json({ message: "No account with this email has been registered." });
     }
-
-    const isMatch = await bcrypt.compareSync(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid creadentials." });
-    }
-
-    const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.postType },
-      secret
-    );
-
-    res.json({
-      token,
-      id: user.id,
-      email: user.email,
-    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -190,4 +240,3 @@ exports.updateImage = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
-

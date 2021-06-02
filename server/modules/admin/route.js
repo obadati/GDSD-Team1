@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./controller');
 
+/**********************************Register Controller & Define Routing Path*****************************/
+
 /*Create Admin */
 router.post("/create",controller.create);
 
@@ -16,5 +18,7 @@ router.post("/create",controller.create);
 
  /*Approve or Change Status*/
  router.patch("/approveStatus/:id",controller.ApproveStatus);
+
+/*Export  Router*/
 module.exports = router;
 

@@ -5,6 +5,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = require("../../utils/token").tokenEncryptionSecret;
 
+/****************************************************Define Controller***********************************/
+
+/*Create Admin*/
 exports.create = async (req, res) => {
   try {
     let { username, password } = req.body;
