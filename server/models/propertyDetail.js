@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       propertyDetail.belongsTo(models.category)
+      propertyDetail.hasMany(models.imageProperty, { foreignKey: 'propertyId' });
+      propertyDetail.belongsTo(models.user,{foreignKey: 'agentId' });
     }
   };
   propertyDetail.init({
@@ -24,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     room: DataTypes.STRING,
     size: DataTypes.STRING,
     images: DataTypes.STRING,
-    status: DataTypes.INTEGER,
+    status: DataTypes.STRING,
+    agentId: DataTypes.INTEGER,
     date:DataTypes.STRING
   }, {
     sequelize,

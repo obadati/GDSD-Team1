@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./controller');
 
+/**********************************Register Controller & Define Routing Path*****************************/
+
 /*Create Categories */
 router.post("/",controller.create);
 
@@ -14,5 +16,6 @@ router.get("/:id/search/",controller.searchPropertyByCategoryText);
 /*Delete Category */
 router.delete("/:id",controller.deleteCategory);
 
+/*Export  Router*/
 module.exports = router;
 
