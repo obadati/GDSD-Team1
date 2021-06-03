@@ -123,3 +123,25 @@ formData:{
 /*Get Property Detail By Id*/
 [HttpGet]
 http://18.185.96.197:5000/api/properties/propertyDetail/19
+
+
+********************************************************
+/*Contact Us*/
+
+/*Add Queries*/
+[HttpPost]
+http://18.185.96.197:5000/api/contactUs/
+Body:{
+    name: name,
+    email:email,
+    phone:phone,
+    description: description
+}
+
+/*Get All Queries*/
+[HttpGet]
+http://18.185.96.197:5000/api/contactUs/1
+
+/*Delete Queries*/
+[HttpGet]
+http://18.185.96.197:5000/api/contactUs/1

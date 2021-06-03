@@ -15,16 +15,13 @@ exports.create = async (req, res) => {
 
       let data = {
         name:req.body.name,
-        createdAt: date + " " + time,
-        updatedAt: date + " " + time,
       };
-      console.log(data)
       await Category.create(data);
       return res.status(200).json({ messages: "Category Created Successfully" });
     
 } 
   catch (err) {
-    res.status(500).json({ error: err.message });
+  return  res.status(500).json({ error: err.message });
   }
 };
 /*Get All Category */
