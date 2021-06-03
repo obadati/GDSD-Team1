@@ -6,7 +6,7 @@ const admin = require('./modules/admin/route');
 const property = require('./modules/propertyDetails/route');
 const category = require('./modules/category/route');
 const user = require('./modules/user/route');
-const contactUs =require('./modules/contactUs/router');
+const contactUs =require('./modules/contactUs/route');
 const port = 5000;
 
 /*Server Image Path Through Server */
