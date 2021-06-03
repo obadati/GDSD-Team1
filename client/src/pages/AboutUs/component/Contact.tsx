@@ -19,7 +19,7 @@ const ContactUs: React.FC<any> = () => {
   };
   const onSubmit = async (e:any) => {
     e.preventDefault();
-    await axios.post("http://localhost:3003/users", user);
+    await axios.post("http://18.185.96.197:5000/api/contactUs/", user);
     history.push("/");
   };
   return (
