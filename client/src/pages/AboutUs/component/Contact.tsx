@@ -7,13 +7,12 @@ const ContactUs: React.FC<any> = () => {
   const [user, setUser] = useState({
     id: val,
     name: "",
-    username: "",
+    description: "",
     email: "",
     phone: "",
-    website: "",
   });
 
-  const { name, username, email, phone, website } = user;
+  const { name, description, email, phone } = user;
   const onInputChange = (e:any) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -65,9 +64,9 @@ const ContactUs: React.FC<any> = () => {
                     
                     className="form-control form-control-lg"
                     placeholder="Enter Your Query"
-                    name="website"
-                    value={website}
-                    onChange={(e:any) => onInputChange(e)}
+                    name="description"
+                    value={description}
+                    onChange={(e) => onInputChange(e)}
                   />
                   
                 </div>
