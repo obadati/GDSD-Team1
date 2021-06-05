@@ -23,6 +23,10 @@
 
     .seller-info {
       display: flex;
+      border: 1px solid var(--app-color-border);
+      flex-direction: column;
+      margin: 1rem;
+      text-align: center;
 
       p {
         margin: auto !important;
