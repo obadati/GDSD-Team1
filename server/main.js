@@ -4,6 +4,7 @@ const app = express();
 const db = require('./models');
 const admin = require('./modules/admin/route');
 const property = require('./modules/propertyDetails/route');
+const company = require('./modules/company/route');
 const category = require('./modules/category/route');
 const user = require('./modules/user/route');
 const port = 5000;
@@ -23,6 +24,8 @@ app.use('/api/categories', category);
 app.use('/api/properties', property);
 app.use('/api/admin', admin);
 app.use('/api/user', user);
+app.use('/api/company', company);
+
 
 /*Error  Handling*/
 app.use((req, res, next) => {
