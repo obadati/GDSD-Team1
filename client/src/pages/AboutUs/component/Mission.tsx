@@ -1,20 +1,11 @@
 import MissionLogo from "../../../assets/images/mission.png";
+import "../../AboutUs/component/styles/aboutUs.scss";
 const Mission: React.FC<any> = () => {
-  const font ={
-      fontSize:"20px",
-      padding:"5px"
-  }
-  const logo = {
-    height: "170px",
-    width: "auto",
-  };
-
   return (
     <div>
       <div className="container">
       <img
-          style={logo}
-          className="float-right"
+          className="float-right logo"
           src={MissionLogo}
         />
         <div className="generalInfo-heading">
@@ -23,11 +14,11 @@ const Mission: React.FC<any> = () => {
         <div className="Content">
           <h2><strong>Mission</strong></h2>
           <br></br>
-          <p style={font}>Our mission is to inspire a positive, lasting impact.</p>
+          <p>Our mission is to inspire a positive, lasting impact.</p>
           <br></br>
           <h4><strong>HFM VALUES</strong></h4>
           <br></br>
-          <p style={font}>
+          <p>
            <ul>
              <li><b>HUMBLE.</b> We never forget that we owe everything to the efforts of each team member, our families, and our clients.</li>
              <li><b>GRIT.</b> We persevere in our efforts no matter the obstacle with a high sense of urgency and always keeping our team and clients top of mind.</li>

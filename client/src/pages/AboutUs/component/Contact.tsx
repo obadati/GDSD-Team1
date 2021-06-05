@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { craeteContact } from "../../../api/contact";
 const ContactUs: React.FC<any> = () => {
   let history = useHistory();
   var val = Math.floor(1000 + Math.random() * 9000);
@@ -18,7 +19,8 @@ const ContactUs: React.FC<any> = () => {
   };
   const onSubmit = async (e:any) => {
     e.preventDefault();
-    await axios.post("http://18.185.96.197:5000/api/contactUs/", user);
+   await craeteContact(user)
+    // await axios.post("http://18.185.96.197:5000/api/contactUs/", user);
     history.push("/");
   };
   return (
@@ -70,7 +72,7 @@ const ContactUs: React.FC<any> = () => {
                   />
                   
                 </div>
-                <button className="btn btn-danger btn-block">Send Query</button>
+                <button className="btn btn-danger btn-block" onClick={onSubmit}>Send Query</button>
               </form>
             </div>
         </div>
