@@ -11,11 +11,12 @@ import "./Navigation.scss";
 const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
   const tabs: NavigationTab[] = [
     { label: "home", to: AppRoutes.Landing },
-    { label: "about", to: AppRoutes.About },
     { label: "find property", to: AppRoutes.Properties },
     { label: "Find Average Price", to: AppRoutes.FindAveragePrice },
     { label: "My Dashboard", to: AppRoutes.MyDashboard },
     { label: "Companies", to: AppRoutes.Companies },
+    { label: "about", to: AppRoutes.About },
+    
   ];
   const history = useHistory();
 

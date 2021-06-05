@@ -26,22 +26,22 @@ const Findaveragepricepage: React.FC<PropsFromRedux> = ({ properties }) => {
 
   return (
     <div className='findaverageprice-page'>
-      <div className='aside'>
-        <Filters onFilterSelected={handleFilterSelection} />
-      </div>
-      <div className='center'>
-        <div className='search-box-wrapper'>
-          <SearchBoxComponent
-            list={properties}
-            searchFor={["location", "title", "category.name"]}
-            onSearchComplete={(list: Property[]) =>
-              setFilteredProps(list.length > 0 ? list : properties)
-            }
-          />
-        </div>
-        <PropertyList properties={filteredProps} />
-      </div>
+    <div className='aside'>
+      <Filters onFilterSelected={handleFilterSelection} />
     </div>
+    <div className='center'>
+      <div className='search-box-wrapper'>
+        <SearchBoxComponent
+          list={properties}
+          searchFor={["location", "title", "category.name"]}
+          onSearchComplete={(list: Property[]) =>
+            setFilteredProps(list.length > 0 ? list : properties)
+          }
+        />
+      </div>
+      <PropertyList properties={filteredProps} />
+    </div>
+  </div>
   );
 };
 

@@ -12,6 +12,7 @@ const AppRouter: React.FC<any> = () => {
       <Route path={AppRoutes.Home} exact component={PropertiesPage}></Route>
       <Route path={AppRoutes.MyDashboard} exact component={PropertiesPage}></Route>
       <Route path={AppRoutes.FindAveragePrice} exact component={PropertiesPage}></Route>
+      <Route path={AppRoutes.Companies} exact component={Companiespage}></Route>
     </Switch>
   );
 };

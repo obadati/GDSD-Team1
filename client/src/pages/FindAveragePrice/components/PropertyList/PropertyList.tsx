@@ -10,6 +10,8 @@ interface OwnProps {
 const PropertyList: React.FC<OwnProps> = ({ properties }) => {
   return (
     <>
+
+    
       <div className='properties-list'>
         {properties.length > 0
           ? (properties as Property[]).map((property) => (

@@ -9,6 +9,7 @@ interface OwnProps {
 
 const PropertyCard: React.FC<OwnProps> = ({ property }) => {
   return (
+
     <div className='property-card'>
       <div className='property-card__thumbnail'>
         <img src={`${BASE_URL}/${property.images}`} alt='no img' />
@@ -27,6 +28,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property }) => {
         </div>
       </div>
     </div>
+  
   );
 };
 
