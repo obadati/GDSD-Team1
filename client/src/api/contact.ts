@@ -6,5 +6,9 @@ export enum ContactEndpoints {
 export const BASE_URL = "http://18.185.96.197:5000";
 
 export const craeteContact = (user: any) => {
-  return httpPOST(`${BASE_URL}${ContactEndpoints.CraeteContact}`, { user });
+  const params = new URLSearchParams();
+  for (const key in user) {
+    params.append(key, user[key]);
+  }
+  return httpPOST(`${BASE_URL}${ContactEndpoints.CraeteContact}`, params);
 };
