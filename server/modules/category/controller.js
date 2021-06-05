@@ -5,7 +5,9 @@ const date = require("../../utils/date");
 const time = require("../../utils/time");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+const status = "Approved";
 
+/****************************************************Define Controller***********************************/
 
 /*Create Category*/
 exports.create = async (req, res) => {
@@ -40,7 +42,7 @@ exports.searchPropertyByCategoryText = async(req,res)=>{
   try{
       const {query}= req.query;
       let properties = await Property.findAll({
-        where:{categoryId:req.params.id, title:{ [Op.like]: "%" + query + "%" } }
+        where:{categoryId:req.params.id, title:{ [Op.like]: "%" + query + "%" },status:status }
       });
       if(properties.length==0){
       return  res.status(404).json({message:"Not Found"});

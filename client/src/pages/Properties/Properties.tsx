@@ -25,7 +25,7 @@ const PropertiesPage: React.FC<PropsFromRedux> = ({ properties }) => {
   };
 
   return (
-    <div className='properties-page'>
+    <div className='properties-page app-page'>
       <div className='aside'>
         <Filters onFilterSelected={handleFilterSelection} />
       </div>

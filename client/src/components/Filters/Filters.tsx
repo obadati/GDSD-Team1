@@ -14,6 +14,7 @@ const Filters: React.FC<OwnProps> = ({ onFilterSelected }) => {
     <div className='app-filters'>
       {filterTypes.map((filter, index) => (
         <div
+          key={`app-filters-${filter}`}
           onClick={() => setSelected(index)}
           className={`app-filter-type ${
             index === selected ? `app-filter-type--selected` : ""

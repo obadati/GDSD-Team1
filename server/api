@@ -1,3 +1,72 @@
+********************************************************
+/*Admins*/
+
+/*Create Admin*/
+[HttpPost]
+http://18.185.96.197:5000/api/admin/create
+data:{
+    username:"",
+    password:""
+}
+
+/*Login Admin*/
+[HttpPost]
+http://18.185.96.197:5000/api/admin/login
+data:{
+    username:"",
+    password:""
+}
+
+/*List of All Agents*/
+[HttpGet]
+1 is pageNumber;
+http://18.185.96.197:5000/api/admin/allAgent/1
+
+/*List of Agent By Status*/
+[HttpGet]
+1 is pageNumber;
+http://18.185.96.197:5000/api/admin/agentByStatus/1?status=Approved
+
+/*Approve Agent Status*/
+[HttpPatch]
+5 is agentId;
+http://18.185.96.197:5000/api/admin/approveStatus/5?status=Approved
+
+********************************************************
+/*Users*/
+
+/*Create User*/
+[HttpPost]
+http://18.185.96.197:5000/api/user
+if postType = Agent then companyId field add in data.
+data:{
+    "firstName":"",
+    "lastName":"",
+    "email":"",
+    "password":"",
+    "postType":""
+}
+
+/*Login User*/
+[HttpPost]
+http://18.185.96.197:5000/api/user/login
+data:{
+    "email":"",
+    "password":""
+}
+
+/*Show User Image*/
+[HttpGet]
+http://18.185.96.197:5000/api/user/userImage/4
+
+/*Update User Image*/
+[HttpPatch]
+http://18.185.96.197:5000/api/user/updateImage/2
+formData:{
+    image:image
+}
+
+********************************************************
 /*Categories*/
 
 /*Create Category*/
@@ -11,6 +80,7 @@ http://18.185.96.197:5000/api/categories
 
 /*Get Property By CategoryId and Search Query*/
 [HttpGet]
+3 is categoryId
 http://18.185.96.197:5000/api/categories/3/search?query=Trier
 
 /*Delete Category*/
@@ -41,3 +111,15 @@ http://18.185.96.197:5000/api/properties/search/?text={text}&page={pageNumber}
 /*Delete Property*/
 [HttpDelete]
 http://18.185.96.197:5000/api/properties/{id}
+
+/*Add More Image To Properties*/
+[HttpPost]
+http://18.185.96.197:5000/api/properties/images/
+formData:{
+    property: images,
+    propertyId: propertyId
+}
+
+/*Get Property Detail By Id*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/propertyDetail/19
