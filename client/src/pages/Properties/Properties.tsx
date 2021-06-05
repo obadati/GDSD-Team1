@@ -7,7 +7,7 @@ import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";
 import LoadingOverlay from "react-loading-overlay-ts"
 import { PropertyList } from "./components";
-import CustomLoader from "../../components/CustomLoader/Loader"
+import CustomLoader from "../../components/CustomLoader/CustomLoader"
 
 import "./Properties.scss";
 

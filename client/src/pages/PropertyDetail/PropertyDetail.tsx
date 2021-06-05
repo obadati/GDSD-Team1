@@ -16,7 +16,6 @@ const PropertyDetail: React.FC<any> = () => {
       <div className='aside'>
         <div className='seller-info'>
         <SellerProfile
-        
         stars={2}
         sellerName="Sample Seller"
         sellerCompany="Sample Company"
@@ -25,9 +24,7 @@ const PropertyDetail: React.FC<any> = () => {
           "create-contact",
           "get-average-price",
           "add-to-compare"
-        ]}>
-
-        </SellerProfile>
+        ]}/>
         </div>
         <div className='property-tags'>
           <div className='property-tags__tag'>€ {property.price}</div>

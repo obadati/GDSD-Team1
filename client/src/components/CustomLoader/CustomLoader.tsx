@@ -1,5 +1,5 @@
 import React from "react";
-import "./Loader.scss";
+import "./CustomLoader.scss";
 import AppLogo from "../../assets/images/logo.png";
 
 const LoaderComponent: React.FC<{ title: string }> = ({ title }) => {
