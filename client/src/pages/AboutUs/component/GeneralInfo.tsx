@@ -1,6 +1,6 @@
 
 import AppLogo from "../../../assets/images/logo.png";
-import "../../AboutUs/component/styles/aboutUs.scss";
+import "../../AboutUs/AboutUs.scss";
 const GeneralInfo: React.FC<any> = () => {
   return (
     <>

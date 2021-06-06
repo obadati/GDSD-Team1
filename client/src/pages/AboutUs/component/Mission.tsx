@@ -1,5 +1,5 @@
 import MissionLogo from "../../../assets/images/mission.png";
-import "../../AboutUs/component/styles/aboutUs.scss";
+import "../../AboutUs/AboutUs.scss";
 const Mission: React.FC<any> = () => {
   return (
     <div>

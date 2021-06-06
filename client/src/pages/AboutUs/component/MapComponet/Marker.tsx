@@ -1,6 +1,6 @@
 import React from 'react';
 import '../MapComponet/Marker.scss';
-import '../styles/animation.scss';
+import '../../../../styles/_animations.scss';
 
 const Marker = (props: any) => {
   const { color, name, id } = props;
