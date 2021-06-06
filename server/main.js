@@ -14,6 +14,7 @@ app.use('/', express.static(__dirname + '/public/'));
 app.use('/assests/uploads/propertyImage/', express.static(__dirname + '/assests/uploads/propertyImage/'));
 app.use('/assests/uploads/avatar/', express.static(__dirname + '/assests/uploads/avatar/'));
 app.use('/assests/uploads/userImage/', express.static(__dirname + '/assests/uploads/userImage/'));
+app.use('/assests/uploads/company/', express.static(__dirname + '/assests/uploads/company/'));
 app.use(express.json());
 
 /*Access For Frontend To Consume Backend Server*/
