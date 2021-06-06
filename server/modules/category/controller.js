@@ -15,18 +15,16 @@ exports.create = async (req, res) => {
 
       let data = {
         name:req.body.name,
-        createdAt: date + " " + time,
-        updatedAt: date + " " + time,
       };
       console.log(data)
       await Category.create(data);
       return res.status(200).json({ messages: "Category Created Successfully" });
-    
 } 
   catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 /*Get All Category */
 exports.getAllCategory = async (req, res) => {
   try {
@@ -37,6 +35,7 @@ exports.getAllCategory = async (req, res) => {
    return res.status(500).json({ error: err.message });
   }
 };
+
 /*Get Property By CategoryId & Text */
 exports.searchPropertyByCategoryText = async(req,res)=>{
   try{
@@ -52,7 +51,8 @@ exports.searchPropertyByCategoryText = async(req,res)=>{
   catch(err){
    return res.status(500).json({ error: err.message });
   }
-}
+};
+
 /*Delete Property */
 exports.deleteCategory = async (req, res) => {
     try {
@@ -68,4 +68,4 @@ exports.deleteCategory = async (req, res) => {
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  };
+};

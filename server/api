@@ -94,7 +94,7 @@ http://18.185.96.197:5000/api/categories/{id}
 /*Create Property*/
 [HttpPost]
 http://18.185.96.197:5000/api/properties
-Form-Data : [title, description, price, location, categoryId, property(Image)]
+Form-Data : [title, description, price, location, city,room,size,categoryId, property(Image)]
 
 /*All properties*/
 [HttpGet]
@@ -123,3 +123,25 @@ formData:{
 /*Get Property Detail By Id*/
 [HttpGet]
 http://18.185.96.197:5000/api/properties/propertyDetail/19
+
+/*Agent Property List*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/agentProperty/1?agentId=2
+
+/*Agent Property List By Status*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/agentPropertyByStatus/1?agentId=5&status=Pending
+
+/*Update Property*/
+[HttpPatch]
+http://18.185.96.197:5000/api/properties/updateProperty/19
+Form-Data : [title, description, price, location, city,room,size,categoryId, property(Image)]
+
+
+/*All Property List By Admin*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/getAllPropertyByAdmin/1
+
+/*Property List By Status Admin*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/getAllPropertyByAdminStatus/1?status=Pending
