@@ -46,6 +46,7 @@ exports.create = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
 /*Admin Login */
 exports.Login = async (req, res) => {
   try {
@@ -84,7 +85,7 @@ exports.Login = async (req, res) => {
 /*List Of Agents */
 exports.GetAgent = async (req, res) => {
   try {
-    let limit = 20;
+    let limit = 8;
     let offset = 0;
     User.findAndCountAll({ where: { postType: "Agent" } }).then((data) => {
       let page = req.params.page; // page number
@@ -116,10 +117,11 @@ exports.GetAgent = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
 /*List of Agent By Status */
 exports.GetAgentStatus = async (req, res) => {
   try {
-    let limit = 20;
+    let limit = 8;
     let offset = 0;
     const { status } = req.query;
     User.findAndCountAll({ where: { postType: "Agent", status: status } }).then(
@@ -154,6 +156,7 @@ exports.GetAgentStatus = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
 /*Approve Agent*/
 exports.ApproveStatus = async (req, res) => {
   try {
@@ -171,6 +174,41 @@ exports.ApproveStatus = async (req, res) => {
         message: "User not found",
       });
     }
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+/*List Of Buyer */
+exports.GetBuyer = async (req, res) => {
+  try {
+    let limit = 8;
+    let offset = 0;
+    User.findAndCountAll({ where: { postType: "Buyer" } }).then((data) => {
+      let page = req.params.page; // page number
+      let pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+
+      User.findAll({
+        where: { postType: "Buyer" },
+        attributes: [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "postType",
+          "image",
+          "date",
+        ],
+        order: [["id", "DESC"]],
+        limit: limit,
+        offset: offset,
+      }).then((agent) => {
+        return res
+          .status(200)
+          .json({ result: agent, count: data.count, pages: pages });
+      });
+    });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
