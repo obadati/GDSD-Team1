@@ -33,7 +33,10 @@ router.get("/propertyDetail/:id", controller.getPropertyById);
 router.get("/category/:page",controller.propertyByCategoryId);
 
 /*Filter Property By Text */
-router.get("/search/",controller.searchPropertyByText);
+router.get("/user/search",controller.searchPropertyByText);
+
+/*Find Property Average Price*/
+router.get("/user/findAvgPrice",controller.findAvgPrice);
 
 /******************************************************Admin Dashboard***********************************/
 /*Get List of Property By Admin */

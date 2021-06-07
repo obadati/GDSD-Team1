@@ -20,7 +20,10 @@ var storage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(
       null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname).toLocaleLowerCase()
+      file.fieldname +
+        "-" +
+        Date.now() +
+        path.extname(file.originalname).toLocaleLowerCase()
     );
   },
 });
@@ -86,7 +89,7 @@ exports.create = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -119,7 +122,7 @@ exports.addPropertyImage = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -173,7 +176,7 @@ exports.agentProperty = async (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -229,7 +232,7 @@ exports.agentPropertyByStatus = async (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 /*Update Property */
@@ -285,7 +288,7 @@ exports.updateProperty = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -331,7 +334,7 @@ exports.getAllProperty = (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -379,29 +382,25 @@ exports.propertyByCategoryId = (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
 /*Search Property Text By User*/
 exports.searchPropertyByText = (req, res) => {
   try {
-    let { text, page } = req.query;
-    text = text.toLowerCase();
-    console.log(text);
-
+    let { query, page } = req.query;
+    query = query.toLowerCase();
     let limit = 8;
     let offset = 0;
     Property.findAndCountAll({
-      where: { title: { [Op.like]: "%" + text + "%" }, status: status },
+      where: { title: { [Op.like]: "%" + query + "%" }, status: status },
     }).then((data) => {
-      // let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
       Property.findAll({
-        where: { title: { [Op.like]: "%" + text + "%" }, status: status },
-        // where:{title:text},
+        where: { title: { [Op.like]: "%" + query + "%" }, status: status },
         attributes: [
           "id",
           "title",
@@ -430,7 +429,7 @@ exports.searchPropertyByText = (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -451,10 +450,42 @@ exports.getPropertyById = async (req, res) => {
       return res.status(404).json({ message: "Data Not Found" });
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
+exports.findAvgPrice = async (req, res) => {
+  try {
+    let { city, categoryId, room, size } = req.query;
+    let property = await Property.findAll({
+      where: {
+        city: city,
+        categoryId: categoryId,
+        room: room,
+        size: size,
+      },
+      attributes: ["id", "price"],
+    });
+    if (property.length > 0) {
+      let sum = property.reduce(function (tot, arr) {
+        // return the sum with previous value
+        return tot + parseFloat(arr.price);
+        // set initial value as 0
+      }, 0);
+
+      let avgPrice = Math.round(sum / property.length);
+      console.log(avgPrice);
+      return res.json({ sumofProperty: sum, totalProperty:property.length, avgPrice: avgPrice, });
+    } else {
+      return res.status(404).json({
+        Message:
+          "Total Sum of Filter Property Price / Get Filtered Number of Property from DB",
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
 /******************************************************Admin Dashboard***********************************/
 
 /*List Of All Property By Admin */
@@ -500,7 +531,7 @@ exports.getAllPropertyByAdmin = async (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -549,7 +580,7 @@ exports.getAllPropertyByAdminStatus = async (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -587,6 +618,6 @@ exports.deleteProperty = async (req, res) => {
       return res.status(404).json({ message: "Data Not Found" });
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
