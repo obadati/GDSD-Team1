@@ -12,7 +12,10 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
   const tabs: NavigationTab[] = [
     { label: "home", to: AppRoutes.Landing },
     { label: "about", to: AppRoutes.About },
-    { label: "find property", to: AppRoutes.Properties },
+    { label: "properties", to: AppRoutes.Properties },
+    { label: "find average price", to: AppRoutes.AvgPrice },
+    { label: "my dashbsoards", to: AppRoutes.Dashboard },
+    { label: "companies", to: AppRoutes.Companies },
   ];
   const history = useHistory();
 

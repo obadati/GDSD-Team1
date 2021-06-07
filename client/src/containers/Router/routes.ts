@@ -5,4 +5,7 @@ export enum AppRoutes {
   Team = "/team",
   Properties = "/properties",
   PropertyDetail = "/properties/:uid",
+  Dashboard= "dashboard",
+  AvgPrice= "/avg-price",
+  Companies = "/companies"
 }
