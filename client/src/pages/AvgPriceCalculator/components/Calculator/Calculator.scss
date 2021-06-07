@@ -1,0 +1,27 @@
+.price-calculator-component {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 80px;
+    grid-gap: 1rem;
+    flex: 1;
+
+    label {
+      font-weight: bold;
+      &::first-letter {
+        text-transform: capitalize;
+      }
+    }
+
+    input {
+      background: inherit;
+    }
+  }
+  .app-button {
+    margin-top: 1rem;
+    text-transform: uppercase !important;
+  }
+}
