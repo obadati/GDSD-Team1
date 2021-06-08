@@ -8,6 +8,7 @@ import AboutUsPage from "../../pages/AboutUs/AboutUs";
 import ContactUs from "../../pages/AboutUs/component/Contact";
 import PropertyDetail from "../../pages/PropertyDetail/PropertyDetail";
 import { AppRoutes } from "./routes";
+import NotFound from "../../pages/NotFound/NotFound";
 
 const AppRouter: React.FC<any> = () => {
   return (
@@ -28,6 +29,7 @@ const AppRouter: React.FC<any> = () => {
         path={AppRoutes.AvgPrice}
         component={AvgPriceCalculator}
         exact></PrivateRoute>
+      <Route path='*' component={NotFound}></Route>
     </Switch>
   );
 };
