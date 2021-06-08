@@ -14,8 +14,3 @@ export const useAuth = (): {
   const { token = "", username = "" } = authUser;
   return { token, username, authenticated: Boolean(token) };
 };
-
-// };
-// export const useAuth = () => {
-//   return false;
-// };
