@@ -11,7 +11,6 @@ interface CalculatorData {
 }
 
 const Calculator = () => {
-
   const [price, setPrice] = useState(0);
 
   const fields: Array<{
@@ -80,47 +79,43 @@ const Calculator = () => {
   useEffect(() => {}, [price]);
 
   return (
-    <div className="price-calculator-component">
+    <div className='price-calculator-component'>
       <form>
         {fields.map(({ label, placeholder, type, name, options }) => (
-          <div className="form-group">
+          <div className='form-group'>
             <label htmlFor={label}>{label}</label>
 
             {type !== "dropdown" ? (
               <input
                 onChange={(e) => handleInputChange(e.target.value, name)}
                 placeholder={placeholder}
-                className="form-control"
+                className='form-control'
                 name={label}
                 type={type}
                 value={(formData as any)[name]}
-                min={1}
-              ></input>
+                min={1}></input>
             ) : (
-              <div className="dropdown">
+              <div className='dropdown'>
                 <button
                   style={{ width: "100%" }}
-                  className="btn btn-info dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                 Select
+                  className='btn btn-info dropdown-toggle'
+                  type='button'
+                  id='dropdownMenuButton'
+                  data-toggle='dropdown'
+                  aria-haspopup='true'
+                  aria-expanded='false'>
+                  {Object.keys(PropertyCategories)[formData.category - 1]}
                 </button>
                 <div
                   style={{ width: "100%" }}
-                  className="dropdown-menu"
-                  aria-labelledby="dropdownMenuButton"
-                >
+                  className='dropdown-menu'
+                  aria-labelledby='dropdownMenuButton'>
                   {options?.map((x, index) => (
                     <a
-                      className="dropdown-item"
+                      className='dropdown-item'
                       onClick={() => {
                         setFormData({ ...formData, category: index + 1 });
-                      }}
-                    >
+                      }}>
                       {" "}
                       {x}
                     </a>
@@ -131,10 +126,10 @@ const Calculator = () => {
           </div>
         ))}
       </form>
-      <button className="app-button" onClick={onSubmit}>
+      <button className='app-button' onClick={onSubmit}>
         Get Price
       </button>
-      {price && <p>{price}</p>}
+      {price > 0 && <p>Avg Price: € {price}</p>}
     </div>
   );
 };
