@@ -14,7 +14,7 @@ export const PrivateRoute: FC<MetaRoute> = ({
   component: Component,
   ...rest
 }) => {
-  const authenticated = useAuth();
+  const { authenticated } = useAuth();
   return (
     <Route
       {...rest}
@@ -33,7 +33,7 @@ export const GuestRoute: FC<MetaRoute> = ({
   component: Component,
   ...rest
 }) => {
-  const authenticated = useAuth();
+  const { authenticated } = useAuth();
   return (
     <Route
       {...rest}
