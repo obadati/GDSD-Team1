@@ -13,8 +13,8 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     { label: "home", to: AppRoutes.Landing },
     { label: "about", to: AppRoutes.About },
     { label: "properties", to: AppRoutes.Properties },
-    { label: "find average price", to: AppRoutes.AvgPrice },
-    { label: "my dashbsoards", to: AppRoutes.Dashboard },
+    { label: "average price", to: AppRoutes.AvgPrice },
+    { label: "my dashboard", to: AppRoutes.Dashboard },
     { label: "companies", to: AppRoutes.Companies },
   ];
   const history = useHistory();
