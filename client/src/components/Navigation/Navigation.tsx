@@ -10,7 +10,7 @@ import { AppState } from "../../store/rootReducer";
 import "./Navigation.scss";
 
 const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
-  const authenticated = useAuth();
+  const { authenticated, username } = useAuth();
   const tabs: NavigationTab[] = [
     { label: "home", to: AppRoutes.Landing },
     { label: "about", to: AppRoutes.About },
@@ -21,6 +21,9 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
   ];
 
   const userActions: UserActions[] = [];
+  if (username) {
+    userActions.push({ label: username });
+  }
   if (authenticated) {
     userActions.push({ label: "Log Out", to: AppRoutes.Login });
   } else {
@@ -51,7 +54,7 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     if (label === "Log Out") {
       localStorage.clear();
     }
-    history.push(AppRoutes.Login);
+    if (label !== username) history.push(AppRoutes.Login);
   };
 
   const renderUserActions = () =>
@@ -61,7 +64,7 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
         onClick={() => handleUserAction(tab.label)}
         className={`app-navigation__tab app-navigation__tab${
           activeTab.label === tab.label ? "--selected" : ""
-        }`}>
+        } ${tab.label === username ? `app-navigation__tab--username` : ""}`}>
         {tab.label}
       </div>
     ));
