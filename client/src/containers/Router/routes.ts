@@ -11,4 +11,9 @@ export enum AppRoutes {
   Location="/location",
   Properties = "/properties",
   PropertyDetail = "/properties/:uid",
+  Dashboard = "dashboard",
+  AvgPrice = "/avg-price",
+  Companies = "/companies",
+  Login = "/login",
+  SignUp = "/sign-up",
 }

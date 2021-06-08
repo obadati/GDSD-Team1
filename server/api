@@ -94,7 +94,7 @@ http://18.185.96.197:5000/api/categories/{id}
 /*Create Property*/
 [HttpPost]
 http://18.185.96.197:5000/api/properties
-Form-Data : [title, description, price, location, categoryId, property(Image)]
+Form-Data : [title, description, price, location, city,room,size,categoryId, property(Image)]
 
 /*All properties*/
 [HttpGet]
@@ -124,24 +124,28 @@ formData:{
 [HttpGet]
 http://18.185.96.197:5000/api/properties/propertyDetail/19
 
-
-********************************************************
-/*Contact Us*/
-
-/*Add Queries*/
-[HttpPost]
-http://18.185.96.197:5000/api/contactUs/
-Body:{
-    name: name,
-    email:email,
-    phone:phone,
-    description: description
-}
-
-/*Get All Queries*/
+/*Agent Property List*/
 [HttpGet]
-http://18.185.96.197:5000/api/contactUs/1
+http://18.185.96.197:5000/api/properties/agentProperty/1?agentId=2
 
-/*Delete Queries*/
+/*Agent Property List By Status*/
 [HttpGet]
-http://18.185.96.197:5000/api/contactUs/1
+http://18.185.96.197:5000/api/properties/agentPropertyByStatus/1?agentId=5&status=Pending
+
+/*Update Property*/
+[HttpPatch]
+http://18.185.96.197:5000/api/properties/updateProperty/19
+Form-Data : [title, description, price, location, city,room,size,categoryId, property(Image)]
+
+
+/*All Property List By Admin*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/getAllPropertyByAdmin/1
+
+/*Property List By Status Admin*/
+[HttpGet]
+http://18.185.96.197:5000/api/properties/getAllPropertyByAdminStatus/1?status=Pending
+
+/*Average Property Price Calculator*/
+[HTTPGET]
+API: http://18.185.96.197:5000/api/properties/user/findAvgPrice?city=Merzig&categoryId=3&room=3&size=154

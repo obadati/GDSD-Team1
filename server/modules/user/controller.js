@@ -10,7 +10,6 @@ const secret = require("../../utils/token").tokenEncryptionSecret;
 const Approved = "Approved";
 const Pending = "Pending";
 const Agent = "Agent";
-const Buyer = "Buyer";
 
 /****************************************************Define Controller***********************************/
 
@@ -22,7 +21,7 @@ var storage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(
       null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname).toLocaleLowerCase()
     );
   },
 });
@@ -187,7 +186,7 @@ exports.image = async (req, res) => {
     const id = req.params.id;
     let image = await User.findOne({
       where: { id: id },
-      attributes: ["id", "image"],
+      attributes: ["id", "image","rating"],
     });
     if (!image) {
       return res
@@ -200,15 +199,18 @@ exports.image = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 /*Update Image */
 exports.updateImage = async (req, res) => {
   try {
     const id = req.params.id;
     upload(req, res, async function (err) {
       if (err) {
-        console.log("hi");
         return res.status(400).json({
-          message: err.message + " maximum 2mb",
+          message:
+          err.message == "File too large"
+            ? err.message + " the maximum is 2 Mb"
+            : err.message, 
         });
       } else {
         const imageUrl = "/assests/uploads/avatar/avatar.png";
@@ -217,7 +219,6 @@ exports.updateImage = async (req, res) => {
           where: { id: id, image: imageUrl },
         });
         if (userImage) {
-          console.log("123");
           await User.update({ image: path }, { where: { id: id } });
           return res.status(200).json({ message: "Image Upload Successfully" });
         } else {
@@ -229,7 +230,6 @@ exports.updateImage = async (req, res) => {
               console.log(err);
             }
           });
-          console.log("hello");
           return res.status(200).json({
             message: "Image Update Successfully",
           });
