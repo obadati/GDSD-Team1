@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { GuestRoute, PrivateRoute } from "../../components/Route/Route";
-import { HomePage, LandingPage, PropertiesPage } from "../../pages";
+import { HomePage, PropertiesPage } from "../../pages";
+import AvgPriceCalculator from "../../pages/AvgPriceCalculator/AvgPriceCalculator";
 import Login from "../../pages/Login/Login";
 import AboutUsPage from "../../pages/AboutUs/AboutUs";
 import ContactUs from "../../pages/AboutUs/component/Contact";
@@ -23,6 +24,10 @@ const AppRouter: React.FC<any> = () => {
       <PrivateRoute
         path={AppRoutes.PropertyDetail}
         component={PropertyDetail}
+        exact></PrivateRoute>
+      <PrivateRoute
+        path={AppRoutes.AvgPrice}
+        component={AvgPriceCalculator}
         exact></PrivateRoute>
       <Route path='*' component={NotFound}></Route>
     </Switch>
