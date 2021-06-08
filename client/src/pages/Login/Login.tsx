@@ -34,7 +34,7 @@ const LoginPage: React.FC<any> = ({ dispatch }) => {
               className='form-control'
               id='username'
               type='text'
-              placeholder='Enter Username'
+              placeholder='Username'
               value={user.username}
               onChange={(e) =>
                 setAppUser({ ...user, username: e.target.value })
