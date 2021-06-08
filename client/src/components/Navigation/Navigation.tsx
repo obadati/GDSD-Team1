@@ -3,12 +3,14 @@ import { connect, ConnectedProps } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import AppLogo from "../../assets/images/logo.png";
 import { AppRoutes } from "../../containers/Router/routes";
+import { useAuth } from "../../hooks/auth";
 import { setActiveTab } from "../../store/navigation/actions";
-import { NavigationTab } from "../../store/navigation/types";
+import { NavigationTab, UserActions } from "../../store/navigation/types";
 import { AppState } from "../../store/rootReducer";
 import "./Navigation.scss";
 
 const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
+  const authenticated = useAuth();
   const tabs: NavigationTab[] = [
     { label: "home", to: AppRoutes.Landing },
     { label: "about", to: AppRoutes.About },
@@ -17,6 +19,14 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     { label: "my dashboard", to: AppRoutes.Dashboard },
     { label: "companies", to: AppRoutes.Companies },
   ];
+
+  const userActions: UserActions[] = [];
+  if (authenticated) {
+    userActions.push({ label: "Log Out", to: AppRoutes.Login });
+  } else {
+    userActions.push({ label: "Log In", to: AppRoutes.Login });
+  }
+
   const history = useHistory();
 
   const handleSelectedTab = (tab: NavigationTab, index: number) => {
@@ -37,6 +47,25 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     ));
   };
 
+  const handleUserAction = (label: string) => {
+    if (label === "Log Out") {
+      localStorage.clear();
+    }
+    history.push(AppRoutes.Login);
+  };
+
+  const renderUserActions = () =>
+    userActions.map((tab, index) => (
+      <div
+        key={`navigation-tab-${index}`}
+        onClick={() => handleUserAction(tab.label)}
+        className={`app-navigation__tab app-navigation__tab${
+          activeTab.label === tab.label ? "--selected" : ""
+        }`}>
+        {tab.label}
+      </div>
+    ));
+
   const renderIntro = (): JSX.Element => (
     <div className='app-intro'>
       <h3>Global Distributed Software Development</h3>
@@ -53,6 +82,7 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
           <img src={AppLogo} />
         </div>
         {renderTabs()}
+        <div className='user-actions'>{renderUserActions()}</div>
       </div>
     );
   };
