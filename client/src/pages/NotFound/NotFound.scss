@@ -1,0 +1,23 @@
+.not-found-page {
+  display: flex;
+  margin-top: 0 !important;
+
+  div.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+  }
+
+  img {
+    height: 100px;
+    object-fit: contain;
+    opacity: 0.15;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+}
