@@ -10,8 +10,14 @@ const AppRouter: React.FC<any> = () => {
   return (
     <Switch>
       <GuestRoute path={AppRoutes.Login} component={Login}></GuestRoute>
-      <Route path={AppRoutes.Landing} exact component={HomePage}></Route>
-      <Route path={AppRoutes.About} exact component={LandingPage}></Route>
+      <GuestRoute
+        path={AppRoutes.Landing}
+        exact
+        component={HomePage}></GuestRoute>
+      <GuestRoute
+        path={AppRoutes.About}
+        exact
+        component={LandingPage}></GuestRoute>
       <PrivateRoute
         path={AppRoutes.Properties}
         component={PropertiesPage}
