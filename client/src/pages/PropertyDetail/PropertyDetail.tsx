@@ -19,7 +19,7 @@ const PropertyDetail: React.FC<any> = () => {
         <div className='property-tags'>
           <div className='property-tags__tag'>€ {property.price}</div>
           <div className='property-tags__tag'>{property.category.name}</div>
-          <div className='property-tags__tag'>Area: {property.size}</div>
+          <div className='property-tags__tag'>Area: {property.size} sqm</div>
           <div className='property-tags__tag'>{property.location}</div>
         </div>
       </div>

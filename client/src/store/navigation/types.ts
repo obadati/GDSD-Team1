@@ -9,6 +9,11 @@ export interface NavigationTab {
   to: AppRoutes;
 }
 
+export interface UserActions {
+  label: string;
+  to?: AppRoutes;
+}
+
 export enum NavigationStateActions {
   SetActiveTab = "set-active-tab",
 }

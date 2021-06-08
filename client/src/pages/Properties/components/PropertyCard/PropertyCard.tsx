@@ -32,7 +32,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property }) => {
             {property.category.name}
           </span>
           <span className='property-card__content__tag property-card__content__tag--size'>
-            {property.size}
+            {property.size} sqm
           </span>
         </div>
       </div>

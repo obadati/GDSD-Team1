@@ -7,6 +7,7 @@ const property = require('./modules/propertyDetails/route');
 const company = require('./modules/company/route');
 const category = require('./modules/category/route');
 const user = require('./modules/user/route');
+const contactUs =require('./modules/contactUs/route');
 const port = 5000;
 
 /*Server Image Path Through Server */
@@ -26,6 +27,7 @@ app.use('/api/properties', property);
 app.use('/api/admin', admin);
 app.use('/api/user', user);
 app.use('/api/company', company);
+app.use('/api/contactUs',contactUs);
 
 
 /*Error  Handling*/
