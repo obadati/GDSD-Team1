@@ -69,7 +69,7 @@ exports.Login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: admin.id, username: admin.username, role: "Admin" },
+      { id: admin.id, username: admin.username, role: "admin" },
       secret
     );
 
@@ -77,6 +77,7 @@ exports.Login = async (req, res) => {
       token,
       adminId: admin.id,
       username: admin.username,
+      userType:"admin"
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });

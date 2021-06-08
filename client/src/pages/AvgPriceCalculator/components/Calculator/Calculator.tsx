@@ -7,14 +7,12 @@ interface CalculatorData {
   location: string;
   rooms: number;
   size: number;
-  category: string;
+  category: number;
 }
 
 const Calculator = () => {
-  const [showText, setShowText] = useState(false);
-  const [price, setPrice] = useState();
-  const [select, setSelect] = useState("select");
- 
+
+  const [price, setPrice] = useState(0);
 
   const fields: Array<{
     label: string;
@@ -50,13 +48,9 @@ const Calculator = () => {
     },
   ];
 
-  const handleChange = (e: any) => {
-    setSelect(e.target.value);
-  };
-
   const [formData, setFormData] = useState<CalculatorData>({
     location: "",
-    category: "",
+    category: 1,
     rooms: 1,
     size: 10,
   });
@@ -68,29 +62,23 @@ const Calculator = () => {
   const onSubmit = async () => {
     try {
       console.log(formData);
-      let a = await AvgPrice(
-        // formData.location,
-        // formData.category,
-        // formData.rooms,
-        // formData.size
-        "Merzig","3",3,154
+      let property = await AvgPrice(
+        formData.location,
+        formData.category,
+        formData.rooms,
+        formData.size
       );
-      setPrice(a);
-      setShowText(true);
-      
-      console.log(a.avgPrice);
+      setPrice(property.avgPrice);
+      console.log(property.avgPrice);
     } catch (e) {
       console.log(e.response.data.Message);
     }
   };
-
-
   useEffect(() => {
     onSubmit();
   }, []);
   useEffect(() => {}, [price]);
-  
-  const Text = () => <div>You clicked the button! {setPrice}</div>;
+
   return (
     <div className="price-calculator-component">
       <form>
@@ -119,15 +107,23 @@ const Calculator = () => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  {select}
+                 Select
                 </button>
                 <div
                   style={{ width: "100%" }}
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuButton"
                 >
-                  {options?.map((x) => (
-                    <a className="dropdown-item"> {x}</a>
+                  {options?.map((x, index) => (
+                    <a
+                      className="dropdown-item"
+                      onClick={() => {
+                        setFormData({ ...formData, category: index + 1 });
+                      }}
+                    >
+                      {" "}
+                      {x}
+                    </a>
                   ))}
                 </div>
               </div>
@@ -138,8 +134,7 @@ const Calculator = () => {
       <button className="app-button" onClick={onSubmit}>
         Get Price
       </button>
-     
-      {showText ? <Text /> : "Not Result Found"}
+      {price && <p>{price}</p>}
     </div>
   );
 };
