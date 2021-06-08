@@ -42,3 +42,14 @@
   width: 100%;
   align-items: center;
 }
+
+.user-actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+
+  .app-navigation__tab--username {
+    color: var(--app-color-secondary);
+    font-weight: 900;
+  }
+}

@@ -145,3 +145,7 @@ http://18.185.96.197:5000/api/properties/getAllPropertyByAdmin/1
 /*Property List By Status Admin*/
 [HttpGet]
 http://18.185.96.197:5000/api/properties/getAllPropertyByAdminStatus/1?status=Pending
+
+/*Average Property Price Calculator*/
+[HTTPGET]
+API: http://18.185.96.197:5000/api/properties/user/findAvgPrice?city=Merzig&categoryId=3&room=3&size=154
