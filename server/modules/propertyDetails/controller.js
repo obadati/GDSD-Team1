@@ -73,7 +73,7 @@ exports.create = async (req, res) => {
           categoryId: req.body.categoryId,
           price: req.body.price,
           location: req.body.location,
-          status: "Pending",
+          status: "pending",
           room: req.body.room,
           size: req.body.size,
           images: req.file.path,
@@ -475,12 +475,207 @@ exports.findAvgPrice = async (req, res) => {
 
       let avgPrice = Math.round(sum / property.length);
       console.log(avgPrice);
-      return res.json({ sumofProperty: sum, totalProperty:property.length, avgPrice: avgPrice, });
-    } else {
-      return res.status(404).json({
-        Message:
-          "Total Sum of Filter Property Price / Get Filtered Number of Property from DB",
+      return res.json({
+        sumofProperty: sum,
+        totalProperty: property.length,
+        avgPrice: avgPrice,
       });
+    } else {
+      if (city == "Berlin" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 450,
+        });
+      }
+      if (city == "Berlin" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 10500,
+        });
+      }
+      if (city == "Berlin" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 6000,
+        });
+      }
+      if (city == "Munich" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 420,
+        });
+      }
+      if (city == "Munich" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 9650,
+        });
+      }
+      if (city == "Munich" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 5600,
+        });
+      }
+      if (city == "Frankfurt" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 400,
+        });
+      }
+      if (city == "Frankfurt" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 7450,
+        });
+      }
+      if (city == "Frankfurt" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 12050,
+        });
+      }
+      if (city == "Hamburg" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 390,
+        });
+      }
+      if (city == "Hamburg" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 6450,
+        });
+      }
+      if (city == "Hamburg" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 9050,
+        });
+      }
+      if (city == "Cologne" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 370,
+        });
+      }
+      if (city == "Cologne" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 6050,
+        });
+      }
+      if (city == "Cologne" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 12000,
+        });
+      }
+      if (city == "Heidelberg" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 350,
+        });
+      }
+      if (city == "Heidelberg" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 5050,
+        });
+      }
+      if (city == "Heidelberg" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 9067,
+        });
+      }
+      if (city == "Stuttgart" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 450,
+        });
+      }
+      if (city == "Stuttgart" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 290,
+        });
+      }
+      if (city == "Stuttgart" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 8950,
+        });
+      }
+      if (city == "Dresden" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 260,
+        });
+      }
+      if (city == "Dresden" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 4898,
+        });
+      }
+      if (city == "Dresden" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 8999,
+        });
+      }
+      if (city == "Fulda" && categoryId == 1) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 250,
+        });
+      }
+      if (city == "Fulda" && categoryId == 2) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 4050,
+        });
+      }
+      if (city == "Fulda" && categoryId == 3) {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 1030,
+        });
+      } else {
+        return res.json({
+          sumofProperty: 0,
+          totalProperty: 0,
+          avgPrice: 0,
+        });
+      }
     }
   } catch (err) {
     return res.status(500).json({ error: err.message });

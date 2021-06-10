@@ -79,7 +79,7 @@ exports.create = async (req, res) => {
         password: passwordHash,
         postType,
         companyId: 0,
-        status: "Pending",
+        status: "pending",
         rating: 0.0,
         date: date,
       };
