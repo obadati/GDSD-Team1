@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/auth";
 import { setActiveTab } from "../../store/navigation/actions";
 import { NavigationTab, UserActions } from "../../store/navigation/types";
 import { AppState } from "../../store/rootReducer";
+
 import "./Navigation.scss";
 
 const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
@@ -18,6 +19,7 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     { label: "average price", to: AppRoutes.AvgPrice },
     { label: "my dashboard", to: AppRoutes.Dashboard },
     { label: "companies", to: AppRoutes.Companies },
+    { label: "chat", to: AppRoutes.Messenger },
   ];
 
   const userActions: UserActions[] = [];
@@ -42,9 +44,8 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
       <div
         key={`navigation-tab-${index}`}
         onClick={() => handleSelectedTab(tab, index)}
-        className={`app-navigation__tab app-navigation__tab${
-          activeTab.label === tab.label ? "--selected" : ""
-        }`}>
+        className={`app-navigation__tab app-navigation__tab${activeTab.label === tab.label ? "--selected" : ""
+          }`}>
         {tab.label}
       </div>
     ));
@@ -62,9 +63,8 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
       <div
         key={`navigation-tab-${index}`}
         onClick={() => handleUserAction(tab.label)}
-        className={`app-navigation__tab app-navigation__tab${
-          activeTab.label === tab.label ? "--selected" : ""
-        } ${tab.label === username ? `app-navigation__tab--username` : ""}`}>
+        className={`app-navigation__tab app-navigation__tab${activeTab.label === tab.label ? "--selected" : ""
+          } ${tab.label === username ? `app-navigation__tab--username` : ""}`}>
         {tab.label}
       </div>
     ));
