@@ -1,32 +1,44 @@
-import React, { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { getAllProperties } from "./api/properties";
-import "./App.scss";
-import Navigation from "./components/Navigation/Navigation";
-import AppRouter from "./containers/Router/AppRouter";
-import { BrowserRouter as Router } from "react-router-dom";
-import { setAllProperties } from "./store/properties/actions";
+import React, { useEffect, useState } from 'react';
+import LoadingOverlay from 'react-loading-overlay-ts';
+import { connect, ConnectedProps } from 'react-redux';
+import { getAllProperties } from './api/properties';
+import './App.scss';
+import Navigation from './components/Navigation/Navigation';
+import AppRouter from './containers/Router/AppRouter';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { setAllProperties } from './store/properties/actions';
+import CustomLoader from './components/CustomLoader/CustomLoader';
 
 interface OwnProps extends PropsFromRedux {}
 
 const App: React.FC<OwnProps> = ({ dispatch }) => {
-  useEffect(() => {
-    loadData();
-  }, []);
+    const [isLoading, setIsLoading] = useState(false);
+    useEffect(() => {
+        loadData();
+    }, []);
 
-  const loadData = async () => {
-    const { result } = await getAllProperties();
-    dispatch(setAllProperties(result));
-  };
+    const loadData = async () => {
+        setIsLoading(true);
+        const { result } = await getAllProperties();
+        if (result) {
+            setIsLoading(false);
+        }
+        dispatch(setAllProperties(result));
+    };
 
-  return (
-    <div className='app-wrapper'>
-      <Router>
-        <Navigation />
-        <AppRouter />
-      </Router>
-    </div>
-  );
+    return (
+        <div className="app-wrapper">
+            <LoadingOverlay
+                active={isLoading}
+                spinner={<CustomLoader title="Loading ..." />}
+            >
+                <Router>
+                    <Navigation />
+                    <AppRouter />
+                </Router>
+            </LoadingOverlay>
+        </div>
+    );
 };
 
 const mapStateToProps = () => ({});
