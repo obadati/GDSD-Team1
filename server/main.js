@@ -8,7 +8,9 @@ const company = require('./modules/company/route');
 const category = require('./modules/category/route');
 const user = require('./modules/user/route');
 const contactUs =require('./modules/contactUs/route');
+const contract = require('./modules/contract/route');
 const port = 5000;
+const auth = require('./middleware/auth'); 
 
 /*Server Image Path Through Server */
 app.use('/', express.static(__dirname + '/public/'));
@@ -20,6 +22,8 @@ app.use(express.json());
 
 /*Access For Frontend To Consume Backend Server*/
 app.use(cors());
+// app.use(auth);
+
 
 /*Register Route For End Points*/
 app.use('/api/categories', category);
@@ -28,6 +32,7 @@ app.use('/api/admin', admin);
 app.use('/api/user', user);
 app.use('/api/company', company);
 app.use('/api/contactUs',contactUs);
+app.use('/api/contract/',contract);
 
 
 /*Error  Handling*/

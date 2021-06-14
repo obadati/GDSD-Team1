@@ -8,7 +8,7 @@ var path = require("path");
 const fs = require("fs");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const status = "Approved";
+const status = "approved";
 
 /****************************************************Define Controller***********************************/
 
@@ -292,6 +292,22 @@ exports.updateProperty = async (req, res) => {
   }
 };
 
+exports.disableProperty = async (req,res)=>{
+  try{
+    let id = req.params.id;
+    await Property.update(
+      {
+        status:"disable"
+      },
+      { where: { id: id } }
+    );
+    return res.status(200).json({message:"Disable Successfully"});
+  }
+  catch(err){
+    return res.status(500).json({error:err.message});
+  }
+
+}
 /*********************************************************Website User*********************************/
 
 /*Get All Property Approved By Admin*/
