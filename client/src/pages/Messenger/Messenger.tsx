@@ -8,27 +8,59 @@ import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
 
+interface ConversationState {
+    rcvId: number,
+    Name: string,
+    lastMessage: string,
+}
+const defaultConversations: ConversationState[] = [];
 
 const MessengerPage: React.FC<any> = () => {
     //  const history = useHistory();
-    const [conversations, setConversations] = useState<any[]>([]);
-    const user = { name: 123, id: 1 };
+    let messagesState = {};
+    const isAdmin = { rcvId: 5, Name: 'Ahmad' };
+    const [conversations, setConversations] = useState([]);
+    const [messages, setMessages] = useState([]);
+    // let user = { name: 123, id: 1 };
+
     //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
+    useEffect(() => {
+        const getMessages = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/api/message/getMessages/1?withUser=2");
+                setMessages(res as any);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        };
+        getMessages();
+    }, [])
+    console.log(messages)
+
     useEffect(() => {
         const getConversations = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/message/Conversation/1");
+                const res = await axios.get("http://localhost:5000/api/message/Conversation/1", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                });
                 // const { res } = { data: { id: 5, rcid: 4 } } as any;
-                //console.log(res);
-                setConversations(res.data);
+                console.log(res);
+                setConversations([]);
             }
             catch (err) {
                 console.log(err);
             }
         };
         getConversations();
-    }, [user.id]);
+    }, []);
 
+
+
+
+    console.log(messages)
     return (
         <div className="messenger">
             <div className="chatMenu">
@@ -36,15 +68,8 @@ const MessengerPage: React.FC<any> = () => {
                     <input placeholder="Search for Conversation" className="chatMenuInput" />
                 </div>
                 <div className="chatMenuWrapper">
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
+                    {messages.map(c => <Conversation />)}
+
 
                 </div>
             </div>
