@@ -6,6 +6,7 @@ const admin = require('./modules/admin/route');
 const property = require('./modules/propertyDetails/route');
 const company = require('./modules/company/route');
 const category = require('./modules/category/route');
+const message = require('./modules/message/route');
 const user = require('./modules/user/route');
 const port = 5000;
 
@@ -26,6 +27,7 @@ app.use('/api/properties', property);
 app.use('/api/admin', admin);
 app.use('/api/user', user);
 app.use('/api/company', company);
+app.use('/api/message', message);
 
 
 /*Error  Handling*/
@@ -38,13 +40,13 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-          message: error.message
-      }
+      message: error.message
+    }
   });
 });
 
 /*Intialize the Sequalize*/
-db.sequelize.sync().then((req)=>{
+db.sequelize.sync().then((req) => {
   app.listen(port, () => {
     console.log(`Real-Estate-App is listening at http://localhost:${port}`)
   })
