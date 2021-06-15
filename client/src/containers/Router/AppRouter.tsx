@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { GuestRoute, PrivateRoute } from "../../components/Route/Route";
-import { HomePage, PropertiesPage } from "../../pages";
+import { HomePage, LandingPage, PropertiesPage, MessengerPage } from "../../pages";
 import AvgPriceCalculator from "../../pages/AvgPriceCalculator/AvgPriceCalculator";
 import Login from "../../pages/Login/Login";
 import AboutUsPage from "../../pages/AboutUs/AboutUs";
@@ -15,6 +15,7 @@ const AppRouter: React.FC<any> = () => {
     <Switch>
       <GuestRoute path={AppRoutes.Login} component={Login}></GuestRoute>
       <Route path={AppRoutes.Landing} exact component={HomePage}></Route>
+      <Route path={AppRoutes.Messenger} exact component={MessengerPage}></Route>
       <Route path={AppRoutes.Contact} exact component={ContactUs}></Route>
       <Route path={AppRoutes.AboutUs} exact component={AboutUsPage}></Route>
       <PrivateRoute
