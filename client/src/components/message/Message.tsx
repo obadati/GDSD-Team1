@@ -2,7 +2,7 @@ import "./Message.scss";
 import { format } from "timeago.js";
 
 
-const Message: React.FC<any> = ({ own }) => {
+const Message: React.FC<any> = ({ message, own }) => {
 
 
     return (
@@ -15,10 +15,10 @@ const Message: React.FC<any> = ({ own }) => {
                 />
                 <div className="messageBubble">
                     <p className="messageText">
-                        As you know, the Chinese government keeps a close eye on how people in the country use the internet
+                        {message.messageTxt}
                     </p></div>
             </div>
-            <div className="messageBottom">1 hour ago</div>
+            <div className="messageBottom">{format(message.created)}</div>
         </div>
     );
 }
