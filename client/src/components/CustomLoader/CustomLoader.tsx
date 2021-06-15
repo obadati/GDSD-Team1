@@ -4,11 +4,13 @@ import AppLogo from "../../assets/images/logo.png";
 
 const LoaderComponent: React.FC<{ title: string }> = ({ title }) => {
     return (
-        <div>
-            <div className="loader-img">
-                <img src={AppLogo} />
+        <div className="app-loader">
+            <div className="app-loader__inner">
+                <div className="loader-logo">
+                    <img src={AppLogo} />
+                </div>
+                <div>{title}</div>
             </div>
-            <div>{title}</div>
         </div>
     );
 };
