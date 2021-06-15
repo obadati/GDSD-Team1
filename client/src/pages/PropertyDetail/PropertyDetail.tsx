@@ -5,6 +5,7 @@ import CarouselComponent from "../../components/Carousel/Carousel";
 import { Property } from "../../store/properties/types";
 import Hero from "../Home/components/Hero/Hero";
 import "./PropertyDetail.scss";
+import SellerProfile from "../../components/SellerProfile/SellerProfile"
 
 const PropertyDetail: React.FC<any> = () => {
   const history = useHistory();
@@ -14,7 +15,16 @@ const PropertyDetail: React.FC<any> = () => {
     <div className='property-detail-page app-page'>
       <div className='aside'>
         <div className='seller-info'>
-          <p>Seller Info here...</p>
+        <SellerProfile
+        stars={2}
+        sellerName="Sample Seller"
+        sellerCompany="Sample Company"
+        actions={[
+          "message-agent",
+          "create-contact",
+          "get-average-price",
+          "add-to-compare"
+        ]}/>
         </div>
         <div className='property-tags'>
           <div className='property-tags__tag'>€ {property.price}</div>
