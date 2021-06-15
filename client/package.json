@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.1.10",
+    "@types/google-map-react": "^2.1.1",
     "@types/jest": "^26.0.15",
     "@types/lodash.debounce": "^4.0.6",
     "@types/node": "^12.0.0",
@@ -17,17 +18,23 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-mock-store": "^1.0.2",
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "fuse.js": "^6.4.6",
+    "google-map-react": "^2.1.9",
+    "google-maps-react": "^2.0.6",
     "lodash.debounce": "^4.0.8",
     "node-sass": "^5.0.0",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.6.0",
     "react-dom": "^17.0.2",
+    "react-loading-overlay-ts": "^0.2.0",
     "react-material-ui-carousel": "^2.2.6",
     "react-multi-carousel": "^2.6.3",
     "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-stars": "^2.2.5",
     "react-toastify": "^7.0.4",
     "redux": "^4.0.5",
     "redux-mock-store": "^1.5.4",
@@ -59,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-stars": "^2.2.0",
     "react-test-renderer": "^17.0.2"
   }
 }

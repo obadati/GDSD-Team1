@@ -7,17 +7,14 @@ const controller = require('./controller');
 /*Create Admin */
 router.post("/create",controller.create);
 
-/*Admin Login */
- router.post("/login",controller.Login);
-
  /*All Agent */
- router.get("/allAgent/:page",controller.GetAgent);
+ router.get("/allAgent/:page",controller.getAgent);
 
  /*Get Agent By Status */
- router.get("/agentByStatus/:page",controller.GetAgentStatus);
+ router.get("/agentByStatus/:page",controller.getAgentStatus);
 
  /*Approve or Change Status*/
- router.patch("/approveStatus/:id",controller.ApproveStatus);
+ router.patch("/approveStatus/:id",controller.gpproveStatus);
 
 /*Export  Router*/
 module.exports = router;

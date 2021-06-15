@@ -144,7 +144,7 @@ http://18.185.96.197:5000/api/properties/getAllPropertyByAdmin/1
 
 /*Property List By Status Admin*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/getAllPropertyByAdminStatus/1?status=Pending
+http://18.185.96.197:5000/api/properties/getAllPropertyByAdminStatus/1?status=pending
 
 /*Average Property Price Calculator*/
 [HTTPGET]

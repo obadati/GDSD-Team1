@@ -14,12 +14,12 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
   const { authenticated, username } = useAuth();
   const tabs: NavigationTab[] = [
     { label: "home", to: AppRoutes.Landing },
-    { label: "about", to: AppRoutes.About },
     { label: "properties", to: AppRoutes.Properties },
     { label: "average price", to: AppRoutes.AvgPrice },
-    { label: "my dashboard", to: AppRoutes.Dashboard },
+    { label: "Dashboard", to: AppRoutes.Dashboard },
     { label: "companies", to: AppRoutes.Companies },
     { label: "chat", to: AppRoutes.Messenger },
+    { label: "about us", to: AppRoutes.AboutUs },
   ];
 
   const userActions: UserActions[] = [];
