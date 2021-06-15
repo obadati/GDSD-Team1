@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Message from "../../components/message/Message";
 import { dummyDeveloper, getRandomBg } from "../../utility/static";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
@@ -7,16 +7,17 @@ import Conversation from "../../components/conversations/Conversation";
 import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
-import { httpGET } from "../../utility/http";
+import { httpGET, httpPOST } from "../../utility/http";
 
 
 
 const MessengerPage: React.FC<any> = () => {
 
-    const [currentChat, setCurrentChat] = useState([] as any);
+    const [currentChat, setCurrentChat] = useState(null as any);
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const scrollRef = useRef<null | HTMLDivElement>(null)
     // let user = { name: 123, id: 1 };
 
     //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
@@ -50,21 +51,25 @@ const MessengerPage: React.FC<any> = () => {
         };
         getConversations();
     }, []);
-    /*const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const message = {
+        const messageSend = {
             sndId: 1,
-            rcvId: 2,
+            rcvId: currentChat.rcvId,
             messageTxt: newMessage,
         };
         try {
-            const res = await axios.post("http://localhost:5000/api/message/sendMessage", message);
-            setMessages([...messages, res] as any)
+            const res = await httpPOST("http://localhost:5000/api/message/sendMessage", messageSend);
+            setMessages([...messages, res] as any);
+            setNewMessage("");
         }
         catch (err) {
             console.log(err);
         }
-    }*/
+    };
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, [messages]);
     return (
         <div className="messenger">
             <div className="chatMenu">
@@ -82,25 +87,25 @@ const MessengerPage: React.FC<any> = () => {
             </div>
             <div className="chatBox">
                 <div className="chatBoxWrapper">
-                    {currentChat ? (<>
-                        <div className="chatBoxTop">
-                            {messages.map(m =>
-                                <Message message={m} own={m === 1} />
-                            )}
-
-
-                        </div>
-                        <div className="chatBoxBottom">
-                            <textarea
-                                className="chatMessageInput"
-                                placeholder="write something..."
-                                onChange={(e) => setNewMessage(e.target.value)}
-                                value={newMessage}
-                            ></textarea>
-                            <button className="chatSubmitButton" onClick={handleSubmit}>➢</button>
-                        </div> </>) : (<span className="noConversationText">Please Chose a Conversation</span>
+                    {currentChat ? (
+                        <>
+                            <div className="chatBoxTop">
+                                {messages.map((m: any) => (
+                                    <div ref={scrollRef}>
+                                        <Message message={m} own={m.rcv !== 1} />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="chatBoxBottom">
+                                <textarea
+                                    className="chatMessageInput"
+                                    placeholder="write something..."
+                                    onChange={(e) => setNewMessage(e.target.value)}
+                                    value={newMessage}
+                                ></textarea>
+                                <button className="chatSubmitButton" onClick={handleSubmit}>➢</button>
+                            </div> </>) : (<span className="noConversationText">Please Chose a Conversation</span>
                     )}
-
                 </div>
             </div>
 
