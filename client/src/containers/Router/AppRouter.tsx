@@ -15,6 +15,7 @@ import PropertyDetail from "../../pages/PropertyDetail/PropertyDetail";
 import { AppRoutes } from "./routes";
 import NotFound from "../../pages/NotFound/NotFound";
 import Dashboard from "../../pages/Dashboard/Dashboard";
+import EditProperty from "../../pages/EditProperty/EditProperty";
 
 const AppRouter: React.FC<any> = () => {
     return (
@@ -59,7 +60,7 @@ const AppRouter: React.FC<any> = () => {
             ></PrivateRoute>
             <PrivateRoute
                 path={AppRoutes.EditProperty}
-                component={PropertyDetail}
+                component={EditProperty}
                 exact
             ></PrivateRoute>
             <PrivateRoute

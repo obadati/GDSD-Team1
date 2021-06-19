@@ -8,17 +8,18 @@ import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
 import { httpGET, httpPOST } from "../../utility/http";
-import { useAuth } from "../../hooks/auth";
-
 
 const MessengerPage: React.FC<any> = () => {
+    const [currentChat, setCurrentChat] = useState(null as any);
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null as any);
 
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+
     const scrollRef = useRef<null | HTMLDivElement>(null)
     const { userId } = useAuth();
+
     // let user = { name: 123, id: 1 };
 
     //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
@@ -39,18 +40,32 @@ const MessengerPage: React.FC<any> = () => {
         const getMessages = async () => {
             try {
                 const res = await axios.get("http://18.185.96.197:5000/api/message/getMessages/" + userId + "?withUser=" + currentChat.rcvId);
+
                 //" + currentChat?.rcvId as any
                 setMessages(res as any);
                 console.log(res);
-
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
         };
         getMessages();
-
     }, [currentChat]);
+
+
+    useEffect(() => {
+        const getConversations = async () => {
+            try {
+                const res = await axios.get(
+                    "http://18.185.96.197:5000/api/message/Conversation/"+ userId
+                );
+                // console.log(res);
+                setConversations(res as any);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getConversations();
+    }, []);
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const messageSend = {
@@ -59,30 +74,33 @@ const MessengerPage: React.FC<any> = () => {
             messageTxt: newMessage,
         };
         try {
+
             const res = await httpPOST("http://18.185.96.197:5000/api/message/sendMessage", messageSend);
             setMessages([...messages, res as any] as any);
+
             setNewMessage("");
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
     };
     useEffect(() => {
-        scrollRef.current?.scrollIntoView({ behavior: "smooth" })
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
     return (
         <div className="messenger">
             <div className="chatMenu">
                 <div className="chatMenuSearchWrapper">
-                    <input placeholder="Search for Conversation" className="chatMenuInput" />
+                    <input
+                        placeholder="Search for Conversation"
+                        className="chatMenuInput"
+                    />
                 </div>
                 <div className="chatMenuWrapper">
-                    {conversations.map(c => (
+                    {conversations.map((c) => (
                         <div onClick={() => setCurrentChat(c)}>
                             <Conversation conversation={c} />
-                        </div>))
-                    }
-
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className="chatBox">
@@ -93,6 +111,7 @@ const MessengerPage: React.FC<any> = () => {
                                 {messages.map((m: any) => (
                                     <div ref={scrollRef}>
                                         <Message message={m} own={m.rcvId !== userId} />
+
                                     </div>
                                 ))}
                             </div>
@@ -100,11 +119,23 @@ const MessengerPage: React.FC<any> = () => {
                                 <textarea
                                     className="chatMessageInput"
                                     placeholder="write something..."
-                                    onChange={(e) => setNewMessage(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewMessage(e.target.value)
+                                    }
                                     value={newMessage}
                                 ></textarea>
-                                <button className="chatSubmitButton" onClick={handleSubmit}>➢</button>
-                            </div> </>) : (<span className="noConversationText">Please Chose a Conversation</span>
+                                <button
+                                    className="chatSubmitButton"
+                                    onClick={handleSubmit}
+                                >
+                                    ➢
+                                </button>
+                            </div>{" "}
+                        </>
+                    ) : (
+                        <span className="noConversationText">
+                            Please Chose a Conversation
+                        </span>
                     )}
                 </div>
             </div>
@@ -117,6 +148,6 @@ const MessengerPage: React.FC<any> = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 };
 export default MessengerPage;
