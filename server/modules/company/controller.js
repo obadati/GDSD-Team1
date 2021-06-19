@@ -102,7 +102,7 @@ exports.deleteCompany = async (req, res) => {
 
     let company = await Company.findOne({ where: { id: id } });
     if (company == null) {
-      return res.status(400).json({ msg: "Company Not Found" });
+      return res.status(400).json({ message: "Company Not Found" });
     }
     await Company.destroy({
       where: { id: id },

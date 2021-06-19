@@ -1,0 +1,28 @@
+.app-loader {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 9999;
+    background: white;
+    left: 0;
+    top: 0;
+    display: flex;
+    &__inner {
+        margin: auto;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        .loader-logo {
+            width: 150px;
+            height: 150px;
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}

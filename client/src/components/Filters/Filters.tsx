@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Filters.scss";
 
-const filterTypes = ["rent", "house", "apartment"];
+export enum PropertyCategories {
+  Rent = "rent",
+  House = "house",
+  Apartment = "apartment",
+}
 
 interface OwnProps {
   onFilterSelected: (selected: number) => void;
@@ -12,7 +16,7 @@ const Filters: React.FC<OwnProps> = ({ onFilterSelected }) => {
 
   return (
     <div className='app-filters'>
-      {filterTypes.map((filter, index) => (
+      {Object.keys(PropertyCategories).map((filter, index) => (
         <div
           key={`app-filters-${filter}`}
           onClick={() => setSelected(index)}
