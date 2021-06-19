@@ -71,10 +71,10 @@ exports.sendMessage = async (req, res) => {
           messageTxt: req.body.messageTxt
         };
         console.log(data);
-        await Message.create(data);
+        const meesage = await Message.create(data);
         return res
           .status(200)
-          .json({ messages: "Message Sent", });
+          .json(meesage);
       }
     });
   } catch (err) {
@@ -87,7 +87,7 @@ exports.getMessages = async (req, res) => {
     const { withUser } = req.query;
     let id = req.params.userId;
     console.log(withUser, id)
-    const [results, metadata] = await db.sequelize.query("select sndId,rcvId,messageTxt,createdAt created from messages where messageTxt <> '' and ((sndId =:sndId and rcvId =:rcvId) or (sndId =:rcvId and rcvId =:sndId)) order by createdAt ",
+    const [results, metadata] = await db.sequelize.query("select sndId,rcvId,messageTxt,createdAt from messages where messageTxt <> '' and ((sndId =:sndId and rcvId =:rcvId) or (sndId =:rcvId and rcvId =:sndId)) order by createdAt ",
       {
         replacements: { sndId: id, rcvId: withUser }
       });

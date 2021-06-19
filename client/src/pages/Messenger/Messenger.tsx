@@ -12,9 +12,9 @@ import { httpGET, httpPOST } from "../../utility/http";
 
 
 const MessengerPage: React.FC<any> = () => {
-
-    const [currentChat, setCurrentChat] = useState(null as any);
     const [conversations, setConversations] = useState([]);
+    const [currentChat, setCurrentChat] = useState(null as any);
+
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const scrollRef = useRef<null | HTMLDivElement>(null)
@@ -22,9 +22,22 @@ const MessengerPage: React.FC<any> = () => {
 
     //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
     useEffect(() => {
+        const getConversations = async () => {
+            try {
+                //18.185.96.197
+                const res = await axios.get("http://18.185.96.197:5000/api/message/Conversation/1");
+                setConversations(res as any);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        };
+        getConversations();
+    }, []);
+    useEffect(() => {
         const getMessages = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/message/getMessages/1?withUser=" + currentChat.rcvId);
+                const res = await axios.get("http://18.185.96.197:5000/api/message/getMessages/1?withUser=" + currentChat.rcvId);
                 //" + currentChat?.rcvId as any
                 setMessages(res as any);
                 console.log(res);
@@ -37,20 +50,6 @@ const MessengerPage: React.FC<any> = () => {
         getMessages();
 
     }, [currentChat]);
-
-    useEffect(() => {
-        const getConversations = async () => {
-            try {
-                const res = await axios.get("http://localhost:5000/api/message/Conversation/1");
-                // console.log(res);
-                setConversations(res as any);
-            }
-            catch (err) {
-                console.log(err);
-            }
-        };
-        getConversations();
-    }, []);
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const messageSend = {
@@ -59,8 +58,8 @@ const MessengerPage: React.FC<any> = () => {
             messageTxt: newMessage,
         };
         try {
-            const res = await httpPOST("http://localhost:5000/api/message/sendMessage", messageSend);
-            setMessages([...messages, res] as any);
+            const res = await httpPOST("http://18.185.96.197:5000/api/message/sendMessage", messageSend);
+            setMessages([...messages, res as any] as any);
             setNewMessage("");
         }
         catch (err) {
@@ -92,7 +91,7 @@ const MessengerPage: React.FC<any> = () => {
                             <div className="chatBoxTop">
                                 {messages.map((m: any) => (
                                     <div ref={scrollRef}>
-                                        <Message message={m} own={m.rcv !== 1} />
+                                        <Message message={m} own={m.rcvId !== 1} />
                                     </div>
                                 ))}
                             </div>
