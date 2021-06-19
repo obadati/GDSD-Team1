@@ -20,11 +20,15 @@ const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
 
     const loadData = async () => {
         dispatch(setLoadingState(true));
-        const { result } = await getAllProperties();
-        if (result) {
-            dispatch(setAllProperties(result));
+        try {
+            const { result } = await getAllProperties();
+            if (result) {
+                dispatch(setAllProperties(result));
+            }
+            dispatch(setLoadingState(false));
+        } catch (e) {
+            dispatch(setLoadingState(false));
         }
-        dispatch(setLoadingState(false));
     };
 
     return (
