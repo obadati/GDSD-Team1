@@ -6,7 +6,7 @@ export interface NavigationState {
 
 export interface NavigationTab {
   label: string;
-  to: AppRoutes;
+  to: AppRoutes | string;
 }
 
 export interface UserActions {
