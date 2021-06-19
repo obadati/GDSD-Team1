@@ -1,5 +1,6 @@
 export interface PropertiesState {
   properties: Property[];
+  agentProperties: Property[];
 }
 
 export interface Category {

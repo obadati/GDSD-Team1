@@ -4,7 +4,7 @@ import { AppRoutes } from "../../containers/Router/routes";
 import { useAuth } from "../../hooks/auth";
 
 interface MetaRoute {
-  path: AppRoutes;
+  path: AppRoutes | any;
   exact?: boolean;
   component: React.ComponentType<any>;
 }
