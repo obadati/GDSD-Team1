@@ -8,7 +8,7 @@ import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
 import { httpGET, httpPOST } from "../../utility/http";
-
+import { useAuth } from "../../hooks/auth";
 
 
 const MessengerPage: React.FC<any> = () => {
@@ -18,6 +18,7 @@ const MessengerPage: React.FC<any> = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const scrollRef = useRef<null | HTMLDivElement>(null)
+    const { userId } = useAuth();
     // let user = { name: 123, id: 1 };
 
     //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
@@ -25,7 +26,7 @@ const MessengerPage: React.FC<any> = () => {
         const getConversations = async () => {
             try {
                 //18.185.96.197
-                const res = await axios.get("http://18.185.96.197:5000/api/message/Conversation/1");
+                const res = await axios.get("http://18.185.96.197:5000/api/message/Conversation/" + userId);
                 setConversations(res as any);
             }
             catch (err) {
@@ -37,7 +38,7 @@ const MessengerPage: React.FC<any> = () => {
     useEffect(() => {
         const getMessages = async () => {
             try {
-                const res = await axios.get("http://18.185.96.197:5000/api/message/getMessages/1?withUser=" + currentChat.rcvId);
+                const res = await axios.get("http://18.185.96.197:5000/api/message/getMessages/" + userId + "?withUser=" + currentChat.rcvId);
                 //" + currentChat?.rcvId as any
                 setMessages(res as any);
                 console.log(res);
@@ -53,7 +54,7 @@ const MessengerPage: React.FC<any> = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const messageSend = {
-            sndId: 1,
+            sndId: userId,
             rcvId: currentChat.rcvId,
             messageTxt: newMessage,
         };
@@ -91,7 +92,7 @@ const MessengerPage: React.FC<any> = () => {
                             <div className="chatBoxTop">
                                 {messages.map((m: any) => (
                                     <div ref={scrollRef}>
-                                        <Message message={m} own={m.rcvId !== 1} />
+                                        <Message message={m} own={m.rcvId !== userId} />
                                     </div>
                                 ))}
                             </div>

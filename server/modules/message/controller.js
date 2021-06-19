@@ -41,7 +41,7 @@ exports.createConversation = async (req, res) => {
 exports.getuserConversations = async (req, res) => {
   try {
     let id = req.params.userId;
-    const [results, metadata] = await db.sequelize.query("select rcvId,concat(firstName,concat(' ',lastName)) Name,max(messages.createdAt) lastMessage from test_db.messages  left join users on rcvid=users.id  where sndId=:id group by rcvid order by max(messages.createdAt) desc",
+    const [results, metadata] = await db.sequelize.query("select rcvId,concat(firstName,concat(' ',lastName)) Name,max(messages.createdAt) lastMessage from dev_real_state.messages  left join users on rcvid=users.id  where sndId=:id or (rcvId=:id and messageTxt<>'') group by rcvid order by max(messages.createdAt) desc",
       {
         replacements: { id: id }
       });
@@ -87,7 +87,7 @@ exports.getMessages = async (req, res) => {
     const { withUser } = req.query;
     let id = req.params.userId;
     console.log(withUser, id)
-    const [results, metadata] = await db.sequelize.query("select sndId,rcvId,messageTxt,createdAt from messages where messageTxt <> '' and ((sndId =:sndId and rcvId =:rcvId) or (sndId =:rcvId and rcvId =:sndId)) order by createdAt ",
+    const [results, metadata] = await db.sequelize.query("select sndId,rcvId,messageTxt,createdAt from dev_real_state.messages where messageTxt <> '' and ((sndId =:sndId and rcvId =:rcvId) or (sndId =:rcvId and rcvId =:sndId)) order by createdAt ",
       {
         replacements: { sndId: id, rcvId: withUser }
       });
