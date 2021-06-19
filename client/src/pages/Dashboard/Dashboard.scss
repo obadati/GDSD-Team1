@@ -1,34 +1,37 @@
 .user-dashboard {
-  display: flex;
-
-  &__aside {
-    width: 250px;
     display: flex;
-    flex-direction: column;
+    padding: 5rem 10rem 0;
 
-    a {
-      color: var(--app-color-text) !important;
-      text-decoration: none;
-      text-transform: uppercase;
-      padding: 1rem;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.25rem;
-      font-weight: bold;
-      border-bottom: 2px solid var(--app-color-border);
-      cursor: pointer;
+    &__tiles {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(4, 250px);
+        grid-template-rows: 250px;
+        grid-gap: 1rem;
+        a {
+            max-height: 250px;
+            text-decoration: none;
+        }
 
-      &:last-child {
-        border-bottom: none;
-      }
+        &__tile {
+            background-image: linear-gradient(
+                150deg,
+                var(--app-color-crystal-black),
+                transparent
+            );
+            color: var(--app-color-text);
+            height: 100%;
+            display: flex;
+            font-weight: bold;
 
-      &--selected {
-        background: lightgray;
-      }
+            p {
+                margin: auto !important;
+                text-transform: uppercase;
+            }
+        }
     }
-  }
-
-  .username {
-    font-weight: bold;
-    color: var(--app-color-secondary);
-  }
+    .username {
+        font-weight: bold;
+        color: var(--app-color-secondary);
+    }
 }
