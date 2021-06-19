@@ -18,7 +18,7 @@ const Message: React.FC<any> = ({ message, own }) => {
                         {message.messageTxt}
                     </p></div>
             </div>
-            <div className="messageBottom">{format(message.created)}</div>
+            <div className="messageBottom">{format(message.createdAt)}</div>
         </div>
     );
 }

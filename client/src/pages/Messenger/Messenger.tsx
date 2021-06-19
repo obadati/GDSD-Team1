@@ -8,24 +8,40 @@ import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
 import { httpGET, httpPOST } from "../../utility/http";
+import { useAuth } from "../../hooks/auth";
 
 const MessengerPage: React.FC<any> = () => {
     const [currentChat, setCurrentChat] = useState(null as any);
     const [conversations, setConversations] = useState([]);
+
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
-    const scrollRef = useRef<null | HTMLDivElement>(null);
-    // let user = { name: 123, id: 1 };
 
-    //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
+    const scrollRef = useRef<null | HTMLDivElement>(null);
+    const { userId } = useAuth();
+    useEffect(() => {
+        const getConversations = async () => {
+            try {
+                const res = await axios.get(
+                    "http://18.185.96.197:5000/api/message/Conversation/" +
+                        userId
+                );
+                setConversations(res as any);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getConversations();
+    }, []);
     useEffect(() => {
         const getMessages = async () => {
             try {
                 const res = await axios.get(
-                    "http://localhost:5000/api/message/getMessages/1?withUser=" +
+                    "http://18.185.96.197:5000/api/message/getMessages/" +
+                        userId +
+                        "?withUser=" +
                         currentChat.rcvId
                 );
-                //" + currentChat?.rcvId as any
                 setMessages(res as any);
                 console.log(res);
             } catch (err) {
@@ -39,7 +55,8 @@ const MessengerPage: React.FC<any> = () => {
         const getConversations = async () => {
             try {
                 const res = await axios.get(
-                    "http://localhost:5000/api/message/Conversation/1"
+                    "http://18.185.96.197:5000/api/message/Conversation/" +
+                        userId
                 );
                 // console.log(res);
                 setConversations(res as any);
@@ -52,16 +69,17 @@ const MessengerPage: React.FC<any> = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const messageSend = {
-            sndId: 1,
+            sndId: userId,
             rcvId: currentChat.rcvId,
             messageTxt: newMessage,
         };
         try {
             const res = await httpPOST(
-                "http://localhost:5000/api/message/sendMessage",
+                "http://18.185.96.197:5000/api/message/sendMessage",
                 messageSend
             );
-            setMessages([...messages, res] as any);
+            setMessages([...messages, res as any] as any);
+
             setNewMessage("");
         } catch (err) {
             console.log(err);
@@ -96,7 +114,7 @@ const MessengerPage: React.FC<any> = () => {
                                     <div ref={scrollRef}>
                                         <Message
                                             message={m}
-                                            own={m.rcv !== 1}
+                                            own={m.rcvId !== userId}
                                         />
                                     </div>
                                 ))}
