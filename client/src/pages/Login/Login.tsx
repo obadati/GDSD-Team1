@@ -3,13 +3,15 @@ import "./Login.scss";
 import React, { FC, useState } from "react";
 
 import logo from "../../assets/images/logo.png";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AppRoutes } from "../../containers/Router/routes";
 import { loginUser, UserRoles } from "../../api/user";
+import { setAppUser } from "../../store/user/actions";
+import { AppUser } from "../../models/AppUser";
 
-const LoginPage: React.FC<any> = ({ dispatch }) => {
-    const [user, setAppUser] = useState<{
+const LoginPage: React.FC<PropsFromRedux> = ({ dispatch }) => {
+    const [user, setUser] = useState<{
         username: string;
         password: string;
         role: UserRoles | string;
@@ -29,6 +31,8 @@ const LoginPage: React.FC<any> = ({ dispatch }) => {
         );
         localStorage.setItem("auth-user", JSON.stringify(authenticatedUser));
         history.push(AppRoutes.Landing);
+        debugger;
+        dispatch(setAppUser(authenticatedUser as any));
     };
 
     const renderUserRoles = () => {
@@ -37,7 +41,7 @@ const LoginPage: React.FC<any> = ({ dispatch }) => {
                 {Object.keys(UserRoles).map((role) => (
                     <div
                         onClick={() => {
-                            setAppUser({ ...user, role: role });
+                            setUser({ ...user, role: role });
                         }}
                         key={`user-roles-${role}`}
                         className={`user-roles-wrapper__role action-item ${
@@ -69,7 +73,7 @@ const LoginPage: React.FC<any> = ({ dispatch }) => {
                             placeholder="Username"
                             value={user.username}
                             onChange={(e) =>
-                                setAppUser({
+                                setUser({
                                     ...user,
                                     username: e.target.value,
                                 })
@@ -83,7 +87,7 @@ const LoginPage: React.FC<any> = ({ dispatch }) => {
                             placeholder="Password"
                             value={user.password}
                             onChange={(e) =>
-                                setAppUser({
+                                setUser({
                                     ...user,
                                     password: e.target.value,
                                 })
@@ -115,4 +119,5 @@ const LoginPage: React.FC<any> = ({ dispatch }) => {
 };
 
 const connector = connect();
+type PropsFromRedux = ConnectedProps<typeof connector>;
 export default connector(LoginPage);
