@@ -8,29 +8,26 @@ import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
 import { httpGET, httpPOST } from "../../utility/http";
+import { useAuth } from "../../hooks/auth";
 
 const MessengerPage: React.FC<any> = () => {
     const [currentChat, setCurrentChat] = useState(null as any);
     const [conversations, setConversations] = useState([]);
-    const [currentChat, setCurrentChat] = useState(null as any);
 
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
 
-    const scrollRef = useRef<null | HTMLDivElement>(null)
+    const scrollRef = useRef<null | HTMLDivElement>(null);
     const { userId } = useAuth();
-
-    // let user = { name: 123, id: 1 };
-
-    //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
     useEffect(() => {
         const getConversations = async () => {
             try {
-                //18.185.96.197
-                const res = await axios.get("http://18.185.96.197:5000/api/message/Conversation/" + userId);
+                const res = await axios.get(
+                    "http://18.185.96.197:5000/api/message/Conversation/" +
+                        userId
+                );
                 setConversations(res as any);
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
         };
@@ -39,9 +36,12 @@ const MessengerPage: React.FC<any> = () => {
     useEffect(() => {
         const getMessages = async () => {
             try {
-                const res = await axios.get("http://18.185.96.197:5000/api/message/getMessages/" + userId + "?withUser=" + currentChat.rcvId);
-
-                //" + currentChat?.rcvId as any
+                const res = await axios.get(
+                    "http://18.185.96.197:5000/api/message/getMessages/" +
+                        userId +
+                        "?withUser=" +
+                        currentChat.rcvId
+                );
                 setMessages(res as any);
                 console.log(res);
             } catch (err) {
@@ -51,12 +51,12 @@ const MessengerPage: React.FC<any> = () => {
         getMessages();
     }, [currentChat]);
 
-
     useEffect(() => {
         const getConversations = async () => {
             try {
                 const res = await axios.get(
-                    "http://18.185.96.197:5000/api/message/Conversation/"+ userId
+                    "http://18.185.96.197:5000/api/message/Conversation/" +
+                        userId
                 );
                 // console.log(res);
                 setConversations(res as any);
@@ -74,8 +74,10 @@ const MessengerPage: React.FC<any> = () => {
             messageTxt: newMessage,
         };
         try {
-
-            const res = await httpPOST("http://18.185.96.197:5000/api/message/sendMessage", messageSend);
+            const res = await httpPOST(
+                "http://18.185.96.197:5000/api/message/sendMessage",
+                messageSend
+            );
             setMessages([...messages, res as any] as any);
 
             setNewMessage("");
@@ -110,8 +112,10 @@ const MessengerPage: React.FC<any> = () => {
                             <div className="chatBoxTop">
                                 {messages.map((m: any) => (
                                     <div ref={scrollRef}>
-                                        <Message message={m} own={m.rcvId !== userId} />
-
+                                        <Message
+                                            message={m}
+                                            own={m.rcvId !== userId}
+                                        />
                                     </div>
                                 ))}
                             </div>
