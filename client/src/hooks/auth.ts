@@ -4,17 +4,14 @@ export const useAuth = (): {
     authenticated: boolean;
     username: string;
     token: string;
-    id: number;
+    userId: number;
 } => {
     const user = localStorage.getItem(AUTH_USER_KEY) || null;
     if (!user) {
-        return { authenticated: false, username: "", token: "", id: -1 };
+        return { authenticated: false, username: "", token: "", userId: -1 };
     }
 
     const authUser = JSON.parse(user);
-    let { token = "", username = "", email = "", id } = authUser;
-    if (!username && email) {
-        username = email.split("@")[0];
-    }
-    return { token, username, authenticated: Boolean(token), id };
+    const { token = "", username = "", adminId } = authUser;
+    return { token, username, authenticated: Boolean(token), userId: adminId };
 };

@@ -1,33 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { searchByCategory } from '../../api/properties';
-import Filters from '../../components/Filters/Filters';
-import SearchBoxComponent from '../../components/SearchBox/SearchBox';
-import { Property } from '../../store/properties/types';
-import { AppState } from '../../store/rootReducer';
-import LoadingOverlay from 'react-loading-overlay-ts';
-import { PropertyList } from './components';
-import CustomLoader from '../../components/CustomLoader/CustomLoader';
+import React, { useEffect, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { searchByCategory } from "../../api/properties";
+import Filters from "../../components/Filters/Filters";
+import SearchBoxComponent from "../../components/SearchBox/SearchBox";
+import { Property } from "../../store/properties/types";
+import { AppState } from "../../store/rootReducer";
+import { PropertyList } from "./components";
 
-import './Properties.scss';
+import "./Properties.scss";
 
-const PropertiesPage: React.FC<PropsFromRedux> = ({ properties }) => {
-    const [isLoading, setIsLoading] = useState(false);
+interface OwnProps extends PropsFromRedux {
+    agent?: boolean;
+}
+
+const PropertiesPage: React.FC<OwnProps> = ({ properties, agent }) => {
     const [filteredProps, setFilteredProps] = useState<Property[]>([]);
     useEffect(() => {
-        setIsLoading(true);
         if (properties.length > -1) {
             setFilteredProps(properties);
-            setIsLoading(false);
         }
     }, [properties]);
 
     const handleFilterSelection = async (selected: number) => {
         if (selected && selected > -1) {
-            setIsLoading(true);
             const { result } = await searchByCategory(selected + 1);
             if (result) {
-                setIsLoading(false);
             }
             setFilteredProps(result);
         }
@@ -42,7 +39,7 @@ const PropertiesPage: React.FC<PropsFromRedux> = ({ properties }) => {
                 <div className="search-box-wrapper">
                     <SearchBoxComponent
                         list={properties}
-                        searchFor={['location', 'title', 'category.name']}
+                        searchFor={["location", "title", "category.name"]}
                         onSearchComplete={(list: Property[]) =>
                             setFilteredProps(
                                 list.length > 0 ? list : properties
@@ -50,12 +47,7 @@ const PropertiesPage: React.FC<PropsFromRedux> = ({ properties }) => {
                         }
                     />
                 </div>
-                <LoadingOverlay
-                    active={isLoading}
-                    spinner={<CustomLoader title="Loading the results" />}
-                >
-                    <PropertyList properties={filteredProps} />
-                </LoadingOverlay>
+                <PropertyList properties={filteredProps} />
             </div>
         </div>
     );

@@ -9,6 +9,8 @@ import ContactUs from "../../pages/AboutUs/component/Contact";
 import PropertyDetail from "../../pages/PropertyDetail/PropertyDetail";
 import { AppRoutes } from "./routes";
 import NotFound from "../../pages/NotFound/NotFound";
+import Dashboard from "../../pages/Dashboard/Dashboard";
+import AgentProperties from "../../pages/AgentProperties/AgentProperties";
 
 const AppRouter: React.FC<any> = () => {
   return (
@@ -18,6 +20,22 @@ const AppRouter: React.FC<any> = () => {
       <Route path={AppRoutes.Messenger} exact component={MessengerPage}></Route>
       <Route path={AppRoutes.Contact} exact component={ContactUs}></Route>
       <Route path={AppRoutes.AboutUs} exact component={AboutUsPage}></Route>
+      <PrivateRoute
+        exact
+        path={AppRoutes.Dashboard}
+        component={Dashboard}></PrivateRoute>
+      <PrivateRoute
+        exact
+        path={`${AppRoutes.Dashboard}/${AppRoutes.Contact}`}
+        component={Dashboard}></PrivateRoute>
+      <PrivateRoute
+        exact
+        path={`${AppRoutes.Dashboard}${AppRoutes.Properties}`}
+        component={AgentProperties}></PrivateRoute>
+      <PrivateRoute
+        exact
+        path={AppRoutes.Dashboard}
+        component={Dashboard}></PrivateRoute>
       <PrivateRoute
         path={AppRoutes.Properties}
         component={PropertiesPage}
