@@ -12,6 +12,9 @@ export const useAuth = (): {
     }
 
     const authUser = JSON.parse(user);
-    const { token = "", username = "", adminId } = authUser;
+    let { token = "", username = "", adminId, email = "" } = authUser;
+    if (!username && email) {
+        username = email.split("@")[0];
+    }
     return { token, username, authenticated: Boolean(token), userId: adminId };
 };

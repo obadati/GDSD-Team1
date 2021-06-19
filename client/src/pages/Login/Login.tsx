@@ -9,23 +9,48 @@ import { AppRoutes } from "../../containers/Router/routes";
 import { loginUser, UserRoles } from "../../api/user";
 
 const LoginPage: React.FC<any> = ({ dispatch }) => {
-    const [user, setAppUser] = useState<{ username: string; password: string }>(
-        {
-            username: "",
-            password: "",
-        }
-    );
+    const [user, setAppUser] = useState<{
+        username: string;
+        password: string;
+        role: UserRoles | string;
+    }>({
+        username: "",
+        password: "",
+        role: UserRoles.Buyer,
+    });
     const history = useHistory();
 
     const loginHandler = async (event: any) => {
         event.preventDefault();
-        const authenticatedUser = await loginUser(user.username, user.password);
+        const authenticatedUser = await loginUser(
+            user.username,
+            user.password,
+            user.role
+        );
         localStorage.setItem("auth-user", JSON.stringify(authenticatedUser));
         history.push(AppRoutes.Landing);
     };
 
     const renderUserRoles = () => {
-        return Object.keys(UserRoles).map((role) => <div>{role}</div>);
+        return (
+            <div className="user-roles-wrapper">
+                {Object.keys(UserRoles).map((role) => (
+                    <div
+                        onClick={() => {
+                            setAppUser({ ...user, role: role });
+                        }}
+                        key={`user-roles-${role}`}
+                        className={`user-roles-wrapper__role action-item ${
+                            user.role.toLowerCase() === role.toLowerCase()
+                                ? "user-roles-wrapper__role__selected"
+                                : ""
+                        }`}
+                    >
+                        {role}
+                    </div>
+                ))}
+            </div>
+        );
     };
 
     return (
@@ -33,6 +58,7 @@ const LoginPage: React.FC<any> = ({ dispatch }) => {
             <div className="page__content">
                 <img src={logo} alt="" />
                 <p className="tag-line">Home for me!</p>
+                {renderUserRoles()}
                 <div className="login-page__form">
                     <form className="form-group">
                         <label htmlFor="username"></label>
