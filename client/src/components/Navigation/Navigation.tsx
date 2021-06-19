@@ -12,7 +12,6 @@ import "./Navigation.scss";
 
 const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     const { authenticated, username } = useAuth();
-    debugger;
     const tabs: NavigationTab[] = [
         { label: "home", to: AppRoutes.Landing },
         { label: "properties", to: AppRoutes.Properties },
