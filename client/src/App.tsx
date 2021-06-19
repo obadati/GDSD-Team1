@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import LoadingOverlay from "react-loading-overlay-ts";
+import React, { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { getAllProperties } from "./api/properties";
 import "./App.scss";
@@ -24,11 +23,15 @@ const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
     const loadData = async () => {
         dispatch(setLoadingState(true));
         dispatch(setAppUser(getFromLocalStorage(AUTH_USER_KEY)));
-        const { result } = await getAllProperties();
-        if (result) {
-            dispatch(setAllProperties(result));
+        try {
+            const { result } = await getAllProperties();
+            if (result) {
+                dispatch(setAllProperties(result));
+            }
+            dispatch(setLoadingState(false));
+        } catch (e) {
+            dispatch(setLoadingState(false));
         }
-        dispatch(setLoadingState(false));
     };
 
     return (
