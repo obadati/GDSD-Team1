@@ -23,6 +23,13 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
         });
     };
 
+    const handleEditProperty = (e: any) => {
+        e.stopPropagation();
+        history.push(AppRoutes.EditProperty.replace(":uid", property.id), {
+            state: property,
+        });
+    };
+
     return (
         <div className="property-card" onClick={handleClick}>
             <div className="property-card__thumbnail">
@@ -46,7 +53,10 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
                         </span>
                     </div>
                     {userRole !== UserRoles.Buyer && (
-                        <div className="property-card__actions">
+                        <div
+                            className="property-card__actions"
+                            onClick={handleEditProperty}
+                        >
                             <div className="card-action">
                                 <img src={editIcon}></img>
                             </div>

@@ -11,6 +11,7 @@ export enum AppRoutes {
     Location = "/location",
     Properties = "/properties",
     PropertyDetail = "/properties/:uid",
+    EditProperty = "/properties/:uid/edit",
     Messenger = "/messenger",
     Dashboard = "/dashboard",
     AvgPrice = "/avg-price",

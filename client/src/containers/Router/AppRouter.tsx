@@ -58,6 +58,11 @@ const AppRouter: React.FC<any> = () => {
                 exact
             ></PrivateRoute>
             <PrivateRoute
+                path={AppRoutes.EditProperty}
+                component={PropertyDetail}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
                 path={AppRoutes.AvgPrice}
                 component={AvgPriceCalculator}
                 exact
