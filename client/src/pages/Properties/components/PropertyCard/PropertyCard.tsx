@@ -5,22 +5,23 @@ import "./PropertyCard.scss";
 import { useHistory } from "react-router";
 import { AppRoutes } from "../../../../containers/Router/routes";
 import editIcon from "../../../../assets/images/edit-icon.png";
+import { AppState } from "../../../../store/rootReducer";
+import { UserRoles } from "../../../../api/user";
+import { connect, ConnectedProps } from "react-redux";
 
-interface OwnProps {
+interface OwnProps extends PropsFromRedux {
     property: Property;
-    editable?: boolean;
 }
 
-const PropertyCard: React.FC<OwnProps> = ({ property, editable }) => {
+const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
     const history = useHistory();
+    console.log(userRole);
 
     const handleClick = () => {
         history.push(AppRoutes.PropertyDetail.replace(":uid", property.id), {
             property,
         });
     };
-
-    console.log(editable);
 
     return (
         <div className="property-card" onClick={handleClick}>
@@ -44,7 +45,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property, editable }) => {
                             {property.size}
                         </span>
                     </div>
-                    {editable && (
+                    {userRole !== UserRoles.Buyer && (
                         <div className="property-card__actions">
                             <div className="card-action">
                                 <img src={editIcon}></img>
@@ -57,4 +58,11 @@ const PropertyCard: React.FC<OwnProps> = ({ property, editable }) => {
     );
 };
 
-export default PropertyCard;
+export const mapStateToProps = (state: AppState) => ({
+    userRole: state.user.role as UserRoles,
+});
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(PropertyCard);

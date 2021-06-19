@@ -10,6 +10,9 @@ import { setAllProperties } from "./store/properties/actions";
 import { AppState } from "./store/rootReducer";
 import LoaderComponent from "./components/CustomLoader/CustomLoader";
 import { setLoadingState } from "./store/loader/actions";
+import { setAppUser } from "./store/user/actions";
+import { getFromLocalStorage } from "./utility/localStorage";
+import { AUTH_USER_KEY } from "./constants/constants";
 
 interface OwnProps extends PropsFromRedux {}
 
@@ -20,6 +23,7 @@ const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
 
     const loadData = async () => {
         dispatch(setLoadingState(true));
+        dispatch(setAppUser(getFromLocalStorage(AUTH_USER_KEY)));
         const { result } = await getAllProperties();
         if (result) {
             dispatch(setAllProperties(result));

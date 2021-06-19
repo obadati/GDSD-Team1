@@ -46,10 +46,7 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
                         }
                     />
                 </div>
-                <PropertyList
-                    editable={userRole !== UserRoles.Buyer}
-                    properties={filteredProps}
-                />
+                <PropertyList properties={filteredProps} />
             </div>
         </div>
     );
