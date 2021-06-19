@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { searchByCategory } from "../../api/properties";
+import { UserRoles } from "../../api/user";
 import Filters from "../../components/Filters/Filters";
 import SearchBoxComponent from "../../components/SearchBox/SearchBox";
 import { Property } from "../../store/properties/types";
@@ -9,11 +10,9 @@ import { PropertyList } from "./components";
 
 import "./Properties.scss";
 
-interface OwnProps extends PropsFromRedux {
-    agent?: boolean;
-}
+interface OwnProps extends PropsFromRedux {}
 
-const PropertiesPage: React.FC<OwnProps> = ({ properties, agent }) => {
+const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
     const [filteredProps, setFilteredProps] = useState<Property[]>([]);
     useEffect(() => {
         if (properties.length > -1) {
@@ -47,7 +46,10 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, agent }) => {
                         }
                     />
                 </div>
-                <PropertyList properties={filteredProps} />
+                <PropertyList
+                    editable={userRole !== UserRoles.Buyer}
+                    properties={filteredProps}
+                />
             </div>
         </div>
     );
@@ -55,6 +57,7 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, agent }) => {
 
 const mapStateToProps = (state: AppState) => ({
     properties: state.properties.properties,
+    userRole: state.user.role as UserRoles,
 });
 
 const connector = connect(mapStateToProps);
