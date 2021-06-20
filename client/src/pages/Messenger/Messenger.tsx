@@ -3,7 +3,6 @@ import Message from "../../components/message/Message";
 import { dummyDeveloper, getRandomBg } from "../../utility/static";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
 import Conversation from "../../components/conversations/Conversation";
-
 import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
@@ -38,7 +37,7 @@ const MessengerPage: React.FC<any> = () => {
     //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
 
     useEffect(() => {
-        socket.current = io("ws://localhost:8900");
+        socket.current = io("ws://18.185.96.197:8900");
         socket.current.on("getMessage", (data) => {
             setReceviedMessage({
                 sndId: data.sndId,
