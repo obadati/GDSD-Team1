@@ -21,19 +21,7 @@ const MessengerPage: React.FC<any> = () => {
     const [receviedMessage, setReceviedMessage] = useState(null as any);
     const socket = useRef(io());
     const scrollRef = useRef<null | HTMLDivElement>(null);
-    const { username, email } = useAuth();
-    let userId = 0;
-    if (username == 'rabia') {
-        userId = 4;
-    }
-    else if (username == 'obada') {
-        userId = 1
-    }
-    //const userId = 1;
-    console.log(userId, username, email);
-    // let user = { name: 123, id: 1 };
-
-    //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
+    const { id, username, email } = useAuth();
 
     useEffect(() => {
         socket.current = io("ws://18.185.96.197:8900");
@@ -54,7 +42,7 @@ const MessengerPage: React.FC<any> = () => {
     }, [receviedMessage]);
 
     useEffect(() => {
-        socket.current.emit("addUser", userId);
+        socket.current.emit("addUser", id);
         socket.current.on("getUsers", users => {
             console.log(users)
         })
@@ -66,7 +54,7 @@ const MessengerPage: React.FC<any> = () => {
             try {
                 const res = await axios.get(
                     "http://18.185.96.197:5000/api/message/Conversation/" +
-                    userId
+                    id
                 );
                 setConversations(res as any);
             } catch (err) {
@@ -80,7 +68,7 @@ const MessengerPage: React.FC<any> = () => {
             try {
                 const res = await axios.get(
                     "http://18.185.96.197:5000/api/message/getMessages/" +
-                    userId +
+                    id +
                     "?withUser=" +
                     currentChat.rcvId
                 );
@@ -98,7 +86,7 @@ const MessengerPage: React.FC<any> = () => {
             try {
                 const res = await axios.get(
                     "http://18.185.96.197:5000/api/message/Conversation/" +
-                    userId
+                    id
                 );
                 // console.log(res);
                 setConversations(res as any);
@@ -111,7 +99,7 @@ const MessengerPage: React.FC<any> = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const messageSend = {
-            sndId: userId,
+            sndId: id,
             rcvId: currentChat.rcvId,
             messageTxt: newMessage,
         };
@@ -164,7 +152,7 @@ const MessengerPage: React.FC<any> = () => {
                                     <div ref={scrollRef}>
                                         <Message
                                             message={m}
-                                            own={m.rcvId !== userId}
+                                            own={m.rcvId !== id}
                                         />
                                     </div>
                                 ))}
