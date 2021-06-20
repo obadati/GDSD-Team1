@@ -280,3 +280,30 @@ exports.updateImage = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
+/*Delete User By Admin */
+exports.deleteUser = async (req, res) => {
+  try {
+      const id = req.params.id;
+      let user = await User.findOne({ where: { id: id } });
+     
+      if (user != null) {
+          await User.destroy({
+              where: { id: id },
+          });
+        
+          await fs.unlink(user.image, (err) => {
+              if (err) {
+                  console.log(err);
+              }
+          });
+          return res.status(200).json({
+              message: 'User Delete Successfully',
+          });
+      } else {
+          return res.status(404).json({ message: 'Data Not Found' });
+      }
+  } catch (err) {
+      return res.status(500).json({ error: err.message });
+  }
+};
