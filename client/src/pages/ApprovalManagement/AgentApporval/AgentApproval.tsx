@@ -1,11 +1,145 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { listOfAgent } from "../../../api/approval-managemnet";
+import "./AgentApproval.scss";
+import { BASE_URL } from "../../../api/approval-managemnet";
+import Modal from "../Modal";
 
-const AgentApproval = () => {
-  return (
-    <div >
-      <h1>Agent Approval</h1>
-    </div>
-  );
+const AgentApproval: React.FC<any> = () => {
+    const [agent, setAgent] = useState([]);
+    const [disp, setDisp] = useState(false);
+    const [data, setData] = useState({status:""});
+
+    const loadData = async () => {
+        const data = await listOfAgent(1);
+        setAgent(data.result);
+    };
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const onInputChange = (e:any) => {
+      setData({ ...data, [e.target.name]: e.target.value });
+    };
+  
+    const loadAgent=(value:any)=>{
+      setDisp(false)
+      if(value==true){
+        loadData()
+      }
+    }
+    return (
+        <div>
+            <div className="row">
+                <div className="col style-box">
+                    <h3>AGENT APPROVALS</h3>
+                </div>
+            </div>
+            <div className="card mb-4">
+                <div className="card-header">
+                    <i className="fa fa-user mr-1"></i>
+                    Agent List
+                </div>
+                <div className="card-body">
+                    <div className="table-responsive">
+                        <table
+                            className="table table-bordered table-style"
+                            id="dataTable"
+                        >
+                            <thead>
+                                <tr className="alignment">
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Post</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {agent.map((item: any) => {
+                                    return (
+                                        <tr key={item.id} className="alignment">
+                                            <td>
+                                                <img
+                                                    className="circle-image"
+                                                    src={
+                                                        `${BASE_URL}/` +
+                                                        item.image
+                                                    }
+                                                    alt="Avatar"
+                                                />
+                                            </td>
+                                            <td>
+                                                {item.firstName} {item.lastName}
+                                            </td>
+                                            <td>{item.email}</td>
+                                            <td>{item.postType}</td>
+                                            <td>{item.date}</td>
+                                            <td>{item.status}</td>
+
+                                            <td>
+                                                <ul className="list-inline m-0">
+                                                    <li className="list-inline-item"></li>
+                                                    <li className="list-inline-item">
+                                                        <button
+                                                            className="btn btn-success btn-sm rounded-0"
+                                                            type="button"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Edit"
+                                                            onClick={() => {
+                                                                setDisp(item);
+                                                                setData(item);
+                                                            }}
+                                                        >
+                                                            <i className="fa fa-edit"></i>
+                                                        </button>
+                                                    </li>
+                                                    <li className="list-inline-item">
+                                                        <button
+                                                            className="btn btn-danger btn-sm rounded-0"
+                                                            type="button"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Delete"
+                                                            // onClick={()=>{deleteRecord(item._id)}}
+                                                        >
+                                                            <i className="fa fa-trash"></i>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {data && disp && (
+        <Modal display={disp} onCloseModal={() => setDisp(false)} data ={data} loadAgent={loadAgent}>
+      {console.log(data)}
+          <label>Status</label>
+          <select
+            className="form-control"
+            id="status"
+            aria-label="Default select example"
+            onChange={(e) => onInputChange(e)}
+            name="status"
+          >
+            {/* <option selected>{data['status']}</option> */}
+            <option value="available">available</option>
+            <option value="expire">expire</option>
+          </select>
+        
+        </Modal>
+      )}
+        </div>
+    );
+    console.log("asd" + agent);
 };
 
 export default AgentApproval;

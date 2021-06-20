@@ -1,4 +1,5 @@
 import axios from "axios";
+import { httpGET } from "../utility/http";
 export enum ApporvalEndpoints {
     ListOfAgents = "/api/admin/allAgent",
     ApproveAgent = "/api/contactUs/",
@@ -7,7 +8,7 @@ export enum ApporvalEndpoints {
 export const BASE_URL = "http://18.185.96.197:5000";
 
 export const listOfAgent = (page = 1) => {
-    return axios.get(`${BASE_URL}${ApporvalEndpoints.ListOfAgents}/page=${page}`);
+    return      httpGET(`${BASE_URL}${ApporvalEndpoints.ListOfAgents}/${page}`);
 };
 
 export const approveAgent = (user: any) => {
