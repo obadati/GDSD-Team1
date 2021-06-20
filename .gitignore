@@ -10,7 +10,10 @@
 /client/node_modules
 /client/.pnp
 /client/*.pnp.js
-
+#socket
+/socket/node_modules/
+/socket/.pnp
+/socket/*.pnp.js
 # testing
 /client/coverage
 
