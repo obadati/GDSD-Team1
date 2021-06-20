@@ -15,7 +15,6 @@ interface OwnProps extends PropsFromRedux {
 
 const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
     const history = useHistory();
-    console.log(userRole);
 
     const handleClick = () => {
         history.push(AppRoutes.PropertyDetail.replace(":uid", property.id), {
@@ -26,7 +25,8 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
     const handleEditProperty = (e: any) => {
         e.stopPropagation();
         history.push(AppRoutes.EditProperty.replace(":uid", property.id), {
-            state: property,
+            property,
+            editable: true,
         });
     };
 

@@ -1,0 +1,45 @@
+.edit-property-page {
+    display: flex;
+    flex-direction: column;
+
+    .form-title {
+        margin-bottom: 0.5rem !important;
+        font-weight: 900;
+    }
+
+    .wrapper {
+        border-radius: 10px;
+        padding: 2rem;
+        border: 1px solid var(--app-color-border);
+        background: #ffffff85;
+        box-shadow: 0 2px 12px 1px #1174da4a;
+        max-width: 750px;
+        width: 100%;
+        margin: auto;
+    }
+
+    input {
+        &[type="file"] {
+            display: block;
+        }
+    }
+
+    label {
+        margin-top: 1rem;
+        &:first-child {
+            margin-top: unset;
+        }
+    }
+
+    button {
+        width: 100%;
+
+        &.dropdown-toggle {
+            background: var(--app-color-violet) !important;
+        }
+
+        &[type="submit"] {
+            margin-top: 1rem;
+        }
+    }
+}

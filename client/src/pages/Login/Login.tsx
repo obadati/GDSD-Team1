@@ -31,7 +31,6 @@ const LoginPage: React.FC<PropsFromRedux> = ({ dispatch }) => {
         );
         localStorage.setItem("auth-user", JSON.stringify(authenticatedUser));
         history.push(AppRoutes.Landing);
-        debugger;
         dispatch(setAppUser(authenticatedUser as any));
     };
 
