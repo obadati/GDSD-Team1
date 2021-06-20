@@ -9,19 +9,60 @@ import axios, { AxiosResponse } from "axios";
 import { getConfig } from "@testing-library/react";
 import { httpGET, httpPOST } from "../../utility/http";
 import { useAuth } from "../../hooks/auth";
+import { io } from "socket.io-client";
 
 
 const MessengerPage: React.FC<any> = () => {
+
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null as any);
+    //const [socket, setsocket] = useState(null as any);
 
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
-    const scrollRef = useRef<null | HTMLDivElement>(null)
-    const { userId } = useAuth();
+    const [receviedMessage, setReceviedMessage] = useState(null as any);
+    const socket = useRef(io());
+    const scrollRef = useRef<null | HTMLDivElement>(null);
+    const { username, email } = useAuth();
+    let userId = 0;
+    if (username == 'rabia') {
+        userId = 4;
+    }
+    else if (username == 'obada') {
+        userId = 1
+    }
+    //const userId = 1;
+    console.log(userId, username, email);
     // let user = { name: 123, id: 1 };
 
     //const [developer, setDeveloper] = useState<Developer>(dummyDeveloper);
+
+    useEffect(() => {
+        socket.current = io("ws://localhost:8900");
+        socket.current.on("getMessage", (data) => {
+            setReceviedMessage({
+                sndId: data.sndId,
+                rcvId: data.rcvId,
+                messageTxt: data.messageTxt,
+                createdAt: Date.now(),
+            });
+        });
+    }, []);
+
+    useEffect(() => {
+        receviedMessage &&
+            currentChat?.rcvId == receviedMessage.sndId &&
+            setMessages((prev) => [...prev, receviedMessage] as any);
+    }, [receviedMessage]);
+
+    useEffect(() => {
+        socket.current.emit("addUser", userId);
+        socket.current.on("getUsers", users => {
+            console.log(users)
+        })
+
+    }, []);
+
     useEffect(() => {
         const getConversations = async () => {
             try {
@@ -58,15 +99,21 @@ const MessengerPage: React.FC<any> = () => {
             rcvId: currentChat.rcvId,
             messageTxt: newMessage,
         };
+
+
         try {
             const res = await httpPOST("http://18.185.96.197:5000/api/message/sendMessage", messageSend);
             setMessages([...messages, res as any] as any);
             setNewMessage("");
+            socket.current.emit("sendMessage", messageSend);
+
         }
         catch (err) {
             console.log(err);
         }
     };
+
+
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [messages]);
