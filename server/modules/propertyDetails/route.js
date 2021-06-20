@@ -21,9 +21,6 @@ router.put('/updateProperty/:id', controller.updateProperty);
 /*Add Property Image*/
 router.post('/images/', controller.addPropertyImage);
 
-/*Disable Property*/
-router.patch('/disable/property/:id', controller.disableProperty);
-
 /*********************************************************Website User*********************************/
 /*All Properties */
 router.get('/:page', controller.getAllProperty);
