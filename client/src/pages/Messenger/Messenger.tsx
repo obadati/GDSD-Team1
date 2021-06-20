@@ -169,7 +169,7 @@ const MessengerPage: React.FC<any> = () => {
                                         <Message
                                             message={m}
                                             own={m.rcvId !== id}
-                                            image={userImage}
+                                            image={m.rcvId !== id ? userImage : currentChat}
                                         />
                                     </div>
                                 ))}
