@@ -4,7 +4,7 @@ export interface AppUser {
     role: UserRoles;
     username: string;
     email: string;
-    userId: number;
+    id: number;
     authenticated: boolean;
     token: string;
 }

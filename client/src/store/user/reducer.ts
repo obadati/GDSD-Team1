@@ -4,7 +4,7 @@ import { AppUser } from "../../models/AppUser";
 import { UserStateActions } from "./actions";
 
 export const initialState: AppUser = {
-    userId: -1,
+    id: -1,
     username: "",
     email: "",
     token: "",
