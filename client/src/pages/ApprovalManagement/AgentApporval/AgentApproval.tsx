@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { listOfAgent } from "../../../api/approval-managemnet";
 import "./AgentApproval.scss";
 import { BASE_URL } from "../../../api/approval-managemnet";
-import Modal from "../Modal";
+import Modal from "./Modal";
 
 const AgentApproval: React.FC<any> = () => {
     const [agent, setAgent] = useState([]);
@@ -36,8 +36,8 @@ const AgentApproval: React.FC<any> = () => {
             </div>
             <div className="card mb-4">
                 <div className="card-header">
-                    <i className="fa fa-user mr-1"></i>
-                    Agent List
+                    <i className="fa fa-user mr-3"></i>
+                    AGENT LIST
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
