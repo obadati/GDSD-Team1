@@ -18,10 +18,13 @@ const MessengerPage: React.FC<any> = () => {
 
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const [userImage, setUserImage] = useState([]);
     const [receviedMessage, setReceviedMessage] = useState(null as any);
     const socket = useRef(io());
     const scrollRef = useRef<null | HTMLDivElement>(null);
     const { id, username, email } = useAuth();
+
+
 
     useEffect(() => {
         socket.current = io("ws://18.185.96.197:8900");
@@ -48,7 +51,20 @@ const MessengerPage: React.FC<any> = () => {
         })
 
     }, []);
-
+    useEffect(() => {
+        const getImage = async () => {
+            try {
+                const res = await axios.get(
+                    "http://18.185.96.197:5000/api/user/userImage/" +
+                    id
+                );
+                setUserImage(res as any);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getImage();
+    }, []);
     useEffect(() => {
         const getConversations = async () => {
             try {
@@ -153,6 +169,7 @@ const MessengerPage: React.FC<any> = () => {
                                         <Message
                                             message={m}
                                             own={m.rcvId !== id}
+                                            image={userImage}
                                         />
                                     </div>
                                 ))}
