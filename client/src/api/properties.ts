@@ -36,12 +36,46 @@ export const searchByCategory = (categoryId: number, page = 1) => {
     );
 };
 
-export const updateProperty = (property: Property, agentUid: string) => {
+export const updateProperty = (property: Property, agentId: string) => {
+    const {
+        title,
+        description,
+        price,
+        location,
+        room,
+        size,
+        category: { id: categoryId },
+        images,
+    } = property;
+    /**
+     * title
+        description
+        price
+        location
+        city
+        room
+        size
+        categoryId (int)
+        property (single image)
+        agentId (from token)
+        date (currentDate)
+     */
     return httpPOST(
-        PropertiesEndpoints.UpdateProperty.replace(":uid", property.id).replace(
-            ":agentUid",
-            agentUid
-        ),
-        {}
+        `${BASE_URL}${PropertiesEndpoints.UpdateProperty.replace(
+            ":uid",
+            property.id
+        )}`,
+        {
+            title,
+            description,
+            price,
+            location,
+            room,
+            size,
+            categoryId,
+            property: images,
+            agentId,
+            date: new Date(),
+        }
     );
 };

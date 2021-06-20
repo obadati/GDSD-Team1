@@ -1,18 +1,24 @@
 import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import { updateProperty } from "../../api/properties";
 import { PropertyCategories } from "../../components/Filters/Filters";
+import { useAuth } from "../../hooks/auth";
 import { Property } from "../../store/properties/types";
 import "./EditProperty.scss";
 
 const EditProperty = () => {
     const history = useHistory();
+    const { id: agentId } = useAuth();
     const {
         location: {
             state: { property },
         },
     } = history as any;
-    const [formData, setFormData] = useState<Property>({ ...property });
+    const [formData, setFormData] = useState<Property>({
+        ...property,
+        images: null,
+    });
 
     if (!property) {
         return <></>;
@@ -32,7 +38,11 @@ const EditProperty = () => {
     };
 
     const handleFormSubmit = () => {
-        console.log(formData);
+        updateProperty(formData, agentId.toString());
+    };
+
+    const handleImageChange = (e: any) => {
+        setFormData({ ...formData, images: e.target.files[0] });
     };
 
     return (
@@ -155,7 +165,7 @@ const EditProperty = () => {
 
                     <label htmlFor="images">Images</label>
                     <input
-                        onChange={(e) => setFormData({ ...formData })}
+                        onChange={handleImageChange}
                         placeholder="images"
                         id="images"
                         type="file"
