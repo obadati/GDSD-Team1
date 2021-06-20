@@ -1,55 +1,62 @@
 .app-navigation {
-  border-bottom: 1px solid var(--app-color-border);
-  .app-logo {
-    margin-right: 1rem;
-    width: 100px;
-    height: 100px;
-    img {
-      width: 100%;
-      object-fit: contain;
-      height: 100%;
-    }
-  }
+    border-bottom: 1px solid var(--app-color-border);
 
-  .app-intro {
+    .app-logo {
+        margin-right: 1rem;
+        width: 100px;
+        height: 100px;
+        img {
+            width: 100%;
+            object-fit: contain;
+            height: 100%;
+        }
+    }
+
+    .app-intro {
+        display: flex;
+        h3 {
+            margin-right: 10px !important;
+        }
+    }
+
     display: flex;
-    h3 {
-      margin-right: 10px !important;
+    flex-direction: column;
+    padding-top: 1rem;
+    align-items: center;
+
+    &__tab {
+        padding: 0.5rem;
+        text-transform: uppercase;
+        text-align: center;
+        cursor: pointer;
+        margin-right: 1rem;
+        text-decoration: none;
+        color: var(--app-color-text);
+
+        &--selected {
+            border-bottom: 1px solid;
+            font-weight: 900;
+        }
+
+        &:hover {
+            outline: none;
+        }
     }
-  }
-
-  display: flex;
-  flex-direction: column;
-  padding-top: 1rem;
-  align-items: center;
-
-  &__tab {
-    padding: 0.5rem;
-    text-transform: uppercase;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 1rem;
-
-    &--selected {
-      border-bottom: 1px solid;
-      font-weight: 900;
-    }
-  }
 }
 
 .tabs-wrapper {
-  display: flex;
-  width: 100%;
-  align-items: center;
+    display: flex;
+    width: 100%;
+    align-items: center;
 }
 
 .user-actions {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
 
-  .app-navigation__tab--username {
-    color: var(--app-color-secondary);
-    font-weight: 900;
-  }
+    .app-navigation__tab--username {
+        color: var(--app-color-secondary);
+        font-weight: 900;
+    }
 }

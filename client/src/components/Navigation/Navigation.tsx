@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import AppLogo from "../../assets/images/logo.png";
 import { AppRoutes } from "../../containers/Router/routes";
 import { useAuth } from "../../hooks/auth";
@@ -34,22 +34,17 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
 
     const history = useHistory();
 
-    const handleSelectedTab = (tab: NavigationTab, index: number) => {
-        dispatch(setActiveTab(tab));
-        history.push(tab.to);
-    };
-
     const renderTabs = () => {
         return tabs.map((tab, index) => (
-            <div
+            <NavLink
+                exact
+                to={tab.to}
+                activeClassName="app-navigation__tab--selected"
                 key={`navigation-tab-${index}`}
-                onClick={() => handleSelectedTab(tab, index)}
-                className={`app-navigation__tab app-navigation__tab${
-                    activeTab.label === tab.label ? "--selected" : ""
-                }`}
+                className={`app-navigation__tab `}
             >
                 {tab.label}
-            </div>
+            </NavLink>
         ));
     };
 
