@@ -9,6 +9,8 @@ const fs = require('fs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const status = 'approved';
+const jwt = require('jsonwebtoken');
+const secret = require('../../utils/token').tokenEncryptionSecret;
 
 /****************************************************Define Controller***********************************/
 
@@ -39,7 +41,7 @@ var upload = multer({
         }
         callback(null, true);
     },
-}).single('property');
+}).single('image');
 
 /*Upload Parameter For Multiple Image */
 var uploadMultipleImage = multer({
@@ -52,7 +54,7 @@ var uploadMultipleImage = multer({
         }
         callback(null, true);
     },
-}).array('property', 10);
+}).array('image', 10);
 
 /***********************************************Agent Dashboard******************************************/
 /*Create Property By Agent*/
@@ -241,6 +243,10 @@ exports.agentPropertyByStatus = async (req, res) => {
 /*Update Property */
 exports.updateProperty = async (req, res) => {
     try {
+
+        const token = req.headers.authorization.split(" ")[1];
+        const user = jwt.verify(token, secret);
+        
         upload(req, res, async function (err) {
             if (err) {
                 return res.status(400).json({
@@ -259,12 +265,15 @@ exports.updateProperty = async (req, res) => {
                     room,
                     size,
                     city,
+                    agentId
                 } = req.body;
                 const id = req.params.id;
                 let path = req.file.path;
                 let propertyUpdate = await Property.findOne({
                     where: { id: id },
                 });
+                if(propertyUpdate.agentId == user.id){
+
                 await Property.update(
                     {
                         images: path,
@@ -276,6 +285,7 @@ exports.updateProperty = async (req, res) => {
                         size: size,
                         description: description,
                         city: city,
+                        agentId:agentId
                     },
                     { where: { id: id } }
                 );
@@ -289,26 +299,18 @@ exports.updateProperty = async (req, res) => {
                     message: 'Image Update Successfully',
                 });
             }
+            else{
+                return res.status(400).json({
+                    message: 'Invalid User',
+                });
+            }
+            }
         });
     } catch (err) {
         return res.status(500).json({ error: err.message });
     }
 };
 
-exports.disableProperty = async (req, res) => {
-    try {
-        let id = req.params.id;
-        await Property.update(
-            {
-                status: 'disable',
-            },
-            { where: { id: id } }
-        );
-        return res.status(200).json({ message: 'Disable Successfully' });
-    } catch (err) {
-        return res.status(500).json({ error: err.message });
-    }
-};
 /*********************************************************Website User*********************************/
 
 /*Get All Property Approved By Admin*/
