@@ -9,7 +9,7 @@ export const useAuth = (): AppUser => {
             authenticated: false,
             username: "",
             token: "",
-            userId: -1,
+            id: -1,
             role: UserRoles.Buyer,
             email: "",
         };
@@ -19,9 +19,9 @@ export const useAuth = (): AppUser => {
     let {
         token = "",
         username = "",
-        adminId,
         email = "",
         role = UserRoles.Buyer,
+        id = -1,
     } = authUser;
     if (!username && email) {
         username = email.split("@")[0];
@@ -30,7 +30,7 @@ export const useAuth = (): AppUser => {
         token,
         username,
         authenticated: Boolean(token),
-        userId: adminId,
+        id,
         role,
         email,
     };

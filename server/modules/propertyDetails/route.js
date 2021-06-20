@@ -7,7 +7,7 @@ const controller = require('./controller');
 /***********************************************Agent Dashboard******************************************/
 
 /*Create Properties */
-router.post('/', controller.create);
+router.post('/:uid', controller.create);
 
 /*Get Agent Properties */
 router.get('/agentProperty/:page', controller.agentProperty);

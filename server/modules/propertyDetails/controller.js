@@ -67,6 +67,7 @@ exports.create = async (req, res) => {
                             : err.message,
                 });
             } else {
+                let uid= req.params.uid;
                 let data = {
                     title: req.body.title,
                     description: req.body.description,
@@ -78,7 +79,7 @@ exports.create = async (req, res) => {
                     size: req.body.size,
                     images: req.file.path,
                     city: req.body.city,
-                    agentId: req.body.agentId,
+                    agentId: uid,
                     date: date,
                 };
                 console.log(data);
