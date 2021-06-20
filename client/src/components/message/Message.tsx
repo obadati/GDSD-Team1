@@ -1,5 +1,6 @@
 import "./Message.scss";
 import { format } from "timeago.js";
+import { BASE_URL } from "../../api/properties";
 
 
 const Message: React.FC<any> = ({ message, own, image }) => {
@@ -11,8 +12,8 @@ const Message: React.FC<any> = ({ message, own, image }) => {
 
                 <img
                     className="messageImg"
-                    src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                    alt={image.image}
+                    src={`${BASE_URL}/${image.image}`}
+                    alt=""
                 />
                 <div className="messageBubble">
                     <p className="messageText">
