@@ -3,6 +3,7 @@ import { listOfAgent } from "../../../api/approval-managemnet";
 import "./AgentApproval.scss";
 import { BASE_URL } from "../../../api/approval-managemnet";
 import Modal from "./Modal";
+import { deleteAgent } from "../../../api/approval-managemnet";
 
 const AgentApproval: React.FC<any> = () => {
     const [agent, setAgent] = useState([]);
@@ -27,6 +28,12 @@ const AgentApproval: React.FC<any> = () => {
         loadData()
       }
     }
+    
+    const deleteRecord= async(id:Number)=>{
+        await  deleteAgent(id)
+          loadData();
+          
+            }
     return (
         <div>
             <div className="row">
@@ -104,7 +111,7 @@ const AgentApproval: React.FC<any> = () => {
                                                             data-toggle="tooltip"
                                                             data-placement="top"
                                                             title="Delete"
-                                                            // onClick={()=>{deleteRecord(item._id)}}
+                                                             onClick={()=>{deleteRecord(item.id)}}
                                                         >
                                                             <i className="fa fa-trash"></i>
                                                         </button>

@@ -50,8 +50,7 @@ router.get(
     controller.getAllPropertyByAdminStatus
 );
 
-/*Delete Property */
-router.delete('/:id', controller.deleteProperty);
+
 
 /*Export  Router*/
 module.exports = router;
