@@ -41,7 +41,7 @@ exports.createConversation = async (req, res) => {
 exports.getuserConversations = async (req, res) => {
   try {
     let id = req.params.userId;
-    const [results, metadata] = await db.sequelize.query("select T1.rcvId,concat(firstName,concat(' ',lastName)) Name,Max(T1.lastMessage)  from (select case when rcvId=:id then sndId else rcvId end rcvId ,messages.createdAt lastMessage from dev_real_state.messages where sndId=:id or (rcvId=:id  and messageTxt<>'')) T1 left join dev_real_state.users on T1.rcvId=users.id group by T1.rcvId,Name  order by Max(T1.lastMessage) desc;",
+    const [results, metadata] = await db.sequelize.query("select T1.rcvId,concat(firstName,concat(' ',lastName)) Name,image ,Max(T1.lastMessage)  from (select case when rcvId=:id then sndId else rcvId end rcvId ,messages.createdAt lastMessage from dev_real_state.messages where sndId=:id or (rcvId=:id  and messageTxt<>'')) T1 left join dev_real_state.users on T1.rcvId=users.id group by T1.rcvId,Name,image   order by Max(T1.lastMessage) desc;",
       {
         replacements: { id: id }
       });
