@@ -714,7 +714,7 @@ exports.findAvgPrice = async (req, res) => {
 /*List Of All Property By Admin */
 exports.getAllPropertyByAdmin = async (req, res) => {
     try {
-        let limit = 8;
+        let limit = 15;
         let offset = 0;
         Property.findAndCountAll({}).then((data) => {
             let page = req.params.page; // page number
@@ -911,3 +911,26 @@ exports.filterProperty = (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 };
+
+/*Approve Agent*/
+exports.approveStatus = async (req, res) => {
+    try {
+      let id = req.params.id;
+      const { status } = req.query;
+      let user = await Property.findOne({ where: { id: id } });
+      if (user) {
+        await Property.update({ status: status }, { where: { id: id } });
+  
+        return res.status(200).json({
+          message: "Change status successfully",
+        });
+      } else {
+        return res.status(400).json({
+          message: "Property not found",
+        });
+      }
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  };
+

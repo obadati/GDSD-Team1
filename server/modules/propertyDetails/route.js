@@ -49,6 +49,7 @@ router.get(
     '/getAllPropertyByAdminStatus/:page',
     controller.getAllPropertyByAdminStatus
 );
+router.patch('/approveProperty/status/:id/',controller.approveStatus)
 
 
 

@@ -138,15 +138,15 @@ const AgentApproval: React.FC<any> = () => {
             name="status"
           >
             {/* <option selected>{data['status']}</option> */}
-            <option value="available">available</option>
-            <option value="expire">expire</option>
+            <option value="approved">Approve</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
           </select>
         
         </Modal>
       )}
         </div>
     );
-    console.log("asd" + agent);
 };
 
 export default AgentApproval;

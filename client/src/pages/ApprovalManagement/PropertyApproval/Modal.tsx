@@ -1,7 +1,8 @@
 import {useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+import {approveProperty} from "../../../api/approval-managemnet";
+
 
 interface ModalPopUp {
     display?: any;
@@ -21,15 +22,10 @@ const ModalPopUp: React.FC<ModalPopUp>= ({ display, onCloseModal, data, loadAgen
     e.preventDefault();
    console.log(data);
 
-   let edit = await axios.patch(`http://localhost:5000/api/quiz/${data._id}`, data);
-   console.log(edit)
-   if(edit.status==200){
-    loadAgent(true);
-   }
-   else{
-    loadAgent(false);
-   }
-     history.push("/quiz");
+   let edit = await approveProperty(data.id,data.status);
+   
+   loadAgent(true);
+     history.push("/propertyApproval");
   };
 
   return (
