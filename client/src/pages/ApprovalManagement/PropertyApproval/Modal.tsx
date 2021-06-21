@@ -11,7 +11,7 @@ interface ModalPopUp {
     loadAgent?:any;
 
   }
-const ModalPopUp: React.FC<ModalPopUp>= ({ display, onCloseModal, data, loadAgent,children }) => {
+const ModalPopUp: React.FC<ModalPopUp>= ({ display, onCloseModal, data,  loadAgent,children }) => {
   const [show, setShow] = useState(display ? true : false);
   let history = useHistory();
   const handleClose = () => {

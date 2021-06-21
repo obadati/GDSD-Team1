@@ -2,6 +2,7 @@ import {useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import {approveAgent} from "../../../api/approval-managemnet";
+import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
 
 interface ModalPopUp {
     display?: any;

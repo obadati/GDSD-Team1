@@ -3,37 +3,40 @@ import { listOfProperty } from "../../../api/approval-managemnet";
 import { deleteProperty } from "../../../api/approval-managemnet";
 import "./PropertyApproval.scss";
 import Modal from "./Modal";
+import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
 
 const PropertyApproval: React.FC<any> = () => {
     const [property, setProperty] = useState([]);
     const [disp, setDisp] = useState(false);
     const [data, setData] = useState({});
+    const [testData, setTestData] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const loadData = async () => {
+        setIsLoading(true);
         const data = await listOfProperty(1);
         setProperty(data.result);
-        console.log(data.result)
+        setIsLoading(false);
     };
     useEffect(() => {
         loadData();
     }, []);
 
-    const onInputChange = (e:any) => {
-      setData({ ...data, [e.target.name]: e.target.value });
+    const onInputChange = (e: any) => {
+        setData({ ...data, [e.target.name]: e.target.value });
     };
-  
-    const loadAgent=(value:any)=>{
-      setDisp(false)
-      if(value==true){
-        loadData()
-      }
-    }
 
-    const deleteRecord= async(id:Number)=>{
-      await  deleteProperty(id)
+    const loadAgent = (value: any) => {
+        setDisp(false);
+        if (value == true) {
+            loadData();
+        }
+    };
+
+    const deleteRecord = async (id: Number) => {
+        await deleteProperty(id);
         loadData();
-        
-          }
+    };
     return (
         <div>
             <div className="row">
@@ -41,6 +44,9 @@ const PropertyApproval: React.FC<any> = () => {
                     <h3>PROPERTY APPROVALS</h3>
                 </div>
             </div>
+            {isLoading && (
+                <LoaderComponent title="sit tight!"></LoaderComponent>
+            )}
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-home mr-3"></i>
@@ -102,7 +108,11 @@ const PropertyApproval: React.FC<any> = () => {
                                                             data-toggle="tooltip"
                                                             data-placement="top"
                                                             title="Delete"
-                                                            onClick={()=>{deleteRecord(item.id)}}
+                                                            onClick={() => {
+                                                                deleteRecord(
+                                                                    item.id
+                                                                );
+                                                            }}
                                                         >
                                                             <i className="fa fa-trash"></i>
                                                         </button>
@@ -117,25 +127,35 @@ const PropertyApproval: React.FC<any> = () => {
                     </div>
                 </div>
             </div>
+
             {data && disp && (
-        <Modal display={disp} onCloseModal={() => setDisp(false)} data ={data} loadAgent={loadAgent}>
-      {console.log(data)}
-          <label>Status</label>
-          <select
-            className="form-control"
-            id="status"
-            aria-label="Default select example"
-            onChange={(e) => onInputChange(e)}
-            name="status"
-          >
-            {/* <option selected>{data['status']}</option> */}
-            <option value="approved">Approve</option>
-            <option value="pending">Pending</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        
-        </Modal>
-      )}
+                <Modal
+                    display={disp}
+                    onCloseModal={() => setDisp(false)}
+                    data={data}
+                    loadAgent={loadAgent}
+                >
+                    {isLoading && (
+                        <LoaderComponent title="sit tight!"></LoaderComponent>
+                    )}
+                    <label>Status</label>
+                    <select
+                        className="form-control"
+                        id="status"
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                            onInputChange(e);
+                            setTestData(e.target.value);
+                        }}
+                        value={testData}
+                        name="status"
+                    >
+                        <option value="approved">Approve</option>
+                        <option value="pending">Pending</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </Modal>
+            )}
         </div>
     );
 };

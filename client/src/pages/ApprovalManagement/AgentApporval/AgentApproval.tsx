@@ -4,18 +4,25 @@ import "./AgentApproval.scss";
 import { BASE_URL } from "../../../api/approval-managemnet";
 import Modal from "./Modal";
 import { deleteAgent } from "../../../api/approval-managemnet";
+import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
+
 
 const AgentApproval: React.FC<any> = () => {
     const [agent, setAgent] = useState([]);
     const [disp, setDisp] = useState(false);
     const [data, setData] = useState({status:""});
+    const [testData,setTestData] = useState("");
+    const [isLoading, setIsLoading] =useState(false);
 
     const loadData = async () => {
+        setIsLoading(true)
         const data = await listOfAgent(1);
         setAgent(data.result);
+        setIsLoading(false)
     };
     useEffect(() => {
         loadData();
+       
     }, []);
 
     const onInputChange = (e:any) => {
@@ -41,6 +48,8 @@ const AgentApproval: React.FC<any> = () => {
                     <h3>AGENT APPROVALS</h3>
                 </div>
             </div>
+
+            {isLoading && (<LoaderComponent title="sit tight!"></LoaderComponent>)}
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-user mr-3"></i>
@@ -99,6 +108,7 @@ const AgentApproval: React.FC<any> = () => {
                                                             onClick={() => {
                                                                 setDisp(item);
                                                                 setData(item);
+                                                                setTestData(item.status)
                                                             }}
                                                         >
                                                             <i className="fa fa-edit"></i>
@@ -128,16 +138,19 @@ const AgentApproval: React.FC<any> = () => {
             </div>
             {data && disp && (
         <Modal display={disp} onCloseModal={() => setDisp(false)} data ={data} loadAgent={loadAgent}>
-      {console.log(data)}
+          {isLoading && (<LoaderComponent title="sit tight!"></LoaderComponent>)}
           <label>Status</label>
           <select
             className="form-control"
             id="status"
             aria-label="Default select example"
-            onChange={(e) => onInputChange(e)}
+            onChange={(e) => {
+                onInputChange(e);
+                setTestData(e.target.value);
+            }}
             name="status"
+            value={testData}
           >
-            {/* <option selected>{data['status']}</option> */}
             <option value="approved">Approve</option>
             <option value="pending">Pending</option>
             <option value="rejected">Rejected</option>
