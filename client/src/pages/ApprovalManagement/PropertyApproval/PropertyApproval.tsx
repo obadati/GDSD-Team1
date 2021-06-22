@@ -66,6 +66,7 @@ const PropertyApproval: React.FC<any> = () => {
                                     <th>Size</th>
                                     <th>Location</th>
                                     <th>City</th>
+                                    <th>Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -81,6 +82,7 @@ const PropertyApproval: React.FC<any> = () => {
                                             <td>{item.size}</td>
                                             <td>{item.location}</td>
                                             <td>{item.city}</td>
+                                            <td>{item.date}</td>
                                             <td>{item.status}</td>
 
                                             <td>
