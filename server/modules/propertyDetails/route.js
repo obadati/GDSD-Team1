@@ -49,9 +49,9 @@ router.get(
     '/getAllPropertyByAdminStatus/:page',
     controller.getAllPropertyByAdminStatus
 );
+router.patch('/approveProperty/status/:id/',controller.approveStatus)
 
-/*Delete Property */
-router.delete('/:id', controller.deleteProperty);
+
 
 /*Export  Router*/
 module.exports = router;

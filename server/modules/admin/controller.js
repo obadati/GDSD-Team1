@@ -51,7 +51,7 @@ exports.create = async (req, res) => {
 /*List Of Agents */
 exports.getAgent = async (req, res) => {
   try {
-    let limit = 8;
+    let limit = 15;
     let offset = 0;
     User.findAndCountAll({ where: { postType: "Agent" } }).then((data) => {
       let page = req.params.page; // page number

@@ -16,6 +16,9 @@ import { AppRoutes } from "./routes";
 import NotFound from "../../pages/NotFound/NotFound";
 import Dashboard from "../../pages/Dashboard/Dashboard";
 import EditProperty from "../../pages/EditProperty/EditProperty";
+import Approval from "../../pages/ApprovalManagement/ApprovalDashboard/Approval";
+import AgentApproval from "../../pages/ApprovalManagement/AgentApporval/AgentApproval";
+import PropertyApproval from "../../pages/ApprovalManagement/PropertyApproval/PropertyApproval";
 
 const AppRouter: React.FC<any> = () => {
     return (
@@ -66,6 +69,21 @@ const AppRouter: React.FC<any> = () => {
             <PrivateRoute
                 path={AppRoutes.AvgPrice}
                 component={AvgPriceCalculator}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.Approvals}
+                component={Approval}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.AgentApprovals}
+                component={AgentApproval}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.PropertyApprovals}
+                component={PropertyApproval}
                 exact
             ></PrivateRoute>
             <Route path="*" component={NotFound}></Route>
