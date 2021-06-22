@@ -1,5 +1,5 @@
 import { Property } from "../store/properties/types";
-import { httpGET, httpPOST } from "../utility/http";
+import { httpGET, httpPOST, httpPUT } from "../utility/http";
 
 export enum PropertiesEndpoints {
     GetAll = "/api/properties/",
@@ -36,7 +36,11 @@ export const searchByCategory = (categoryId: number, page = 1) => {
     );
 };
 
-export const updateProperty = (property: Property, agentUid: string) => {
+export const updateProperty = (
+    property: Property,
+    agentId: string,
+    token: string
+) => {
     const {
         title,
         description,
@@ -45,10 +49,28 @@ export const updateProperty = (property: Property, agentUid: string) => {
         room,
         size,
         category: { id: categoryId },
-        images,
+        images: image,
     } = property;
-    return httpPOST(
-        PropertiesEndpoints.UpdateProperty.replace(":uid", property.id),
-        {}
+    return httpPUT(
+        `${BASE_URL}${PropertiesEndpoints.UpdateProperty.replace(
+            ":uid",
+            property.id
+        )}`,
+        {
+            title,
+            description,
+            price,
+            location,
+            room,
+            size,
+            categoryId,
+            image,
+            agentId,
+            date: new Date(),
+        },
+        {
+            "Content-Type": "application/form-data",
+            Authorization: `Bearer ${token}`,
+        }
     );
 };
