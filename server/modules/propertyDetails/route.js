@@ -7,7 +7,7 @@ const controller = require('./controller');
 /***********************************************Agent Dashboard******************************************/
 
 /*Create Properties */
-router.post('/', controller.create);
+router.post('/:uid', controller.create);
 
 /*Get Agent Properties */
 router.get('/agentProperty/:page', controller.agentProperty);
@@ -20,9 +20,6 @@ router.put('/updateProperty/:id', controller.updateProperty);
 
 /*Add Property Image*/
 router.post('/images/', controller.addPropertyImage);
-
-/*Disable Property*/
-router.patch('/disable/property/:id', controller.disableProperty);
 
 /*********************************************************Website User*********************************/
 /*All Properties */
@@ -52,9 +49,9 @@ router.get(
     '/getAllPropertyByAdminStatus/:page',
     controller.getAllPropertyByAdminStatus
 );
+router.patch('/approveProperty/status/:id/',controller.approveStatus)
 
-/*Delete Property */
-router.delete('/:id', controller.deleteProperty);
+
 
 /*Export  Router*/
 module.exports = router;

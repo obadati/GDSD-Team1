@@ -131,7 +131,7 @@ exports.login = async (req, res) => {
       }
 
       const token = jwt.sign(
-        { id: admin.id, username: admin.username, role: "admin" },
+        { id: admin.id, username: admin.username, role: "admin"},
         secret
       );
 
@@ -175,7 +175,7 @@ exports.login = async (req, res) => {
           return res.status(400).json({ message: "Invalid creadentials." });
         }
         const token = jwt.sign(
-          { id: user.id, email: user.username, role: user.postType },
+          { id: user.id, email: user.username, role: user.postType, url:user.image },
           secret
         );
         res.json({
@@ -183,6 +183,7 @@ exports.login = async (req, res) => {
           id: user.id,
           email: user.email,
           role: "agent",
+          url:user.image
         });
       } else if (userPending) {
         return res.status(400).json({
@@ -204,7 +205,7 @@ exports.login = async (req, res) => {
         return res.status(400).json({ message: "Invalid creadentials." });
       }
       const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.postType },
+        { id: user.id, email: user.email, role: user.postType, url:user.image },
         secret
       );
       res.json({
@@ -212,6 +213,7 @@ exports.login = async (req, res) => {
         id: user.id,
         email: user.email,
         role: "buyer",
+        url:user.image
       });
     } else {
       return res.status(400).json({ message: "Please select correct role" });
@@ -278,5 +280,32 @@ exports.updateImage = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
+  }
+};
+
+/*Delete User By Admin */
+exports.deleteUser = async (req, res) => {
+  try {
+      const id = req.params.id;
+      let user = await User.findOne({ where: { id: id } });
+     
+      if (user != null) {
+          await User.destroy({
+              where: { id: id },
+          });
+        
+          await fs.unlink(user.image, (err) => {
+              if (err) {
+                  console.log(err);
+              }
+          });
+          return res.status(200).json({
+              message: 'User Delete Successfully',
+          });
+      } else {
+          return res.status(404).json({ message: 'Data Not Found' });
+      }
+  } catch (err) {
+      return res.status(500).json({ error: err.message });
   }
 };

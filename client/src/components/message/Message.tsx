@@ -1,16 +1,18 @@
 import "./Message.scss";
 import { format } from "timeago.js";
+import { BASE_URL } from "../../api/properties";
 
 
-const Message: React.FC<any> = ({ message, own }) => {
+const Message: React.FC<any> = ({ message, own, image }) => {
 
-
+    //<img src={`${BASE_URL}/${item}`}></img>
     return (
         <div className={own ? "message own" : "message"}>
             <div className="messageTop">
+
                 <img
                     className="messageImg"
-                    src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                    src={`${BASE_URL}/${image.image}`}
                     alt=""
                 />
                 <div className="messageBubble">
@@ -18,7 +20,7 @@ const Message: React.FC<any> = ({ message, own }) => {
                         {message.messageTxt}
                     </p></div>
             </div>
-            <div className="messageBottom">{format(message.created)}</div>
+            <div className="messageBottom">{format(message.createdAt)}</div>
         </div>
     );
 }

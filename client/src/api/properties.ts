@@ -6,7 +6,7 @@ export enum PropertiesEndpoints {
     SearchProperties = "/api/properties/search",
     SearchByCategory = "/api/properties/category",
     GetAgentProperties = "/api/properties/agentProperty/:page?agentId=:agentId",
-    UpdateProperty = "/api/properties/agentProperty/:uid?agentId=:agentUid ",
+    UpdateProperty = "/api/properties/:uid",
 }
 
 export const BASE_URL = "http://18.185.96.197:5000";
@@ -47,19 +47,6 @@ export const updateProperty = (property: Property, agentId: string) => {
         category: { id: categoryId },
         images,
     } = property;
-    /**
-     * title
-        description
-        price
-        location
-        city
-        room
-        size
-        categoryId (int)
-        property (single image)
-        agentId (from token)
-        date (currentDate)
-     */
     return httpPOST(
         `${BASE_URL}${PropertiesEndpoints.UpdateProperty.replace(
             ":uid",

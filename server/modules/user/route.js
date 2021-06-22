@@ -16,4 +16,7 @@ router.get("/userImage/:id",controller.image);
 /*Update User Image */
 router.patch("/updateImage/:id",controller.updateImage);
 
+/*Delete User */
+router.delete("/:id",controller.deleteUser);
+
 module.exports = router;

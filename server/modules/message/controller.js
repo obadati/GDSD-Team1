@@ -41,7 +41,7 @@ exports.createConversation = async (req, res) => {
 exports.getuserConversations = async (req, res) => {
   try {
     let id = req.params.userId;
-    const [results, metadata] = await db.sequelize.query("select rcvId,concat(firstName,concat(' ',lastName)) Name,max(messages.createdAt) lastMessage from test_db.messages  left join users on rcvid=users.id  where sndId=:id group by rcvid order by max(messages.createdAt) desc",
+    const [results, metadata] = await db.sequelize.query("select T1.rcvId,concat(firstName,concat(' ',lastName)) Name,image ,Max(T1.lastMessage)  from (select case when rcvId=:id then sndId else rcvId end rcvId ,messages.createdAt lastMessage from dev_real_state.messages where sndId=:id or (rcvId=:id  and messageTxt<>'')) T1 left join dev_real_state.users on T1.rcvId=users.id group by T1.rcvId,Name,image   order by Max(T1.lastMessage) desc;",
       {
         replacements: { id: id }
       });
@@ -71,10 +71,10 @@ exports.sendMessage = async (req, res) => {
           messageTxt: req.body.messageTxt
         };
         console.log(data);
-        await Message.create(data);
+        const meesage = await Message.create(data);
         return res
           .status(200)
-          .json({ messages: "Message Sent", });
+          .json(meesage);
       }
     });
   } catch (err) {
@@ -87,7 +87,7 @@ exports.getMessages = async (req, res) => {
     const { withUser } = req.query;
     let id = req.params.userId;
     console.log(withUser, id)
-    const [results, metadata] = await db.sequelize.query("select sndId,rcvId,messageTxt,createdAt created from messages where messageTxt <> '' and ((sndId =:sndId and rcvId =:rcvId) or (sndId =:rcvId and rcvId =:sndId)) order by createdAt ",
+    const [results, metadata] = await db.sequelize.query("select sndId,rcvId,messageTxt,createdAt from dev_real_state.messages where messageTxt <> '' and ((sndId =:sndId and rcvId =:rcvId) or (sndId =:rcvId and rcvId =:sndId)) order by createdAt ",
       {
         replacements: { sndId: id, rcvId: withUser }
       });
