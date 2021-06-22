@@ -9,7 +9,7 @@ import "./EditProperty.scss";
 
 const EditProperty = () => {
     const history = useHistory();
-    const { id: agentId } = useAuth();
+    const { id: agentId, token } = useAuth();
     const {
         location: {
             state: { property },
@@ -38,7 +38,7 @@ const EditProperty = () => {
     };
 
     const handleFormSubmit = () => {
-        updateProperty(formData, agentId.toString());
+        updateProperty(formData, agentId.toString(), token);
     };
 
     const handleImageChange = (e: any) => {

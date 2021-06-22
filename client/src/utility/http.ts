@@ -22,7 +22,11 @@ export const httpGET = (url: string): Promise<any> => {
  * @param body request payload
  * @returns {Promise<AxiosResponse>} promise based response
  */
-export const httpPOST = (url: string, body: object): Promise<AxiosResponse> => {
+export const httpPOST = (
+    url: string,
+    body: object,
+    headers?: object
+): Promise<AxiosResponse> => {
     let params = new URLSearchParams();
     if (Object.keys(body).length) {
         Object.keys(body).forEach((key) =>
@@ -33,7 +37,32 @@ export const httpPOST = (url: string, body: object): Promise<AxiosResponse> => {
     return new Promise(async (resolve, reject) => {
         try {
             const data = await axios.post(url, body, {
-                headers: {
+                headers: headers || {
+                    "Content-Type": "application/json",
+                },
+            });
+            resolve(data);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+export const httpPUT = (
+    url: string,
+    body: object,
+    headers?: object
+): Promise<AxiosResponse> => {
+    let params = new URLSearchParams();
+    if (Object.keys(body).length) {
+        Object.keys(body).forEach((key) =>
+            params.append(key, (body as any)[key])
+        );
+    }
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            const data = await axios.put(url, body, {
+                headers: headers || {
                     "Content-Type": "application/json",
                 },
             });
