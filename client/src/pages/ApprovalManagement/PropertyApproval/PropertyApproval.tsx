@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 import { listOfProperty } from "../../../api/approval-managemnet";
 import { deleteProperty } from "../../../api/approval-managemnet";
+ import { propertyImages } from "../../../api/approval-managemnet";
 import "./PropertyApproval.scss";
 import Modal from "./Modal";
+
+import { BASE_URL } from "../../../api/approval-managemnet";
+import ModalPopUpImage from "./ModalImage";
 import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
 
 const PropertyApproval: React.FC<any> = () => {
+     const [propertyImage, setPropertyImage] =useState({ });
+    const [featureImage, setFeatureImage] = useState("");
+    const [propertyId, setProeprtyId] = useState("");
     const [property, setProperty] = useState([]);
     const [disp, setDisp] = useState(false);
+    const [disp1, setDisp1] = useState(false);
     const [data, setData] = useState({});
     const [testData, setTestData] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -33,10 +41,17 @@ const PropertyApproval: React.FC<any> = () => {
         }
     };
 
+    const imageCall =async(id:Number)=>{
+        const images = await propertyImages(id)
+        setPropertyImage(images);
+    }
+    
+
     const deleteRecord = async (id: Number) => {
         await deleteProperty(id);
         loadData();
     };
+
     return (
         <div>
             <div className="row">
@@ -64,7 +79,6 @@ const PropertyApproval: React.FC<any> = () => {
                                     <th>Price</th>
                                     <th>Room</th>
                                     <th>Size</th>
-                                    <th>Location</th>
                                     <th>City</th>
                                     <th>Date</th>
                                     <th>Status</th>
@@ -80,7 +94,7 @@ const PropertyApproval: React.FC<any> = () => {
                                             <td>{item.price}</td>
                                             <td>{item.room}</td>
                                             <td>{item.size}</td>
-                                            <td>{item.location}</td>
+                                            
                                             <td>{item.city}</td>
                                             <td>{item.date}</td>
                                             <td>{item.status}</td>
@@ -119,6 +133,30 @@ const PropertyApproval: React.FC<any> = () => {
                                                             <i className="fa fa-trash"></i>
                                                         </button>
                                                     </li>
+                                                    <li className="list-inline-item">
+                                                        <button
+                                                            className="btn btn-warning btn-sm rounded-0"
+                                                            type="button"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Image"
+                                                            onClick={() => {
+                                                                setDisp1(item);
+                                                                setData(item);
+                                                                setFeatureImage(
+                                                                    item.images
+                                                                );
+                                                                setProeprtyId(item.id)
+                                                                imageCall(item.id)
+
+                                                              
+                                                                
+
+                                                            }}
+                                                        >
+                                                            <i className="fa fa-picture-o"></i>
+                                                        </button>
+                                                    </li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -130,7 +168,7 @@ const PropertyApproval: React.FC<any> = () => {
                 </div>
             </div>
 
-            {data && disp && (
+            {data && disp ? (
                 <Modal
                     display={disp}
                     onCloseModal={() => setDisp(false)}
@@ -157,6 +195,87 @@ const PropertyApproval: React.FC<any> = () => {
                         <option value="rejected">Rejected</option>
                     </select>
                 </Modal>
+            ) : (
+                data &&
+                disp1 && (
+                    <ModalPopUpImage
+                        display={disp1}
+                        onCloseModal={() => setDisp1(false)}
+                        data={data}
+                        loadAgent={loadAgent}
+                    >
+                        {isLoading && (
+                            <LoaderComponent title="sit tight!"></LoaderComponent>
+                        )}
+                        <label>Featured Image</label>
+                        <img
+                            className="square-image"
+                            src={`${BASE_URL}/` + featureImage}
+                            alt="Avatar"
+                        />
+                        <br></br>                        
+                        <br></br>
+                        <label>Property Image</label>
+
+                        
+                       {console.log(propertyId)}
+                        {propertyId}
+                       {console.log(propertyImage)} 
+                                          
+                        <div
+                            id="carouselExampleControls"
+                            className="carousel slide"
+                            data-ride="carousel"
+                        >
+                            <div className="carousel-inner">
+
+                                {/* {
+                           propertyImage.map((item:any)=>{
+                               return(
+                                <div className="carousel-item active" key={item.id}>
+                                        <img
+                                        src={`${BASE_URL}/` + item.image}
+                                        className="d-block w-100"
+                                        alt="..."
+                                    />
+                                      </div>
+                               )
+                           })
+                                } */}
+
+                                    
+
+                              
+                               
+                                
+                            </div>
+                            <a
+                                className="carousel-control-prev"
+                                href="#carouselExampleControls"
+                                role="button"
+                                data-slide="prev"
+                            >
+                                <span
+                                    className="carousel-control-prev-icon"
+                                    aria-hidden="true"
+                                ></span>
+                                <span className="sr-only">Previous</span>
+                            </a>
+                            <a
+                                className="carousel-control-next"
+                                href="#carouselExampleControls"
+                                role="button"
+                                data-slide="next"
+                            >
+                                <span
+                                    className="carousel-control-next-icon"
+                                    aria-hidden="true"
+                                ></span>
+                                <span className="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </ModalPopUpImage>
+                )
             )}
         </div>
     );
