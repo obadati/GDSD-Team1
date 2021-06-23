@@ -19,7 +19,8 @@ import EditProperty from "../../pages/EditProperty/EditProperty";
 import Approval from "../../pages/ApprovalManagement/ApprovalDashboard/Approval";
 import AgentApproval from "../../pages/ApprovalManagement/AgentApporval/AgentApproval";
 import PropertyApproval from "../../pages/ApprovalManagement/PropertyApproval/PropertyApproval";
-
+import UserQueries from "../../pages/Queries/Queries";
+import Queries from "../../pages/Queries/Queries";
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
@@ -84,6 +85,11 @@ const AppRouter: React.FC<any> = () => {
             <PrivateRoute
                 path={AppRoutes.PropertyApprovals}
                 component={PropertyApproval}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.Queries}
+                component={Queries}
                 exact
             ></PrivateRoute>
             <Route path="*" component={NotFound}></Route>
