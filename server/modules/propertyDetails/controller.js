@@ -101,19 +101,22 @@ exports.addPropertyImage = async (req, res) => {
     try {
         uploadMultipleImage(req, res, async function (err) {
             if (err) {
+                console.log(err)
                 return res.status(400).json({
                     message:
                         err.message == 'File too large'
                             ? err.message + ' the maximum is 2 Mb'
                             : err.message,
                 });
+
             } else {
                 sendData();
                 async function sendData() {
                     var images = req.files;
+                    const {propertyId}=req.query
                     for (const filess of images) {
                         let data = {
-                            propertyId: req.body.propertyId,
+                            propertyId: propertyId,
                             image: filess.path,
                         };
                         await PropertyImage.create(data);
@@ -368,6 +371,24 @@ exports.getAllPropertyImage = async(req, res) => {
         return res.status(500).json({ error: err.message });
     }
 };
+/*Delete Property Image */
+exports.deletePropertyImage =async (req,res)=>{
+    try{
+    const {id} =req.query;
+    let propertyImages =await PropertyImage.findOne({where:{ id: id  }})
+    let deleteImages =await PropertyImage.destroy({where:{ id: id  }})
+    await fs.unlink(propertyImages.image, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+     return res.status(200).json({message:"Delete Successfully"});
+     
+ } catch (err) {
+     return res.status(500).json({ error: err.message });
+ }
+}
+
 /*Get Approved Property By Category Id By User*/
 exports.propertyByCategoryId = (req, res) => {
     try {

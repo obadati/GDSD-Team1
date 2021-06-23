@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { listOfProperty } from "../../../api/approval-managemnet";
 import { deleteProperty } from "../../../api/approval-managemnet";
 import { propertyImages } from "../../../api/approval-managemnet";
+import { deletePropertyImages } from "../../../api/approval-managemnet";
+import { BASE_URL } from "../../../api/approval-managemnet";
 import "./PropertyApproval.scss";
 import Modal from "./Modal";
-
-import { BASE_URL } from "../../../api/approval-managemnet";
 import ModalPopUpImage from "./ModalImage";
 import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
 
@@ -19,7 +19,6 @@ const PropertyApproval: React.FC<any> = () => {
     const [data, setData] = useState({});
     const [testData, setTestData] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [index, setIndex] = useState(0);
 
     const loadData = async () => {
         setIsLoading(true);
@@ -43,9 +42,9 @@ const PropertyApproval: React.FC<any> = () => {
     };
 
     const imageCall = async (id: Number) => {
+        setIsLoading(true);
         const images = await propertyImages(id);
-        console.log(images);
-
+        setIsLoading(false);
         setPropertyImage(images);
     };
     const deleteRecord = async (id: Number) => {
@@ -53,6 +52,11 @@ const PropertyApproval: React.FC<any> = () => {
         loadData();
     };
 
+    const deletePropertyImage = async (id: Number, propertyId: Number) => {
+        console.log(id);
+        await deletePropertyImages(id);
+        imageCall(propertyId);
+    };
     return (
         <div>
             <div className="row">
@@ -244,13 +248,13 @@ const PropertyApproval: React.FC<any> = () => {
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Delete"
-                                                // onClick={() => {
-                                                //     deleteRecord(
-                                                //         item.id
-                                                //     );
-                                                // }}
+                                                onClick={() => {
+                                                    deletePropertyImage(
+                                                        item.id,
+                                                        item.propertyId
+                                                    );
+                                                }}
                                             >
-                                                {/* <i className="fa fa-trash"></i> */}
                                                 Delete
                                             </button>
                                         </div>
