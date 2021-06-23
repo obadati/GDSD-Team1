@@ -7,7 +7,7 @@ export enum ApporvalEndpoints {
     ListOfProperty ="/api/properties/getAllPropertyByAdmin",
     ApprovePropery = "/api/properties/approveProperty/status/",
     DeleteProperty ="/api/properties/",
-    PropertyImage ="/api/properties/propertyDetail/"
+    PropertyImage ="/api/properties/property/Image/"
   
 
 }
@@ -33,7 +33,7 @@ export const approveProperty = (id:Number,status: any) => {
     return axios.patch(`${BASE_URL}${ApporvalEndpoints.ApprovePropery}${id}/?status=${status}`);
 };
 export const propertyImages = (id: Number) => {
-    return axios.get(`${BASE_URL}${ApporvalEndpoints.PropertyImage}${id}`);
+    return httpGET(`${BASE_URL}${ApporvalEndpoints.PropertyImage}?id=${id}`);
 };
 
 export const deleteProperty = (id: Number) => {

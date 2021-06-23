@@ -39,9 +39,6 @@ const ModalPopUpImage: React.FC<ModalPopUpImage>= ({ display, onCloseModal, data
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={onSubmit}>
-            Delete
-          </Button>
         </Modal.Footer>
       </Modal>
     </>

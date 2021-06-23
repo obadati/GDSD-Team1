@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { listOfProperty } from "../../../api/approval-managemnet";
 import { deleteProperty } from "../../../api/approval-managemnet";
- import { propertyImages } from "../../../api/approval-managemnet";
+import { propertyImages } from "../../../api/approval-managemnet";
 import "./PropertyApproval.scss";
 import Modal from "./Modal";
 
@@ -10,7 +10,7 @@ import ModalPopUpImage from "./ModalImage";
 import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
 
 const PropertyApproval: React.FC<any> = () => {
-     const [propertyImage, setPropertyImage] =useState({ });
+    const [propertyImage, setPropertyImage] = useState([{}]);
     const [featureImage, setFeatureImage] = useState("");
     const [propertyId, setProeprtyId] = useState("");
     const [property, setProperty] = useState([]);
@@ -19,6 +19,7 @@ const PropertyApproval: React.FC<any> = () => {
     const [data, setData] = useState({});
     const [testData, setTestData] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [index, setIndex] = useState(0);
 
     const loadData = async () => {
         setIsLoading(true);
@@ -41,12 +42,12 @@ const PropertyApproval: React.FC<any> = () => {
         }
     };
 
-    const imageCall =async(id:Number)=>{
-        const images = await propertyImages(id)
-        setPropertyImage(images);
-    }
-    
+    const imageCall = async (id: Number) => {
+        const images = await propertyImages(id);
+        console.log(images);
 
+        setPropertyImage(images);
+    };
     const deleteRecord = async (id: Number) => {
         await deleteProperty(id);
         loadData();
@@ -94,7 +95,7 @@ const PropertyApproval: React.FC<any> = () => {
                                             <td>{item.price}</td>
                                             <td>{item.room}</td>
                                             <td>{item.size}</td>
-                                            
+
                                             <td>{item.city}</td>
                                             <td>{item.date}</td>
                                             <td>{item.status}</td>
@@ -146,12 +147,12 @@ const PropertyApproval: React.FC<any> = () => {
                                                                 setFeatureImage(
                                                                     item.images
                                                                 );
-                                                                setProeprtyId(item.id)
-                                                                imageCall(item.id)
-
-                                                              
-                                                                
-
+                                                                setProeprtyId(
+                                                                    item.id
+                                                                );
+                                                                imageCall(
+                                                                    item.id
+                                                                );
                                                             }}
                                                         >
                                                             <i className="fa fa-picture-o"></i>
@@ -213,66 +214,49 @@ const PropertyApproval: React.FC<any> = () => {
                             src={`${BASE_URL}/` + featureImage}
                             alt="Avatar"
                         />
-                        <br></br>                        
+                        <br></br>
                         <br></br>
                         <label>Property Image</label>
-
-                        
-                       {console.log(propertyId)}
                         {propertyId}
-                       {console.log(propertyImage)} 
-                                          
                         <div
                             id="carouselExampleControls"
                             className="carousel slide"
                             data-ride="carousel"
                         >
-                            <div className="carousel-inner">
-
-                                {/* {
-                           propertyImage.map((item:any)=>{
-                               return(
-                                <div className="carousel-item active" key={item.id}>
-                                        <img
-                                        src={`${BASE_URL}/` + item.image}
-                                        className="d-block w-100"
-                                        alt="..."
-                                    />
-                                      </div>
-                               )
-                           })
-                                } */}
-
-                                    
-
-                              
-                               
-                                
-                            </div>
-                            <a
-                                className="carousel-control-prev"
-                                href="#carouselExampleControls"
-                                role="button"
-                                data-slide="prev"
-                            >
-                                <span
-                                    className="carousel-control-prev-icon"
-                                    aria-hidden="true"
-                                ></span>
-                                <span className="sr-only">Previous</span>
-                            </a>
-                            <a
-                                className="carousel-control-next"
-                                href="#carouselExampleControls"
-                                role="button"
-                                data-slide="next"
-                            >
-                                <span
-                                    className="carousel-control-next-icon"
-                                    aria-hidden="true"
-                                ></span>
-                                <span className="sr-only">Next</span>
-                            </a>
+                            {propertyImage.map((item: any) => {
+                                return (
+                                    <div className="carousel-inner">
+                                        <div
+                                            className="carousel-item active"
+                                            id="#carouselExampleControls"
+                                            key={item.id}
+                                        >
+                                            <img
+                                                src={
+                                                    `${BASE_URL}/` + item.image
+                                                }
+                                                className="d-block w-100"
+                                                alt="..."
+                                            />
+                                            <button
+                                                className="btn btn-danger position"
+                                                type="button"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Delete"
+                                                // onClick={() => {
+                                                //     deleteRecord(
+                                                //         item.id
+                                                //     );
+                                                // }}
+                                            >
+                                                {/* <i className="fa fa-trash"></i> */}
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </ModalPopUpImage>
                 )

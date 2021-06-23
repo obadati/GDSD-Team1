@@ -359,6 +359,15 @@ exports.getAllProperty = (req, res) => {
     }
 };
 
+exports.getAllPropertyImage = async(req, res) => {
+    try {
+        const {id} =req.query;
+       let propertyImages =await PropertyImage.findAll({where:{ propertyId: id  }})
+        return res.status(200).json(propertyImages)
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+};
 /*Get Approved Property By Category Id By User*/
 exports.propertyByCategoryId = (req, res) => {
     try {

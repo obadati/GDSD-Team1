@@ -26,6 +26,9 @@ router.post('/images/', controller.addPropertyImage);
 router.get('/:page', controller.getAllProperty);
 
 /*Get Property By Detail By Id*/
+router.get('/property/Image/', controller.getAllPropertyImage);
+
+/*Get Property By Detail By Id*/
 router.get('/propertyDetail/:id', controller.getPropertyById);
 
 /*Filter Property By Category */
