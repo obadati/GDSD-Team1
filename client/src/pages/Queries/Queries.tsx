@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { UserQueries } from "../../api/contact";
+import { UserQueries, DeleteQueries } from "../../api/contact";
 import "./Queries.scss";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 
@@ -16,6 +16,11 @@ const Queries: React.FC<any> = () => {
     useEffect(() => {
         loadData();
     }, []);
+
+    const deleteRecord = async (id: Number) => {
+        await DeleteQueries(id);
+        loadData();
+    };
 
     return (
         <div>
@@ -46,6 +51,7 @@ const Queries: React.FC<any> = () => {
                                     <th>Email</th>
                                     <th>Date</th>
                                     <th>Message</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -72,6 +78,26 @@ const Queries: React.FC<any> = () => {
 
                                             <td>{setDate}</td>
                                             <td>{item.description}</td>
+                                            <td>
+                                                <ul className="list-inline m-0">
+                                                    <li className="list-inline-item">
+                                                        <button
+                                                            className="btn btn-danger btn-sm rounded-0"
+                                                            type="button"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="Delete"
+                                                            onClick={() => {
+                                                                deleteRecord(
+                                                                    item.id
+                                                                );
+                                                            }}
+                                                        >
+                                                            <i className="fa fa-trash"></i>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </td>
                                         </tr>
                                     );
                                 })}
