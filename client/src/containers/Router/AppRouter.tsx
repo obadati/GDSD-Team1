@@ -19,6 +19,7 @@ import EditProperty from "../../pages/EditProperty/EditProperty";
 import Approval from "../../pages/ApprovalManagement/ApprovalDashboard/Approval";
 import AgentApproval from "../../pages/ApprovalManagement/AgentApporval/AgentApproval";
 import PropertyApproval from "../../pages/ApprovalManagement/PropertyApproval/PropertyApproval";
+import Reports from "../../pages/Reports/Reports";
 
 const AppRouter: React.FC<any> = () => {
     return (
@@ -84,6 +85,11 @@ const AppRouter: React.FC<any> = () => {
             <PrivateRoute
                 path={AppRoutes.PropertyApprovals}
                 component={PropertyApproval}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.Reports}
+                component={Reports}
                 exact
             ></PrivateRoute>
             <Route path="*" component={NotFound}></Route>
