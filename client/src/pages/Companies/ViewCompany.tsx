@@ -37,7 +37,7 @@ const ViewCompanies: React.FC<any> = () => {
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-home mr-3"></i>
-                    COMPANY LIST
+                   VIEW COMPANIES
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">

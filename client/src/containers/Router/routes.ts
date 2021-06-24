@@ -22,6 +22,7 @@ export enum AppRoutes {
     AgentApprovals ="/agentApproval",
     PropertyApprovals ="/propertyApproval",
     Contracts = "/contracts",
-    ViewCompanies ="/viewCompanies"
+    ViewCompanies ="/viewCompanies",
+    AddCompanies="/addCompanies"
 }
             

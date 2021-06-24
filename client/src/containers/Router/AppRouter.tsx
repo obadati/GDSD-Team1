@@ -20,6 +20,7 @@ import Approval from "../../pages/ApprovalManagement/ApprovalDashboard/Approval"
 import AgentApproval from "../../pages/ApprovalManagement/AgentApporval/AgentApproval";
 import PropertyApproval from "../../pages/ApprovalManagement/PropertyApproval/PropertyApproval";
 import ViewCompanies from "../../pages/Companies/ViewCompany";
+import AddCompanies from "../../pages/Companies/AddComapnies";
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
@@ -89,6 +90,11 @@ const AppRouter: React.FC<any> = () => {
             <PrivateRoute
                 path={AppRoutes.ViewCompanies}
                 component={ViewCompanies}
+                exact
+            ></PrivateRoute>
+             <PrivateRoute
+                path={AppRoutes.AddCompanies}
+                component={AddCompanies}
                 exact
             ></PrivateRoute>
             <Route path="*" component={NotFound}></Route>
