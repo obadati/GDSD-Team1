@@ -46,12 +46,10 @@ router.get('/getAllPropertyByAdmin/:page', controller.getAllPropertyByAdmin);
 
 /*Get List of Property By Admin */
 router.get(
-    '/getAllPropertyByAdminStatus/:page',
-    controller.getAllPropertyByAdminStatus
+  '/getAllPropertiesByAdminStatus/:page',
+  controller.getAllPropertiesByAdminStatus
 );
-router.patch('/approveProperty/status/:id/',controller.approveStatus)
-
-
+router.patch('/approveProperty/status/:id/', controller.approveStatus);
 
 /*Export  Router*/
 module.exports = router;
