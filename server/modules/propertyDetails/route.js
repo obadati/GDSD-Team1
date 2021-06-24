@@ -46,8 +46,8 @@ router.get('/getAllPropertyByAdmin/:page', controller.getAllPropertyByAdmin);
 
 /*Get List of Property By Admin */
 router.get(
-  '/getAllPropertiesByAdminStatus/:page',
-  controller.getAllPropertiesByAdminStatus
+  '/getAllPropertyByAdminStatus/:page',
+  controller.getAllPropertyByAdminStatus
 );
 router.patch('/approveProperty/status/:id/', controller.approveStatus);
 

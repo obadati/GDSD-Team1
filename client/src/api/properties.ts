@@ -76,7 +76,7 @@ export const updateProperty = (
     );
 };
 
-export const getAllPropertiesByAdminStatus = (status: string, page = 1) => {
+export const getAllPropertyByAdminStatus = (status: string, page = 1) => {
     return httpGET(
         `${BASE_URL}${PropertiesEndpoints.GetAllByAdminStatus}/${page}/?status=${status}`
     );

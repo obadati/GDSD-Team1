@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getAllPropertiesByAdminStatus } from "../../api/properties";
+import { getAllPropertyByAdminStatus } from "../../api/properties";
 import "./Reports.scss";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -17,7 +17,7 @@ const PropertyApproval: React.FC<any> = () => {
 
     const loadData = async (status = "approved") => {
         setIsLoading(true);
-        const data = await getAllPropertiesByAdminStatus(status, 1);
+        const data = await getAllPropertyByAdminStatus(status, 1);
         setProperty(data.result);
         setIsLoading(false);
     };
