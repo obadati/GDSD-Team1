@@ -21,6 +21,9 @@ import AgentApproval from "../../pages/ApprovalManagement/AgentApporval/AgentApp
 import PropertyApproval from "../../pages/ApprovalManagement/PropertyApproval/PropertyApproval";
 import ViewCompanies from "../../pages/Companies/ViewCompany";
 import AddCompanies from "../../pages/Companies/AddComapnies";
+import Companies from "../../pages/Companies/Companies";
+import PropertyList from "../../pages/Companies/PropertyList";
+import AgentList from "../../pages/Companies/AgentList";
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
@@ -36,6 +39,21 @@ const AppRouter: React.FC<any> = () => {
                 path={AppRoutes.AboutUs}
                 exact
                 component={AboutUsPage}
+            ></Route>
+            <Route
+                path={AppRoutes.Companies}
+                exact
+                component={Companies}
+            ></Route>
+             <Route
+                path={AppRoutes.AgentList}
+                exact
+                component={AgentList}
+            ></Route>
+            <Route
+                path={AppRoutes.PropertyList}
+                exact
+                component={PropertyList}
             ></Route>
             <PrivateRoute
                 exact

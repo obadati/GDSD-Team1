@@ -1,28 +1,45 @@
 import { useState, useEffect } from "react";
-import { listOfCompanies } from "../../api/companies";
-import { deleteCompanes } from "../../api/companies";
+import { postCompanies } from "../../api/companies";
 import "./Company.scss";
-import { BASE_URL } from "../../api/companies";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 
 const AddCompanies: React.FC<any> = () => {
-    const [companies, setCompanies] = useState([]);
+    const [state, setState] = useState({
+  
+      chooseFile: '',
+      name: '',
+      registrationNumber:''
+  })
+
     const [isLoading, setIsLoading] = useState(false);
 
-    const loadData = async () => {
-        setIsLoading(true);
-        const data = await listOfCompanies(1);
-        setCompanies(data.result);
-        setIsLoading(false);
-    };
-    useEffect(() => {
-        loadData();
-    }, []);
+    const onChangeFile = (e:any) => {
+      const target = e.target;
 
-    const deleteRecord = async (id: Number) => {
-        await deleteCompanes(id);
-        loadData();
-    };
+      setState(prevState => ({
+          ...prevState,
+          chooseFile: target.files[0]
+      }));
+
+      console.log(target.files[0]);
+  };
+
+    const onHandleSubmit = async(e:any) => {
+      e.preventDefault();
+      let data = new FormData();
+      data.append('logo', state['chooseFile']);
+      data.append('name', state['name']);
+      data.append('registrationNumber', state['registrationNumber']);
+      console.log(data,"data")
+      await postCompanies(data)
+     
+  }
+  const onHandleTextChange = (e:any) => {
+    const target = e.target
+    setState(prevState => ({
+        ...prevState, [target.name]: target.value
+    }))
+}
     return (
         <div>
             <div className="row">
@@ -41,27 +58,29 @@ const AddCompanies: React.FC<any> = () => {
                 </div>
                 <div className="card-body">
                 <div className="wrapper">
-                <form>
+                 <form onSubmit={onHandleSubmit}> 
 
                
   <div className="row">
     <div className="col">
-      <input type="text" className="form-control" placeholder="First name"/>
+      <input type="text" className="form-control" name="name" placeholder="Company Name"  onChange={onHandleTextChange}
+                                                />
     </div>
     <div className="col">
-      <input type="text" className="form-control" placeholder="Last name"/>
+      <input type="text" className="form-control" placeholder="Registration Number" name="registrationNumber"  onChange={onHandleTextChange}
+                                                />
     </div>
   </div>
   <br></br>
   <div className="input-group mb-3">
   
   <div className="custom-file">
-    <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
+    <input type="file" className="custom-file-input" name='chooseFile'  onChange={onChangeFile} />
     <label className="custom-file-label" >Choose file</label>
   </div>
 </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
-</form>
+  <input type="submit" name="submit" className="btn btn-primary" value="Submit" />
+ </form> 
 </div>
                 </div>
             </div>
