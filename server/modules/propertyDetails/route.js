@@ -42,11 +42,12 @@ router.get('/user/findAvgPrice', controller.findAvgPrice);
 router.get('/user/filterProperty/:page', controller.filterProperty);
 
 /******************************************************Admin Dashboard***********************************/
+/*Get Property By Detail By Id*/
+router.get('/property/Image/', controller.getAllPropertyImage);
+
 /*Get List of Property By Admin */
 router.get('/getAllPropertyByAdmin/:page', controller.getAllPropertyByAdmin);
 
-/*Get Property By Detail By Id*/
-router.get('/property/Image/', controller.getAllPropertyImage);
 
 /**Delete Propert Image from  Image Property Table */
 router.delete ('/property/delete/image/',controller.deletePropertyImage)
