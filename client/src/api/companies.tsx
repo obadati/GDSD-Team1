@@ -5,7 +5,7 @@ export enum CompanyEndpoints {
     DeleteCompanies = "/api/company/",
     AddCompanies ="/api/company/",
     ListOfAgents ="/api/company/agentList/",
-    ListOfProperty ="/api/properties/agentProperty/",
+    ListOfProperty ="/api/properties/user/approve/agent/property/",
     PropertyImage ="/api/properties/property/Image/",
     
 }

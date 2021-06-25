@@ -7,7 +7,7 @@ import Modal from "./ModalImage";
 import ModalPopUpImage from "./ModalImage";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 
-const PropertyList: React.FC<any> = () => {
+const PropertyList: React.FC<any> = (props) => {
     const [propertyImage, setPropertyImage] = useState([{}]);
     const [featureImage, setFeatureImage] = useState("");
     const [propertyId, setProeprtyId] = useState("");
@@ -17,10 +17,11 @@ const PropertyList: React.FC<any> = () => {
     const [data, setData] = useState({});
     const [testData, setTestData] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-
+    const {id} =props.match.params
     const loadData = async () => {
         setIsLoading(true);
-        const data = await listOfPropertyByAgent(1,2);
+       
+        const data = await listOfPropertyByAgent(1,id);
         setProperty(data.result);
         setIsLoading(false);
     };
@@ -46,16 +47,7 @@ const PropertyList: React.FC<any> = () => {
         setIsLoading(false);
         setPropertyImage(images);
     };
-    // const deleteRecord = async (id: Number) => {
-    //     await deleteProperty(id);
-    //     loadData();
-    // };
-
-    // const deletePropertyImage = async (id: Number, propertyId: Number) => {
-    //     console.log(id);
-    //     await deletePropertyImages(id);
-    //     imageCall(propertyId);
-    // };
+    
     return (
         <div>
             <div className="row">
@@ -84,9 +76,8 @@ const PropertyList: React.FC<any> = () => {
                                     <th>Room</th>
                                     <th>Size</th>
                                     <th>City</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+
+                                    <th>Image</th>
                                 </tr>
                             </thead>
 
@@ -100,43 +91,11 @@ const PropertyList: React.FC<any> = () => {
                                             <td>{item.size}</td>
 
                                             <td>{item.city}</td>
-                                            <td>{item.date}</td>
-                                            <td>{item.status}</td>
-
+                                           
                                             <td>
                                                 <ul className="list-inline m-0">
-                                                    <li className="list-inline-item"></li>
-                                                    <li className="list-inline-item">
-                                                        <button
-                                                            className="btn btn-success btn-sm rounded-0"
-                                                            type="button"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top"
-                                                            title="Edit"
-                                                            onClick={() => {
-                                                                setDisp(item);
-                                                                setData(item);
-                                                            }}
-                                                        >
-                                                            <i className="fa fa-edit"></i>
-                                                        </button>
-                                                    </li>
-                                                    {/* <li className="list-inline-item">
-                                                        <button
-                                                            className="btn btn-danger btn-sm rounded-0"
-                                                            type="button"
-                                                            data-toggle="tooltip"
-                                                            data-placement="top"
-                                                            title="Delete"
-                                                            onClick={() => {
-                                                                deleteRecord(
-                                                                    item.id
-                                                                );
-                                                            }}
-                                                        >
-                                                            <i className="fa fa-trash"></i>
-                                                        </button>
-                                                    </li> */}
+                                                   
+                                                   
                                                     <li className="list-inline-item">
                                                         <button
                                                             className="btn btn-warning btn-sm rounded-0"
@@ -241,21 +200,7 @@ const PropertyList: React.FC<any> = () => {
                                                 className="d-block w-100"
                                                 alt="..."
                                             />
-                                            {/* <button
-                                                className="btn btn-danger position"
-                                                type="button"
-                                                data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="Delete"
-                                                onClick={() => {
-                                                    deletePropertyImage(
-                                                        item.id,
-                                                        item.propertyId
-                                                    );
-                                                }}
-                                            >
-                                                Delete
-                                            </button> */}
+
                                         </div>
                                     </div>
                                 );

@@ -21,7 +21,8 @@ const Companies: React.FC<any> = () => {
     }, []);
 
     const companyId = async (id: Number) => {
-        history.push('/viewCompanies')
+        console.log(id,"id")
+        history.push(`/agentList/${id}`)
     };
     return (
         <div>
@@ -51,7 +52,7 @@ const Companies: React.FC<any> = () => {
                                     <th>Company</th>
                                     <th>Registration Number</th>
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <th>Agent</th>
                                 </tr>
                             </thead>
 
@@ -92,7 +93,7 @@ const Companies: React.FC<any> = () => {
                                                             type="button"
                                                             data-toggle="tooltip"
                                                             data-placement="top"
-                                                            title="Delete"
+                                                            title="Agent"
                                                             onClick={() => {
                                                                 companyId(
                                                                     item.id

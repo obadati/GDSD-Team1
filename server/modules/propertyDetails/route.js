@@ -41,6 +41,8 @@ router.get('/user/findAvgPrice', controller.findAvgPrice);
 /*Filter properties */
 router.get('/user/filterProperty/:page', controller.filterProperty);
 
+router.get('/user/approve/agent/property/:page', controller.approvedAgentProperty);
+
 /******************************************************Admin Dashboard***********************************/
 /*Get List of Property By Admin */
 router.get('/getAllPropertyByAdmin/:page', controller.getAllPropertyByAdmin);

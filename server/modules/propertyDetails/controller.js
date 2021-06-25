@@ -734,6 +734,61 @@ exports.findAvgPrice = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
+/*Agent List of Property */
+exports.approvedAgentProperty = async (req, res) => {
+    try {
+      let limit = 8;
+      let offset = 0;
+      const { agentId } = req.query;
+      let agent = await User.findOne({
+        attributes: ["id", "firstName", "lastName", "rating", "image"],
+        where: { id: agentId },
+      });
+      console.log(agent);
+      Property.findAndCountAll({ where: { agentId: agentId,status:status } }).then((data) => {
+        let page = req.params.page; // page number
+        let pages = Math.ceil(data.count / limit);
+        offset = limit * (page - 1);
+  
+        Property.findAll({
+          attributes: [
+            "id",
+            "title",
+            "description",
+            "price",
+            "room",
+            "size",
+            "location",
+            "city",
+            "images",
+            "agentId",
+            "createdAt",
+            "categoryId",
+            "status",
+          ],
+          order: [["id", "DESC"]],
+          include: {
+            model: db.category,
+            attributes: ["id", "name"],
+          },
+          where: { agentId: agentId, status:status },
+          limit: limit,
+          offset: offset,
+        }).then((property) => {
+          return res.status(200).json({
+            user: agent,
+            result: property,
+            count: data.count,
+            pages: pages,
+          });
+        });
+      });
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  };
+
 /******************************************************Admin Dashboard***********************************/
 
 /*List Of All Property By Admin */

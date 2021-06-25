@@ -5,14 +5,16 @@ import { BASE_URL } from "../../api/companies";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { useHistory } from "react-router";
 
-const AgentList: React.FC<any> = () => {
+const AgentList: React.FC<any> = (props:any) => {
     const history = useHistory();
     const [agent, setAgent] = useState([]);
     const [isLoading, setIsLoading] =useState(false);
+    console.log(props,"props")
+    const {id} =props.match.params
 
     const loadData = async () => {
          setIsLoading(true)
-         const data = await companyAgent(1,1);
+         const data = await companyAgent(1,id);
          console.log(data)
          setAgent(data.result);
          setIsLoading(false)
@@ -23,10 +25,10 @@ const AgentList: React.FC<any> = () => {
     }, []);
 
   
-  
+  console.log(history)
     
     const propertyRecord= async(id:Number)=>{
-        history.push('/agentProperty')
+        history.push(`/propertyList/${id}`)
           
             }
     return (
