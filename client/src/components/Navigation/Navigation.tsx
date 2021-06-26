@@ -22,15 +22,25 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
         { label: "about us", to: AppRoutes.AboutUs },
     ];
 
-    const userActions: UserActions[] = [];
-    if (username) {
-        userActions.push({ label: username });
-    }
-    if (authenticated) {
-        userActions.push({ label: "Log Out", to: AppRoutes.Login });
-    } else {
-        userActions.push({ label: "Log In", to: AppRoutes.Login });
-    }
+    const [userActions, setUserActions] = useState<UserActions[]>([]);
+
+    useEffect(() => {
+        if (username) {
+            setUserActions([...userActions, { label: username }]);
+        }
+        if (authenticated) {
+            setUserActions([
+                ...userActions,
+                { label: "Log Out", to: AppRoutes.Login },
+            ]);
+        } else {
+            setUserActions([
+                ...userActions,
+                { label: "Log In", to: AppRoutes.Login },
+            ]);
+            userActions.push();
+        }
+    }, [username]);
 
     const history = useHistory();
 

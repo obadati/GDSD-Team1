@@ -1,50 +1,79 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AppRoutes } from "../../containers/Router/routes";
 import { useAuth } from "../../hooks/auth";
 import "./Dashboard.scss";
 import { NavigationTab } from "../../store/navigation/types";
-import { useState } from "react";
-import x from "../../assets/images/hero-fallback-2.jpg";
-import { UserRoles } from "../../api/user";
 import contractIcon from "../../assets/images/contract.png";
 import homeIcon from "../../assets/images/home.png";
 import msgIcon from "../../assets/images/msg.png";
 import companyIcon from "../../assets/images/company.png";
 import approvalIcon from "../../assets/images/approval.png";
+import queryIcon from "../../assets/images/query.png";
+import { UserRoles } from "../../api/user";
+import { useState } from "react";
 
 interface DashboardTile extends NavigationTab {
     icon: string;
+    role?: UserRoles;
 }
 
-const Dashboard: React.FC<any> = () => {
-    const { username, role } = useAuth();
-    const [selectedTab, setSelectedTab] = useState<number>(-1);
-    const tabs: DashboardTile[] = [
-        {
-            label: "Messages",
-            to: `${AppRoutes.Messenger}`,
-            icon: msgIcon,
-        },
-        {
-            label: "Approvals",
-            to: `${AppRoutes.Approvals}`,
-            icon: approvalIcon,
-        },
-    ];
+const tabs: DashboardTile[] = [
+    {
+        label: "Messages",
+        to: `${AppRoutes.Messenger}`,
+        icon: msgIcon,
+    },
+    {
+        label: "Approvals",
+        to: `${AppRoutes.Approvals}`,
+        icon: approvalIcon,
+        role: UserRoles.Admin,
+    },
+    {
+        label: "Contracts",
+        to: `${AppRoutes.Contracts}`,
+        icon: contractIcon,
+    },
+    {
+        label: "Queries",
+        to: `${AppRoutes.Contact}`,
+        icon: queryIcon,
+        role: UserRoles.Admin,
+    },
+    {
+        label: "Companies",
+        to: `${AppRoutes.Companies}`,
+        icon: companyIcon,
+        role: UserRoles.Admin,
+    },
+    {
+        label: "Properties",
+        to: `${AppRoutes.Properties}`,
+        icon: homeIcon,
+        role: UserRoles.Agent,
+    },
+];
 
-    if (role !== UserRoles.Buyer) {
-        tabs.push({
-            label: "Properties",
-            to: `${AppRoutes.Properties}`,
-            icon: homeIcon,
-        });
-    }
+const Dashboard: React.FC<any> = () => {
+    const { role } = useAuth();
+    const [dashboardTiles, setDashboardTiles] = useState<DashboardTile[]>(tabs);
+
+    useEffect(() => {
+        if (role) {
+            debugger;
+            setDashboardTiles([
+                ...dashboardTiles.filter(
+                    (tile) => tile.role === role || !tile.role
+                ),
+            ]);
+        }
+    }, [role]);
 
     return (
         <div className="app-page user-dashboard ">
             <div className="user-dashboard__tiles">
-                {tabs.map((tab) => (
+                {dashboardTiles.map((tab) => (
                     <Link to={tab.to}>
                         <div className="user-dashboard__tiles__tile">
                             <div className="tile-content-wrapper">
