@@ -27,16 +27,6 @@ const Dashboard: React.FC<any> = () => {
             icon: msgIcon,
         },
         {
-            label: "Companies",
-            to: `${AppRoutes.Companies}`,
-            icon: companyIcon,
-        },
-        {
-            label: "Contracts",
-            to: `${AppRoutes.Contracts}`,
-            icon: contractIcon,
-        },
-        {
             label: "Approvals",
             to: `${AppRoutes.Approvals}`,
             icon: approvalIcon,
