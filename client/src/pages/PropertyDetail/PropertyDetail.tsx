@@ -43,8 +43,9 @@ const PropertyDetail: React.FC<any> = () => {
                         <LoaderComponent title="sit tight!"></LoaderComponent>
                     )}
                     <SellerProfile
+                        image={userInfo.image}
                         stars={userInfo.rating}
-                        sellerName={userInfo.firstName + userInfo.lastName}
+                        sellerName={userInfo.firstName +" "+userInfo.lastName}
                         sellerCompany={userInfo.companyName}
                         actions={[
                             "message-agent",

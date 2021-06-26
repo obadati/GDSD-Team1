@@ -7,11 +7,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-const PropertyApproval: React.FC<any> = () => {
+const Reports: React.FC<any> = () => {
     const [property, setProperty] = useState([]);
-    const [disp, setDisp] = useState(false);
-    const [data, setData] = useState({});
-    const [testData, setTestData] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState("approved");
 
@@ -25,16 +22,7 @@ const PropertyApproval: React.FC<any> = () => {
         loadData();
     }, []);
 
-    const onInputChange = (e: any) => {
-        setData({ ...data, [e.target.name]: e.target.value });
-    };
-
-    const loadAgent = (value: any) => {
-        setDisp(false);
-        if (value == true) {
-            loadData();
-        }
-    };
+   
     const changeStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStatus((e.target as HTMLInputElement).value);
         console.log(status);
@@ -44,7 +32,7 @@ const PropertyApproval: React.FC<any> = () => {
         <div>
             <div className="row">
                 <div className="col style-box">
-                    <h3>Property List by Admin Status</h3>
+                    <h3>PROPERTY STATUS</h3>
                 </div>
             </div>
             <RadioGroup
@@ -116,4 +104,4 @@ const PropertyApproval: React.FC<any> = () => {
     );
 };
 
-export default PropertyApproval;
+export default Reports;
