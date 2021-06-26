@@ -52,7 +52,7 @@ const PropertyList: React.FC<any> = (props) => {
         <div>
             <div className="row">
                 <div className="col style-box">
-                    <h3>PROPERTY APPROVALS</h3>
+                    <h3>PROPERTIES</h3>
                 </div>
             </div>
             {isLoading && (
@@ -61,7 +61,7 @@ const PropertyList: React.FC<any> = (props) => {
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-home mr-3"></i>
-                    PROPERTY LIST
+                    PROPERTIES LIST
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -76,8 +76,7 @@ const PropertyList: React.FC<any> = (props) => {
                                     <th>Room</th>
                                     <th>Size</th>
                                     <th>City</th>
-
-                                    <th>Image</th>
+                                    <th>Images</th>
                                 </tr>
                             </thead>
 
@@ -178,8 +177,8 @@ const PropertyList: React.FC<any> = (props) => {
                         />
                         <br></br>
                         <br></br>
-                        <label>Property Image</label>
-                        {propertyId}
+                        <label>More Property Image</label>
+                        
                         <div
                             id="carouselExampleControls"
                             className="carousel slide"

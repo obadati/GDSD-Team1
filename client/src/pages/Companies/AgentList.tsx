@@ -35,7 +35,7 @@ const AgentList: React.FC<any> = (props:any) => {
         <div>
             <div className="row">
                 <div className="col style-box">
-                    <h3>AGENT LIST</h3>
+                    <h3>AGENTS</h3>
                 </div>
             </div>
 
@@ -43,7 +43,7 @@ const AgentList: React.FC<any> = (props:any) => {
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-user mr-3"></i>
-                    AGENT LIST
+                    AGENTS LIST
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -55,7 +55,7 @@ const AgentList: React.FC<any> = (props:any) => {
                                 <tr className="alignment">
                                     <th>Image</th>
                                     <th>Name</th>
-                                    <th>Property</th>
+                                    <th>Properties</th>
                                 </tr>
                             </thead>
 

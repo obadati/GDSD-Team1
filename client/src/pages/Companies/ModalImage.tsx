@@ -1,7 +1,6 @@
 import {useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-// import {approveProperty} from "../../../api/approval-managemnet";
 
 
 interface ModalPopUpImage {
@@ -18,15 +17,7 @@ const ModalPopUpImage: React.FC<ModalPopUpImage>= ({ display, onCloseModal, data
     setShow(false);
     onCloseModal();
   };
-  const onSubmit = async (e:any) => {
-    e.preventDefault();
-   console.log(data);
-
-//    let edit = await approveProperty(data.id,data.status);
-   
-   loadAgent(true);
-     history.push("/propertyApproval");
-  };
+  
 
   return (
     <>

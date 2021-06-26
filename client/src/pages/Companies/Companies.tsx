@@ -5,7 +5,7 @@ import { BASE_URL } from "../../api/companies";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { useHistory } from "react-router";
 
-const Companies: React.FC<any> = () => {
+const Companies: React.FC<any> = ({ dispatch, loading }) => {
     const history = useHistory();
     const [companies, setCompanies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ const Companies: React.FC<any> = () => {
         <div>
             <div className="row">
                 <div className="col style-box">
-                    <h3>REGISTERED COMPANIES</h3>
+                    <h3>COMPANIES</h3>
                 </div>
             </div>
 
@@ -38,7 +38,7 @@ const Companies: React.FC<any> = () => {
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-home mr-3"></i>
-                   VIEW COMPANIES
+                COMPANIES LIST
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -52,7 +52,7 @@ const Companies: React.FC<any> = () => {
                                     <th>Company</th>
                                     <th>Registration Number</th>
                                     <th>Date</th>
-                                    <th>Agent</th>
+                                    <th>Agents</th>
                                 </tr>
                             </thead>
 
