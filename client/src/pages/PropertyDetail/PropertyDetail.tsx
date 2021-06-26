@@ -8,6 +8,7 @@ import SellerProfile from "../../components/SellerProfile/SellerProfile";
 import { getUserInfo } from "../../api/user";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { useAuth } from "../../hooks/auth";
+import { BASE_URL } from "../../api/properties";
 import jwtDecode from "jwt-decode";
 
 const PropertyDetail: React.FC<any> = () => {
@@ -30,11 +31,13 @@ const PropertyDetail: React.FC<any> = () => {
         const user = await getUserInfo(obj.id);
         setUserInfo(user);
         setIsLoading(false);
+        console.log(user,"user")
     };
     useEffect(() => {
         loadUserData();
     }, []);
 
+console.log(userInfo,"userInfo")
     return (
         <div className="property-detail-page app-page">
             <div className="aside">
@@ -43,7 +46,7 @@ const PropertyDetail: React.FC<any> = () => {
                         <LoaderComponent title="sit tight!"></LoaderComponent>
                     )}
                     <SellerProfile
-                        image={userInfo.image}
+                        image={BASE_URL+"/"+userInfo.image}
                         stars={userInfo.rating}
                         sellerName={userInfo.firstName +" "+userInfo.lastName}
                         sellerCompany={userInfo.companyName}
