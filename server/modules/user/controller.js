@@ -228,7 +228,11 @@ exports.image = async (req, res) => {
     const id = req.params.id;
     let image = await User.findOne({
       where: { id: id },
-      attributes: ["id", "image", "rating"],
+      attributes: ["id", "firstName","lastName","image", "rating"],
+      include: {
+        model: db.company,
+        attributes: ['id', 'name'],
+    },
     });
     if (!image) {
       return res
