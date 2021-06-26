@@ -53,13 +53,13 @@ exports.getAgent = async (req, res) => {
   try {
     let limit = 15;
     let offset = 0;
-    User.findAndCountAll({ where: { postType: "Agent" } }).then((data) => {
+    User.findAndCountAll({ where: { postType: "agent" } }).then((data) => {
       let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
       User.findAll({
-        where: { postType: "Agent" },
+        where: { postType: "agent" },
         attributes: [
           "id",
           "firstName",
@@ -90,14 +90,14 @@ exports.getAgentStatus = async (req, res) => {
     let limit = 8;
     let offset = 0;
     const { status } = req.query;
-    User.findAndCountAll({ where: { postType: "Agent", status: status } }).then(
+    User.findAndCountAll({ where: { postType: "agent", status: status } }).then(
       (data) => {
         let page = req.params.page; // page number
         let pages = Math.ceil(data.count / limit);
         offset = limit * (page - 1);
 
         User.findAll({
-          where: { postType: "Agent", status: status },
+          where: { postType: "agent", status: status },
           attributes: [
             "id",
             "firstName",
@@ -150,13 +150,13 @@ exports.getBuyer = async (req, res) => {
   try {
     let limit = 8;
     let offset = 0;
-    User.findAndCountAll({ where: { postType: "Buyer" } }).then((data) => {
+    User.findAndCountAll({ where: { postType: "buyer" } }).then((data) => {
       let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
       User.findAll({
-        where: { postType: "Buyer" },
+        where: { postType: "buyer" },
         attributes: [
           "id",
           "firstName",
