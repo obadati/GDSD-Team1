@@ -8,7 +8,7 @@ const controller = require('./controller');
 
 
 /*Add Property Image*/
-router.post('/propertyimages/', controller.addPropertyImage);
+router.post('/:uid/images', controller.addPropertyImage);
 /*Create Properties */
 router.post('/:uid', controller.create);
 

@@ -112,7 +112,7 @@ exports.addPropertyImage = async (req, res) => {
         sendData();
         async function sendData() {
           var images = req.files;
-          const { propertyId } = req.query;
+          const  propertyId  = req.body.propertyId;
           for (const filess of images) {
             let data = {
               propertyId: propertyId,
