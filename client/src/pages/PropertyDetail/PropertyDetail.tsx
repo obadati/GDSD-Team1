@@ -38,6 +38,7 @@ const PropertyDetail: React.FC<any> = () => {
                     </div>
                 </div>
             </div>
+            
             <div className="center">
                 <h3 className="property-detail-page__title">
                     {property.title}
