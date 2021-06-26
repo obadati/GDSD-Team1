@@ -36,11 +36,7 @@ export const searchByCategory = (categoryId: number, page = 1) => {
     );
 };
 
-export const updateProperty = (
-    property: Property,
-    agentId: string,
-    token: string
-) => {
+export const updateProperty = (property: Property, token: string) => {
     const {
         title,
         description,
@@ -65,11 +61,10 @@ export const updateProperty = (
             size,
             categoryId,
             image,
-            agentId,
             date: new Date(),
         },
         {
-            "Content-Type": "application/form-data",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
         }
     );
