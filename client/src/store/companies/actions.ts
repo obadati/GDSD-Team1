@@ -1,7 +1,7 @@
 import { StateAction } from "..";
 
 export enum CompaniesStateActions {
-    SetAll = "set-all",
+    SetAll = "set-all-companies",
 }
 
 export const setAllCompanies = (companies: any[] = []): StateAction => ({
