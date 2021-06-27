@@ -32,7 +32,7 @@ export const signUpUser = (
         firstName,
         lastName,
         email,
-        postType: role,
+        role,
         companyId,
         password,
     });
