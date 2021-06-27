@@ -19,13 +19,14 @@ export enum AppRoutes {
     Login = "/login",
     SignUp = "/sign-up",
     Approvals = "/approval",
-    AgentApprovals ="/agentApproval",
-    PropertyApprovals ="/propertyApproval",
+    AgentApprovals = "/agentApproval",
+    PropertyApprovals = "/propertyApproval",
     Contracts = "/contracts",
+    Reports = "/reports",
     Queries ="/userQueries",
     ViewCompanies ="/viewCompanies",
     AddCompanies="/addCompanies",
     AgentList="/agentList/:id",
     PropertyList ="/propertyList/:id"
+
 }
-            

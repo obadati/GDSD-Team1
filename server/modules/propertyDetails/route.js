@@ -51,20 +51,17 @@ router.get('/property/Image/', controller.getAllPropertyImage);
 /*Get List of Property By Admin */
 router.get('/getAllPropertyByAdmin/:page', controller.getAllPropertyByAdmin);
 
-
 /*Get Property By Detail By Id*/
 router.get('/property/Image/', controller.getAllPropertyImage);
 
-
 /**Delete Propert Image from  Image Property Table */
 router.delete ('/property/delete/image/',controller.deletePropertyImage)
+
 /*Get List of Property By Admin */
 router.get('/getAllPropertyByAdminStatus/:page',controller.getAllPropertyByAdminStatus
 );
 /*Approve Status By Admin */
 router.patch('/approveProperty/status/:id/',controller.approveStatus)
-
-
 
 /*Export  Router*/
 module.exports = router;

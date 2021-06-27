@@ -12,6 +12,7 @@ import homeIcon from "../../assets/images/home.png";
 import msgIcon from "../../assets/images/msg.png";
 import companyIcon from "../../assets/images/company.png";
 import approvalIcon from "../../assets/images/approval.png";
+import reportsIcon from "../../assets/images/approval.png";
 
 interface DashboardTile extends NavigationTab {
     icon: string;
@@ -38,6 +39,13 @@ const Dashboard: React.FC<any> = () => {
             label: "Properties",
             to: `${AppRoutes.Properties}`,
             icon: homeIcon,
+        });
+    }
+    if (role == UserRoles.Admin) {
+        tabs.push({
+            label: "Reports",
+            to: `${AppRoutes.Reports}`,
+            icon: reportsIcon,
         });
     }
 
