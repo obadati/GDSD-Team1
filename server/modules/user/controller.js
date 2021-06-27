@@ -8,6 +8,7 @@ const fs = require("fs");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = require("../../utils/token").tokenEncryptionSecret;
+const user = require("../../models/user");
 const Approved = "approved";
 const Pending = "pending";
 const Agent = "agent";
@@ -47,10 +48,10 @@ var upload = multer({
 /*Create User */
 exports.create = async (req, res) => {
   try {
-    let { firstName, lastName, email, password, companyId, postType } =
+    let { firstName, lastName, email, password, companyId, role } =
       req.body;
 
-    if (!firstName || !lastName || !email || !password || !postType) {
+    if (!firstName || !lastName || !email || !password || !role) {
       return res.status(400).json({ message: "Field empty" });
     }
     if (password.length < 5) {
@@ -70,36 +71,68 @@ exports.create = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     console.log(date);
-    if (companyId == undefined) {
-      let user = {
+    if (companyId == 0) {
+      let userData = {
         firstName,
         lastName,
-        image: "/assests/uploads/avatar/avatar.png",
+        image: "assests/uploads/avatar/avatar.png",
         email,
         password: passwordHash,
-        postType,
+        role,
         companyId: 0,
         status: "pending",
         rating: 0.0,
         date: date,
       };
-      await User.create(user);
-      return res.status(200).json(user);
-    } else {
+      await User.create(userData);
+      
+      if (role === Buyer) {
+        const user = await User.findOne({
+          where: { email: userData.email, role: Buyer },
+        });
+  
+        if (!user) {
+          return res.status(400).json({
+            message: "No account with this email has been registered.",
+          });
+        }
+        const isMatch = await bcrypt.compareSync(password, user.password);
+        if (!isMatch) {
+          return res.status(400).json({ message: "Invalid creadentials." });
+        }
+        const token = jwt.sign(
+          { id: user.id, email: user.email, role: user.role, url:user.image },
+          secret
+        );
+       return res.json({
+          token,
+          id: user.id,
+          email: user.email,
+          role: "buyer",
+          url:user.image
+        });
+      }
+     // return res.status(200).json(user);
+    } 
+    else {
       let user = {
         firstName,
         lastName,
-        image: "/assests/uploads/avatar/avatar.png",
+        image: "assests/uploads/avatar/avatar.png",
         email,
         password: passwordHash,
-        postType,
+        role,
         companyId,
-        status: "Pending",
+        status: "pending",
         rating: 0.0,
         date: date,
       };
       await User.create(user);
-      return res.status(200).json(user);
+       if (role === Agent) {
+      return res.status(200).json({message:"Waiting For Admin Approval"});  
+      }
+      
+     
     }
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -141,18 +174,19 @@ exports.login = async (req, res) => {
         username: admin.username,
         role: "admin",
       });
-    } else if (role === Agent) {
+    }
+    else if (role === Agent) {
       if (!username || !password) {
         return res
           .status(400)
           .json({ message: "Not all fields have been entered." });
       }
       const userPending = await User.findOne({
-        where: { email: username, status: Pending, postType: Agent },
+        where: { email: username, status: Pending, role: Agent },
       });
       /*Agent Login */
       const user = await User.findOne({
-        where: { email: username, status: Approved, postType: Agent },
+        where: { email: username, status: Approved, role: Agent },
       });
       if (userPending) {
         return res.status(400).json({
@@ -175,7 +209,7 @@ exports.login = async (req, res) => {
           return res.status(400).json({ message: "Invalid creadentials." });
         }
         const token = jwt.sign(
-          { id: user.id, email: user.username, role: user.postType, url:user.image },
+          { id: user.id, email: user.username, role: user.role, url:user.image },
           secret
         );
         res.json({
@@ -192,7 +226,7 @@ exports.login = async (req, res) => {
       }
     } else if (role === Buyer) {
       const user = await User.findOne({
-        where: { email: username, postType: Buyer },
+        where: { email: username, role: Buyer },
       });
 
       if (!user) {
@@ -205,7 +239,7 @@ exports.login = async (req, res) => {
         return res.status(400).json({ message: "Invalid creadentials." });
       }
       const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.postType, url:user.image },
+        { id: user.id, email: user.email, role: user.role, url:user.image },
         secret
       );
       res.json({

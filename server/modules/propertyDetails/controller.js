@@ -112,7 +112,7 @@ exports.addPropertyImage = async (req, res) => {
         sendData();
         async function sendData() {
           var images = req.files;
-          const  propertyId  = req.body.propertyId;
+          const  propertyId  = req.params.uid;
           for (const filess of images) {
             let data = {
               propertyId: propertyId,
@@ -266,8 +266,9 @@ exports.updateProperty = async (req, res) => {
           city,
           agentId,
         } = req.body;
-        const id = req.params.id;
+        const id = req.params.uid;
         let path = req.file.path;
+        console.log(id)
         let propertyUpdate = await Property.findOne({
           where: { id: id },
         });

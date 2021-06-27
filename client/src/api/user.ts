@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants/constants";
-import { httpPOST } from "../utility/http";
+import { httpGET, httpPOST } from "../utility/http";
 
 export enum UserRoles {
     Buyer = "buyer",
@@ -10,6 +10,7 @@ export enum UserRoles {
 enum UserEndpoints {
     SignUp = "/api/user/",
     Login = "/api/user/login",
+    GetUserInfo = "/api/user/userImage",
 }
 
 export const loginUser = (username: string, password: string, role: string) => {
@@ -35,4 +36,8 @@ export const signUpUser = (
         companyId,
         password,
     });
+};
+
+export const getUserInfo = (id: number) => {
+    return httpGET(`${BASE_URL}${UserEndpoints.GetUserInfo}/${id}`);
 };

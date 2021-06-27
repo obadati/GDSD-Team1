@@ -19,3 +19,11 @@ export interface Property {
     size: string;
     room: number;
 }
+
+export interface User {
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    rating: number;
+    image: string;
+}

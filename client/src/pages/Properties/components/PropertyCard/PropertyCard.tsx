@@ -49,7 +49,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
                             {property.category.name}
                         </span>
                         <span className="property-card__content__tag property-card__content__tag--size">
-                            {property.size}
+                            {property.size} m²
                         </span>
                     </div>
                     {userRole !== UserRoles.Buyer && (

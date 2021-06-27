@@ -8,6 +8,7 @@ export enum PropertiesEndpoints {
     SearchByCategory = "/api/properties/category",
     GetAgentProperties = "/api/properties/agentProperty/:page?agentId=:agentId",
     UpdateProperty = "/api/properties/:uid",
+    GetAllByAdminStatus = "/api/properties/getAllPropertyByAdminStatus",
 }
 
 export const getAllProperties = (page: number = 1) => {
@@ -71,5 +72,11 @@ export const updateProperty = (
             "Content-Type": "application/form-data",
             Authorization: `Bearer ${token}`,
         }
+    );
+};
+
+export const getAllPropertyByAdminStatus = (status: string, page = 1) => {
+    return httpGET(
+        `${BASE_URL}${PropertiesEndpoints.GetAllByAdminStatus}/${page}/?status=${status}`
     );
 };

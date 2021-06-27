@@ -90,7 +90,7 @@ const AgentApproval: React.FC<any> = () => {
                                                 {item.firstName} {item.lastName}
                                             </td>
                                             <td>{item.email}</td>
-                                            <td>{item.postType}</td>
+                                            <td>{item.role}</td>
                                             <td>{item.date}</td>
                                             <td>{item.status}</td>
 

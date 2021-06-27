@@ -1,7 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { GuestRoute, PrivateRoute } from "../../components/Route/Route";
-import { HomePage, PropertiesPage, MessengerPage } from "../../pages";
+import {
+    HomePage,
+    PropertiesPage,
+    MessengerPage,
+    AboutDeveloperPage,
+} from "../../pages";
 import AvgPriceCalculator from "../../pages/AvgPriceCalculator/AvgPriceCalculator";
 import Login from "../../pages/Login/Login";
 import AboutUsPage from "../../pages/AboutUs/AboutUs";
@@ -20,6 +25,8 @@ import Companies from "../../pages/Companies/Companies";
 import PropertyList from "../../pages/Companies/PropertyList";
 import AgentList from "../../pages/Companies/AgentList";
 import SignUpPage from "../../pages/SignUp/SignUp";
+import Reports from "../../pages/Reports/Reports";
+import Queries from "../../pages/Queries/Queries";
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
@@ -40,6 +47,11 @@ const AppRouter: React.FC<any> = () => {
                 path={AppRoutes.AboutUs}
                 exact
                 component={AboutUsPage}
+            ></Route>
+            <Route
+                path={AppRoutes.AboutDeveloper}
+                exact
+                component={AboutDeveloperPage}
             ></Route>
             <Route
                 path={AppRoutes.Companies}
@@ -106,6 +118,17 @@ const AppRouter: React.FC<any> = () => {
                 component={PropertyApproval}
                 exact
             ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.Reports}
+                component={Reports}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.Queries}
+                component={Queries}
+                exact
+            ></PrivateRoute>
+
             <PrivateRoute
                 path={AppRoutes.ViewCompanies}
                 component={ViewCompanies}
