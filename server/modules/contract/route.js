@@ -24,7 +24,7 @@ router.get("/agent/status/:page",controller.getAllContractByAgentStatus);
 router.delete("/:id",controller.delete);
 
 /*Edit Contract */
-router.patch("/endContract/",controller.endContract);
+router.patch("/",controller.endContract);
 
 /*************************************************Buyer Route**********************************************/
 /*Accept Contract */
