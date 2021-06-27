@@ -11,6 +11,7 @@ const Approval = () => {
     return (
         <div>
             <div>
+                \
                 <div className="wrapper">
                     <div className="row">
                         <div className="col col style-box height">
@@ -36,10 +37,7 @@ const Approval = () => {
                             </Link>
                         </div>
                         <div className="col style-box">
-                            <Link
-                                to="/propertyApproval"
-                                className="removeLine"
-                            >
+                            <Link to="/propertyApproval" className="removeLine">
                                 <img
                                     className="dimesion"
                                     src={propertyImage}
