@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { postCompanies } from "../../api/companies";
 import "./Company.scss";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
+import { useHistory } from "react-router";
 
 const AddCompanies: React.FC<any> = () => {
+  const history = useHistory();
     const [state, setState] = useState({
   
       chooseFile: '',
@@ -32,6 +34,7 @@ const AddCompanies: React.FC<any> = () => {
       data.append('registrationNumber', state['registrationNumber']);
       console.log(data,"data")
       await postCompanies(data)
+      history.push('/viewCompanies')
      
   }
   const onHandleTextChange = (e:any) => {

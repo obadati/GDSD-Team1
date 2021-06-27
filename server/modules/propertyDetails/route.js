@@ -20,7 +20,7 @@ router.get('/agentProperty/:page', controller.agentProperty);
 router.get('/agentPropertyByStatus/:page', controller.agentPropertyByStatus);
 
 /*Update Property*/
-router.put('/updateProperty/:id', controller.updateProperty);
+router.put('/:uid', controller.updateProperty);
 
 
 /*********************************************************Website User*********************************/

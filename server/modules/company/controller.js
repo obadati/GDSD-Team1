@@ -5,7 +5,7 @@ const User = db.user;
 var multer = require("multer");
 var path = require("path");
 const fs = require("fs");
-const status= "Approved";
+const status= "approved";
 
 /****************************************************Define Controller***********************************/
 
@@ -167,7 +167,7 @@ exports.getListOfAgent =async(req,res)=>{
     let limit = 8;
     let offset = 0;
     const{companyId} = req.query;
-    User.findAndCountAll({where:{companyId:companyId}}).then((data) => {
+    User.findAndCountAll({where:{companyId:companyId, status:status }}).then((data) => {
       let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
@@ -175,7 +175,7 @@ exports.getListOfAgent =async(req,res)=>{
       User.findAll({
         attributes: ["id", "firstName", "lastName", "image", "companyId"],
         order: [["id", "DESC"]],
-        where:{companyId:companyId},
+        where:{companyId:companyId, status:status},
         limit: limit,
         offset: offset,
       }).then((company) => {

@@ -71,7 +71,7 @@ const Companies: React.FC<any> = ({ dispatch, loading }) => {
                                         <tr key={item.id} className="alignment">
                                             <td>
                                                 <img
-                                                    className="circle-image"
+                                                    className="square-image"
                                                     src={
                                                         `${BASE_URL}/` +
                                                         item.logo
