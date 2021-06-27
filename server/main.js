@@ -11,7 +11,7 @@ const user = require('./modules/user/route');
 const contactUs =require('./modules/contactUs/route');
 const contract = require('./modules/contract/route');
 const port = 5000;
-const auth = require('./middleware/auth'); 
+//const auth = require('./middleware/auth'); 
 
 /*Server Image Path Through Server */
 app.use('/', express.static(__dirname + '/public/'));

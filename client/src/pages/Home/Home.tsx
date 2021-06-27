@@ -1,7 +1,7 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useHistory } from "react-router";
-import { BASE_URL } from "../../api/properties";
+import { BASE_URL } from "../../constants/constants";
 import { AppRoutes } from "../../containers/Router/routes";
 import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";

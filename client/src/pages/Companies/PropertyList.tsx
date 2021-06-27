@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { listOfPropertyByAgent } from "../../api/companies";
 import { propertyImages } from "../../api/companies";
-import { BASE_URL } from "../../api/approval-managemnet";
 import "./Company.scss";
 import Modal from "./ModalImage";
 import ModalPopUpImage from "./ModalImage";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
+import { BASE_URL } from "../../constants/constants";
 
 const PropertyList: React.FC<any> = (props) => {
     const [propertyImage, setPropertyImage] = useState([{}]);
@@ -17,11 +17,11 @@ const PropertyList: React.FC<any> = (props) => {
     const [data, setData] = useState({});
     const [testData, setTestData] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const {id} =props.match.params
+    const { id } = props.match.params;
     const loadData = async () => {
         setIsLoading(true);
-       
-        const data = await listOfPropertyByAgent(1,id);
+
+        const data = await listOfPropertyByAgent(1, id);
         setProperty(data.result);
         setIsLoading(false);
     };
@@ -43,11 +43,11 @@ const PropertyList: React.FC<any> = (props) => {
     const imageCall = async (id: Number) => {
         setIsLoading(true);
         const images = await propertyImages(id);
-        console.log(images,"image")
+        console.log(images, "image");
         setIsLoading(false);
         setPropertyImage(images);
     };
-    
+
     return (
         <div>
             <div className="row">
@@ -90,11 +90,9 @@ const PropertyList: React.FC<any> = (props) => {
                                             <td>{item.size}</td>
 
                                             <td>{item.city}</td>
-                                           
+
                                             <td>
                                                 <ul className="list-inline m-0">
-                                                   
-                                                   
                                                     <li className="list-inline-item">
                                                         <button
                                                             className="btn btn-warning btn-sm rounded-0"
@@ -171,14 +169,14 @@ const PropertyList: React.FC<any> = (props) => {
                         )}
                         <label>Featured Image</label>
                         <img
-                            className="square-image"
+                            className="square-imageProperty"
                             src={`${BASE_URL}/` + featureImage}
                             alt="Avatar"
                         />
                         <br></br>
                         <br></br>
                         <label>More Property Image</label>
-                        
+
                         <div
                             id="carouselExampleControls"
                             className="carousel slide"
@@ -199,7 +197,6 @@ const PropertyList: React.FC<any> = (props) => {
                                                 className="d-block w-100"
                                                 alt="..."
                                             />
-
                                         </div>
                                     </div>
                                 );

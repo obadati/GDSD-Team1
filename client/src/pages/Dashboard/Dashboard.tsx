@@ -12,6 +12,7 @@ import approvalIcon from "../../assets/images/approval.png";
 import queryIcon from "../../assets/images/query.png";
 import { UserRoles } from "../../api/user";
 import { useState } from "react";
+import reportsIcon from "../../assets/images/approval.png";
 
 interface DashboardTile extends NavigationTab {
     icon: string;

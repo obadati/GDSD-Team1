@@ -1,46 +1,43 @@
 import { useState, useEffect } from "react";
 import { listOfAgent } from "../../../api/approval-managemnet";
 import "./AgentApproval.scss";
-import { BASE_URL } from "../../../api/approval-managemnet";
 import Modal from "./Modal";
 import { deleteAgent } from "../../../api/approval-managemnet";
 import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
-
+import { BASE_URL } from "../../../constants/constants";
 
 const AgentApproval: React.FC<any> = () => {
     const [agent, setAgent] = useState([]);
     const [disp, setDisp] = useState(false);
-    const [data, setData] = useState({status:""});
-    const [testData,setTestData] = useState("");
-    const [isLoading, setIsLoading] =useState(false);
+    const [data, setData] = useState({ status: "" });
+    const [testData, setTestData] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const loadData = async () => {
-        setIsLoading(true)
+        setIsLoading(true);
         const data = await listOfAgent(1);
         setAgent(data.result);
-        setIsLoading(false)
+        setIsLoading(false);
     };
     useEffect(() => {
         loadData();
-       
     }, []);
 
-    const onInputChange = (e:any) => {
-      setData({ ...data, [e.target.name]: e.target.value });
+    const onInputChange = (e: any) => {
+        setData({ ...data, [e.target.name]: e.target.value });
     };
-  
-    const loadAgent=(value:any)=>{
-      setDisp(false)
-      if(value==true){
-        loadData()
-      }
-    }
-    
-    const deleteRecord= async(id:Number)=>{
-        await  deleteAgent(id)
-          loadData();
-          
-            }
+
+    const loadAgent = (value: any) => {
+        setDisp(false);
+        if (value == true) {
+            loadData();
+        }
+    };
+
+    const deleteRecord = async (id: Number) => {
+        await deleteAgent(id);
+        loadData();
+    };
     return (
         <div>
             <div className="row">
@@ -49,7 +46,9 @@ const AgentApproval: React.FC<any> = () => {
                 </div>
             </div>
 
-            {isLoading && (<LoaderComponent title="sit tight!"></LoaderComponent>)}
+            {isLoading && (
+                <LoaderComponent title="sit tight!"></LoaderComponent>
+            )}
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-user mr-3"></i>
@@ -91,7 +90,7 @@ const AgentApproval: React.FC<any> = () => {
                                                 {item.firstName} {item.lastName}
                                             </td>
                                             <td>{item.email}</td>
-                                            <td>{item.postType}</td>
+                                            <td>{item.role}</td>
                                             <td>{item.date}</td>
                                             <td>{item.status}</td>
 
@@ -108,7 +107,9 @@ const AgentApproval: React.FC<any> = () => {
                                                             onClick={() => {
                                                                 setDisp(item);
                                                                 setData(item);
-                                                                setTestData(item.status)
+                                                                setTestData(
+                                                                    item.status
+                                                                );
                                                             }}
                                                         >
                                                             <i className="fa fa-edit"></i>
@@ -121,7 +122,11 @@ const AgentApproval: React.FC<any> = () => {
                                                             data-toggle="tooltip"
                                                             data-placement="top"
                                                             title="Delete"
-                                                             onClick={()=>{deleteRecord(item.id)}}
+                                                            onClick={() => {
+                                                                deleteRecord(
+                                                                    item.id
+                                                                );
+                                                            }}
                                                         >
                                                             <i className="fa fa-trash"></i>
                                                         </button>
@@ -137,27 +142,33 @@ const AgentApproval: React.FC<any> = () => {
                 </div>
             </div>
             {data && disp && (
-        <Modal display={disp} onCloseModal={() => setDisp(false)} data ={data} loadAgent={loadAgent}>
-          {isLoading && (<LoaderComponent title="sit tight!"></LoaderComponent>)}
-          <label>Status</label>
-          <select
-            className="form-control"
-            id="status"
-            aria-label="Default select example"
-            onChange={(e) => {
-                onInputChange(e);
-                setTestData(e.target.value);
-            }}
-            name="status"
-            value={testData}
-          >
-            <option value="approved">Approve</option>
-            <option value="pending">Pending</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        
-        </Modal>
-      )}
+                <Modal
+                    display={disp}
+                    onCloseModal={() => setDisp(false)}
+                    data={data}
+                    loadAgent={loadAgent}
+                >
+                    {isLoading && (
+                        <LoaderComponent title="sit tight!"></LoaderComponent>
+                    )}
+                    <label>Status</label>
+                    <select
+                        className="form-control"
+                        id="status"
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                            onInputChange(e);
+                            setTestData(e.target.value);
+                        }}
+                        name="status"
+                        value={testData}
+                    >
+                        <option value="approved">Approve</option>
+                        <option value="pending">Pending</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </Modal>
+            )}
         </div>
     );
 };
