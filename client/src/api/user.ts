@@ -1,3 +1,4 @@
+import { BASE_URL } from "../constants/constants";
 import { httpPOST } from "../utility/http";
 
 export enum UserRoles {
@@ -12,20 +13,26 @@ enum UserEndpoints {
 }
 
 export const loginUser = (username: string, password: string, role: string) => {
-    return httpPOST("http://18.185.96.197:5000", {
+    return httpPOST(`${BASE_URL}${UserEndpoints.Login}`, {
         username,
         password,
         role: role.toLowerCase(),
     });
 };
 export const signUpUser = (
-    username: string,
+    email: string,
     password: string,
-    role: string
+    role: string,
+    firstName: string,
+    lastName: string,
+    companyId?: string | null
 ) => {
-    return httpPOST("http://18.185.96.197:5000", {
-        username,
+    return httpPOST(`${BASE_URL}${UserEndpoints.SignUp}`, {
+        firstName,
+        lastName,
+        email,
+        postType: role,
+        companyId,
         password,
-        role: role.toLowerCase(),
     });
 };
