@@ -1,25 +1,43 @@
 import React, { useState } from "react";
 import "./SignUp.scss";
 import logo from "../../assets/images/logo.png";
-import { UserRoles } from "../../api/user";
+import { signUpUser, UserRoles } from "../../api/user";
 import { connect, ConnectedProps } from "react-redux";
 import { AppState } from "../../store/rootReducer";
 import { Company } from "../../store/companies/types";
+import { setLoadingState } from "../../store/loader/actions";
 
 const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
     const [user, setUser] = useState<{
-        username: string;
+        email: string;
+        firstName: string;
+        lastName: string;
         password: string;
         role: UserRoles | string;
         company?: Company;
     }>({
-        username: "",
+        firstName: "",
+        lastName: "",
+        email: "",
         password: "",
         role: UserRoles.Buyer,
     });
 
-    const handleSignUp = () => {
-        console.log({ signupUser: user });
+    const handleSignUp = async () => {
+        try {
+            dispatch(setLoadingState(true));
+            await signUpUser(
+                user.email,
+                user.password,
+                user.role,
+                user.firstName,
+                user.lastName,
+                user.company?.id || null
+            );
+            dispatch(setLoadingState(true));
+        } catch (e) {
+            dispatch(setLoadingState(true));
+        }
     };
 
     const renderUserRoles = () => {
@@ -54,21 +72,45 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
                 {renderUserRoles()}
                 <div className="login-page__form">
                     <form className="form-group">
-                        <label htmlFor="username"></label>
                         <input
                             className="form-control"
-                            id="username"
+                            id="firstName"
                             type="text"
-                            placeholder="Username"
-                            value={user.username}
+                            placeholder="First Name"
+                            value={user.firstName}
                             onChange={(e) =>
                                 setUser({
                                     ...user,
-                                    username: e.target.value,
+                                    firstName: e.target.value,
                                 })
                             }
                         />
-                        <label htmlFor="password"></label>
+                        <input
+                            className="form-control"
+                            id="lastName"
+                            type="text"
+                            placeholder="Last Name"
+                            value={user.lastName}
+                            onChange={(e) =>
+                                setUser({
+                                    ...user,
+                                    lastName: e.target.value,
+                                })
+                            }
+                        />
+                        <input
+                            className="form-control"
+                            id="email"
+                            type="text"
+                            placeholder="email"
+                            value={user.email}
+                            onChange={(e) =>
+                                setUser({
+                                    ...user,
+                                    email: e.target.value,
+                                })
+                            }
+                        />
                         <input
                             className="form-control"
                             id="password"

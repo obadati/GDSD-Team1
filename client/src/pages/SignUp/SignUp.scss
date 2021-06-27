@@ -20,6 +20,10 @@
 
         form {
             margin-bottom: 0;
+
+            input {
+                margin-bottom: 1rem;
+            }
         }
 
         button {
@@ -85,9 +89,5 @@
             box-sizing: border-box;
             border-radius: 0.23rem !important;
         }
-    }
-
-    .sign-up-cta {
-        margin-top: 1rem;
     }
 }
