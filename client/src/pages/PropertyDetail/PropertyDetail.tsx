@@ -64,7 +64,7 @@ console.log(userInfo,"userInfo")
                         {property.category.name}
                     </div>
                     <div className="property-tags__tag">
-                        Area: {property.size} sqm
+                        Area: {property.size} m²
                     </div>
                     <div className="property-tags__tag">
                         {property.location}
@@ -81,9 +81,9 @@ console.log(userInfo,"userInfo")
                         rounded
                         images={[
                             property.images,
-                            "assests/uploads/propertyImage/property-1621610048377.jpg",
-                            "assests/uploads/propertyImage/property-1621609809384.jpg",
-                            "assests/uploads/propertyImage/property-1621609358303.jpg",
+                            "assests/uploads/propertyImage/image-1624801866564.jpg",
+                            "assests/uploads/propertyImage/image-1624803117211.jpg",
+                            "assests/uploads/propertyImage/image-1624803387547.jpg",
                         ]}
                     />
                 </div>
