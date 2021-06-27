@@ -3,9 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import { GuestRoute, PrivateRoute } from "../../components/Route/Route";
 import {
     HomePage,
-    LandingPage,
     PropertiesPage,
     MessengerPage,
+    AboutDeveloperPage,
 } from "../../pages";
 import AvgPriceCalculator from "../../pages/AvgPriceCalculator/AvgPriceCalculator";
 import Login from "../../pages/Login/Login";
@@ -43,11 +43,16 @@ const AppRouter: React.FC<any> = () => {
                 component={AboutUsPage}
             ></Route>
             <Route
+                path={AppRoutes.AboutDeveloper}
+                exact
+                component={AboutDeveloperPage}
+            ></Route>
+            <Route
                 path={AppRoutes.Companies}
                 exact
                 component={Companies}
             ></Route>
-             <Route
+            <Route
                 path={AppRoutes.AgentList}
                 exact
                 component={AgentList}
@@ -123,7 +128,7 @@ const AppRouter: React.FC<any> = () => {
                 component={ViewCompanies}
                 exact
             ></PrivateRoute>
-             <PrivateRoute
+            <PrivateRoute
                 path={AppRoutes.AddCompanies}
                 component={AddCompanies}
                 exact

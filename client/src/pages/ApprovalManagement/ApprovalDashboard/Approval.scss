@@ -1,22 +1,25 @@
-.dimesion{
+.approvals-page {
+    h3 {
+        color: grey;
+    }
+}
+
+.dimesion {
     height: 250px;
     width: auto;
 }
-.text-decoration{
+.text-decoration {
     text-decoration: none;
 }
-.style-box{
+.style-box {
     text-align: center;
     border-style: solid;
     border-color: white;
-    background-color:white;
+    background-color: white;
     margin: 5px;
 }
-.removeLine:hover{
-    text-decoration:none
-}
-h3{
-    color: grey
+.removeLine:hover {
+    text-decoration: none;
 }
 
 .position {
