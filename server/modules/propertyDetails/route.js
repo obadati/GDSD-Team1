@@ -6,6 +6,10 @@ const controller = require('./controller');
 
 /***********************************************Agent Dashboard******************************************/
 
+
+/*Add Property Image*/
+router.post('/:uid/images', controller.addPropertyImage);
+
 /*Create Properties */
 router.post('/:uid', controller.create);
 
@@ -16,10 +20,8 @@ router.get('/agentProperty/:page', controller.agentProperty);
 router.get('/agentPropertyByStatus/:page', controller.agentPropertyByStatus);
 
 /*Update Property*/
-router.put('/updateProperty/:id', controller.updateProperty);
+router.put('/:uid', controller.updateProperty);
 
-/*Add Property Image*/
-router.post('/images/', controller.addPropertyImage);
 
 /*********************************************************Website User*********************************/
 /*All Properties */
@@ -40,16 +42,26 @@ router.get('/user/findAvgPrice', controller.findAvgPrice);
 /*Filter properties */
 router.get('/user/filterProperty/:page', controller.filterProperty);
 
+router.get('/user/approve/agent/property/:page', controller.approvedAgentProperty);
+
 /******************************************************Admin Dashboard***********************************/
+/*Get Property By Detail By Id*/
+router.get('/property/Image/', controller.getAllPropertyImage);
+
 /*Get List of Property By Admin */
 router.get('/getAllPropertyByAdmin/:page', controller.getAllPropertyByAdmin);
 
+/*Get Property By Detail By Id*/
+router.get('/property/Image/', controller.getAllPropertyImage);
+
+/**Delete Propert Image from  Image Property Table */
+router.delete ('/property/delete/image/',controller.deletePropertyImage)
+
 /*Get List of Property By Admin */
-router.get(
-  '/getAllPropertyByAdminStatus/:page',
-  controller.getAllPropertyByAdminStatus
+router.get('/getAllPropertyByAdminStatus/:page',controller.getAllPropertyByAdminStatus
 );
-router.patch('/approveProperty/status/:id/', controller.approveStatus);
+/*Approve Status By Admin */
+router.patch('/approveProperty/status/:id/',controller.approveStatus)
 
 /*Export  Router*/
 module.exports = router;
