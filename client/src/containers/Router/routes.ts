@@ -27,4 +27,6 @@ export enum AppRoutes {
     AgentList = "/agentList/:id",
     PropertyList = "/propertyList/:id",
     AboutDeveloper = "/about/developer/:id",
+    Reports = "/reports",
+    Queries = "/userQueries",
 }
