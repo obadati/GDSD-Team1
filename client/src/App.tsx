@@ -30,6 +30,7 @@ const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
         try {
             const { result: properties } = await getAllProperties();
             const { result: companies } = await getAllCompanies();
+
             if (properties) {
                 dispatch(setAllProperties(properties));
             }
