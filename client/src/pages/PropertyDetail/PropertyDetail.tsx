@@ -8,8 +8,8 @@ import SellerProfile from "../../components/SellerProfile/SellerProfile";
 import { getUserInfo } from "../../api/user";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { useAuth } from "../../hooks/auth";
-import { BASE_URL } from "../../api/properties";
 import jwtDecode from "jwt-decode";
+import { BASE_URL } from "../../constants/constants";
 
 const PropertyDetail: React.FC<any> = () => {
     const history = useHistory();
@@ -31,13 +31,13 @@ const PropertyDetail: React.FC<any> = () => {
         const user = await getUserInfo(obj.id);
         setUserInfo(user);
         setIsLoading(false);
-        console.log(user,"user")
+        console.log(user, "user");
     };
     useEffect(() => {
         loadUserData();
     }, []);
 
-console.log(userInfo,"userInfo")
+    console.log(userInfo, "userInfo");
     return (
         <div className="property-detail-page app-page">
             <div className="aside">
@@ -46,9 +46,11 @@ console.log(userInfo,"userInfo")
                         <LoaderComponent title="sit tight!"></LoaderComponent>
                     )}
                     <SellerProfile
-                        image={BASE_URL+"/"+userInfo.image}
+                        image={`${BASE_URL}/${userInfo.image}`}
                         stars={userInfo.rating}
-                        sellerName={userInfo.firstName +" "+userInfo.lastName}
+                        sellerName={
+                            userInfo.firstName + " " + userInfo.lastName
+                        }
                         sellerCompany={userInfo.companyName}
                         actions={[
                             "message-agent",
@@ -71,7 +73,7 @@ console.log(userInfo,"userInfo")
                     </div>
                 </div>
             </div>
-            
+
             <div className="center">
                 <h3 className="property-detail-page__title">
                     {property.title}
