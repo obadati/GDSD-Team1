@@ -1,36 +1,33 @@
 import { useState, useEffect } from "react";
 import { companyAgent } from "../../api/companies";
 import "./Company.scss";
-import { BASE_URL } from "../../api/companies";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { useHistory } from "react-router";
+import { BASE_URL } from "../../constants/constants";
 
-const AgentList: React.FC<any> = (props:any) => {
+const AgentList: React.FC<any> = (props: any) => {
     const history = useHistory();
     const [agent, setAgent] = useState([]);
-    const [isLoading, setIsLoading] =useState(false);
-    console.log(props,"props")
-    const {id} =props.match.params
+    const [isLoading, setIsLoading] = useState(false);
+    console.log(props, "props");
+    const { id } = props.match.params;
 
     const loadData = async () => {
-         setIsLoading(true)
-         const data = await companyAgent(1,id);
-         console.log(data)
-         setAgent(data.result);
-         setIsLoading(false)
+        setIsLoading(true);
+        const data = await companyAgent(1, id);
+        console.log(data);
+        setAgent(data.result);
+        setIsLoading(false);
     };
     useEffect(() => {
         loadData();
-       
     }, []);
 
-  
-  console.log(history)
-    
-    const propertyRecord= async(id:Number)=>{
-        history.push(`/propertyList/${id}`)
-          
-            }
+    console.log(history);
+
+    const propertyRecord = async (id: Number) => {
+        history.push(`/propertyList/${id}`);
+    };
     return (
         <div>
             <div className="row">
@@ -39,7 +36,9 @@ const AgentList: React.FC<any> = (props:any) => {
                 </div>
             </div>
 
-            {isLoading && (<LoaderComponent title="sit tight!"></LoaderComponent>)}
+            {isLoading && (
+                <LoaderComponent title="sit tight!"></LoaderComponent>
+            )}
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-user mr-3"></i>
@@ -76,11 +75,11 @@ const AgentList: React.FC<any> = (props:any) => {
                                             <td>
                                                 {item.firstName} {item.lastName}
                                             </td>
-                                           
+
                                             <td>
                                                 <ul className="list-inline m-0">
                                                     <li className="list-inline-item"></li>
-                                                   
+
                                                     <li className="list-inline-item">
                                                         <button
                                                             className="btn btn-success btn-sm rounded-0"
@@ -88,7 +87,11 @@ const AgentList: React.FC<any> = (props:any) => {
                                                             data-toggle="tooltip"
                                                             data-placement="top"
                                                             title="Delete"
-                                                             onClick={()=>{propertyRecord(item.id)}}
+                                                            onClick={() => {
+                                                                propertyRecord(
+                                                                    item.id
+                                                                );
+                                                            }}
                                                         >
                                                             <i className="fa fa-home"></i>
                                                         </button>
@@ -103,7 +106,6 @@ const AgentList: React.FC<any> = (props:any) => {
                     </div>
                 </div>
             </div>
-           
         </div>
     );
 };

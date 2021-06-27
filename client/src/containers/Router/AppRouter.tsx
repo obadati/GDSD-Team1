@@ -24,12 +24,18 @@ import AddCompanies from "../../pages/Companies/AddComapnies";
 import Companies from "../../pages/Companies/Companies";
 import PropertyList from "../../pages/Companies/PropertyList";
 import AgentList from "../../pages/Companies/AgentList";
+import SignUpPage from "../../pages/SignUp/SignUp";
 import Reports from "../../pages/Reports/Reports";
 import Queries from "../../pages/Queries/Queries";
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
             <GuestRoute path={AppRoutes.Login} component={Login}></GuestRoute>
+            <GuestRoute
+                exact
+                path={AppRoutes.SignUp}
+                component={SignUpPage}
+            ></GuestRoute>
             <Route path={AppRoutes.Landing} exact component={HomePage}></Route>
             <Route
                 path={AppRoutes.Messenger}
@@ -112,12 +118,12 @@ const AppRouter: React.FC<any> = () => {
                 component={PropertyApproval}
                 exact
             ></PrivateRoute>
-        <PrivateRoute
+            <PrivateRoute
                 path={AppRoutes.Reports}
                 component={Reports}
                 exact
             ></PrivateRoute>
-                <PrivateRoute
+            <PrivateRoute
                 path={AppRoutes.Queries}
                 component={Queries}
                 exact

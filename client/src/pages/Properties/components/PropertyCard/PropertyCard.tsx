@@ -1,6 +1,5 @@
 import React from "react";
 import { Property } from "../../../../store/properties/types";
-import { BASE_URL } from "../../../../api/properties";
 import "./PropertyCard.scss";
 import { useHistory } from "react-router";
 import { AppRoutes } from "../../../../containers/Router/routes";
@@ -8,6 +7,7 @@ import editIcon from "../../../../assets/images/edit-icon.png";
 import { AppState } from "../../../../store/rootReducer";
 import { UserRoles } from "../../../../api/user";
 import { connect, ConnectedProps } from "react-redux";
+import { BASE_URL } from "../../../../constants/constants";
 
 interface OwnProps extends PropsFromRedux {
     property: Property;

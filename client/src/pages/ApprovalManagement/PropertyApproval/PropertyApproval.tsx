@@ -3,11 +3,11 @@ import { listOfProperty } from "../../../api/approval-managemnet";
 import { deleteProperty } from "../../../api/approval-managemnet";
 import { propertyImages } from "../../../api/approval-managemnet";
 import { deletePropertyImages } from "../../../api/approval-managemnet";
-import { BASE_URL } from "../../../api/approval-managemnet";
 import "./PropertyApproval.scss";
 import Modal from "./Modal";
 import ModalPopUpImage from "./ModalImage";
 import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
+import { BASE_URL } from "../../../constants/constants";
 
 const PropertyApproval: React.FC<any> = () => {
     const [propertyImage, setPropertyImage] = useState([{}]);
@@ -236,9 +236,7 @@ const PropertyApproval: React.FC<any> = () => {
                                             key={item.id}
                                         >
                                             <img
-                                                src={
-                                                    `${BASE_URL}/` + item.image
-                                                }
+                                                src={`${BASE_URL}/${item.image}`}
                                                 className="d-block w-100"
                                                 alt="..."
                                             />
