@@ -266,8 +266,9 @@ exports.updateProperty = async (req, res) => {
           city,
           agentId,
         } = req.body;
-        const id = req.params.id;
+        const id = req.params.uid;
         let path = req.file.path;
+        console.log(id)
         let propertyUpdate = await Property.findOne({
           where: { id: id },
         });
