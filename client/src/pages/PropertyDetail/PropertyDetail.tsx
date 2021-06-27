@@ -1,22 +1,55 @@
 import React from "react";
 import { useHistory } from "react-router";
+import { useState, useEffect } from "react";
 import CarouselComponent from "../../components/Carousel/Carousel";
-import { Property } from "../../store/properties/types";
+import { Property, User } from "../../store/properties/types";
 import "./PropertyDetail.scss";
 import SellerProfile from "../../components/SellerProfile/SellerProfile";
+import { getUserInfo } from "../../api/user";
+import LoaderComponent from "../../components/CustomLoader/CustomLoader";
+import { useAuth } from "../../hooks/auth";
+import { BASE_URL } from "../../api/properties";
+import jwtDecode from "jwt-decode";
 
 const PropertyDetail: React.FC<any> = () => {
     const history = useHistory();
     const property: Property = (history.location.state as any).property;
+    const [isLoading, setIsLoading] = useState(false);
+    const [userInfo, setUserInfo] = useState({
+        firstName: "",
+        lastName: "",
+        companyName: "",
+        rating: 0,
+        image: "",
+    });
+    const { token } = useAuth();
 
+    const loadUserData = async () => {
+        setIsLoading(true);
+        let obj: any;
+        obj = jwtDecode(token);
+        const user = await getUserInfo(obj.id);
+        setUserInfo(user);
+        setIsLoading(false);
+        console.log(user,"user")
+    };
+    useEffect(() => {
+        loadUserData();
+    }, []);
+
+console.log(userInfo,"userInfo")
     return (
         <div className="property-detail-page app-page">
             <div className="aside">
                 <div className="seller-info">
+                    {isLoading && (
+                        <LoaderComponent title="sit tight!"></LoaderComponent>
+                    )}
                     <SellerProfile
-                        stars={2}
-                        sellerName="Sample Seller"
-                        sellerCompany="Sample Company"
+                        image={BASE_URL+"/"+userInfo.image}
+                        stars={userInfo.rating}
+                        sellerName={userInfo.firstName +" "+userInfo.lastName}
+                        sellerCompany={userInfo.companyName}
                         actions={[
                             "message-agent",
                             "create-contact",

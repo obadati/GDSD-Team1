@@ -4,6 +4,7 @@ import ReactStars from "react-stars";
 import Avatar from "../../assets/images/avatar.png";
 
 interface SellerProfileProps {
+    image:string
     stars: number;
     sellerName: string;
     sellerCompany: string;
@@ -11,6 +12,7 @@ interface SellerProfileProps {
 }
 
 const SellerProfileComponent: React.FC<SellerProfileProps> = ({
+    image,
     stars,
     sellerName,
     sellerCompany,
@@ -19,7 +21,7 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
     return (
         <div className="seller-info-card">
             <div className="avatar">
-                <img src={Avatar} alt="avatar" />
+                <img src={image} alt="avatar" />
             </div>
             <div>
                 <h2 className="seller-name">{sellerName}</h2>
