@@ -6,6 +6,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { AppState } from "../../store/rootReducer";
 import { Company } from "../../store/companies/types";
 import { setLoadingState } from "../../store/loader/actions";
+import { setAppUser } from "../../store/user/actions";
 
 const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
     const [user, setUser] = useState<{
@@ -26,7 +27,7 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
     const handleSignUp = async () => {
         try {
             dispatch(setLoadingState(true));
-            await signUpUser(
+            const appUser = await signUpUser(
                 user.email,
                 user.password,
                 user.role,
@@ -34,9 +35,9 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
                 user.lastName,
                 user.company?.id || null
             );
-            dispatch(setLoadingState(true));
+            dispatch(setLoadingState(false));
         } catch (e) {
-            dispatch(setLoadingState(true));
+            dispatch(setLoadingState(false));
         }
     };
 
