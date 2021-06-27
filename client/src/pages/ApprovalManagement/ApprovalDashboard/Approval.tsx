@@ -11,7 +11,7 @@ const Approval = () => {
     return (
         <div>
             <div>
-                <div className="container">
+                <div className="wrapper">
                     <div className="row">
                         <div className="col col style-box height">
                             <h3>PROPERTY MANAGEMENT</h3>

@@ -18,3 +18,19 @@
 h3{
     color: grey
 }
+
+.position {
+    max-height: 450px !important;
+    display: flex;
+
+    .wrapper {
+        border-radius: 10px;
+        padding: 2rem;
+        background: #ffffff85;
+        border: 1px solid var(--app-color-border);
+        box-shadow: 0 2px 12px 1px #1174da4a;
+        max-width: 750px;
+        margin: auto;
+        min-width: 750px;
+    }
+}

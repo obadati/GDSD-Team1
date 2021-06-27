@@ -8,7 +8,8 @@ const controller = require('./controller');
 
 
 /*Add Property Image*/
-router.post('/propertyimages/', controller.addPropertyImage);
+router.post('/:uid/images', controller.addPropertyImage);
+
 /*Create Properties */
 router.post('/:uid', controller.create);
 
@@ -41,12 +42,18 @@ router.get('/user/findAvgPrice', controller.findAvgPrice);
 /*Filter properties */
 router.get('/user/filterProperty/:page', controller.filterProperty);
 
+router.get('/user/approve/agent/property/:page', controller.approvedAgentProperty);
+
 /******************************************************Admin Dashboard***********************************/
 /*Get Property By Detail By Id*/
 router.get('/property/Image/', controller.getAllPropertyImage);
 
 /*Get List of Property By Admin */
 router.get('/getAllPropertyByAdmin/:page', controller.getAllPropertyByAdmin);
+
+
+/*Get Property By Detail By Id*/
+router.get('/property/Image/', controller.getAllPropertyImage);
 
 
 /**Delete Propert Image from  Image Property Table */
