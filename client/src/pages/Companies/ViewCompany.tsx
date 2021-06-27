@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { listOfCompanies } from "../../api/companies";
 import { deleteCompanes } from "../../api/companies";
 import "./Company.scss";
-import { BASE_URL } from "../../api/companies";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
+import { BASE_URL } from "../../constants/constants";
 
 const ViewCompanies: React.FC<any> = () => {
     const [companies, setCompanies] = useState([]);
@@ -37,7 +37,7 @@ const ViewCompanies: React.FC<any> = () => {
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-home mr-3"></i>
-                   VIEW COMPANIES
+                    VIEW COMPANIES
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">

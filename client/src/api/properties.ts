@@ -1,3 +1,4 @@
+import { BASE_URL } from "../constants/constants";
 import { Property } from "../store/properties/types";
 import { httpGET, httpPOST, httpPUT } from "../utility/http";
 
@@ -8,8 +9,6 @@ export enum PropertiesEndpoints {
     GetAgentProperties = "/api/properties/agentProperty/:page?agentId=:agentId",
     UpdateProperty = "/api/properties/:uid",
 }
-
-export const BASE_URL = "http://18.185.96.197:5000";
 
 export const getAllProperties = (page: number = 1) => {
     return httpGET(`${BASE_URL}${PropertiesEndpoints.GetAll}${page}`);

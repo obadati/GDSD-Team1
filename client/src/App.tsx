@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import { connect, ConnectedProps, useStore } from "react-redux";
 import { getAllProperties } from "./api/properties";
 import "./App.scss";
 import Navigation from "./components/Navigation/Navigation";
@@ -12,10 +12,14 @@ import { setLoadingState } from "./store/loader/actions";
 import { setAppUser } from "./store/user/actions";
 import { getFromLocalStorage } from "./utility/localStorage";
 import { AUTH_USER_KEY } from "./constants/constants";
+import { getAllCompanies } from "./api/companies";
+import { setAllCompanies } from "./store/companies/actions";
 
 interface OwnProps extends PropsFromRedux {}
 
 const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
+    const state = useStore();
+    console.log(state.getState());
     useEffect(() => {
         loadData();
     }, []);
@@ -24,9 +28,13 @@ const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
         dispatch(setLoadingState(true));
         dispatch(setAppUser(getFromLocalStorage(AUTH_USER_KEY)));
         try {
-            const { result } = await getAllProperties();
-            if (result) {
-                dispatch(setAllProperties(result));
+            const { result: properties } = await getAllProperties();
+            const { result: companies } = await getAllCompanies();
+            if (properties) {
+                dispatch(setAllProperties(properties));
+            }
+            if (companies) {
+                dispatch(setAllCompanies(companies));
             }
             dispatch(setLoadingState(false));
         } catch (e) {

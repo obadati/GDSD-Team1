@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { listOfCompanies } from "../../api/companies";
 import "./Company.scss";
-import { BASE_URL } from "../../api/companies";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { useHistory } from "react-router";
+import { BASE_URL } from "../../constants/constants";
 
 const Companies: React.FC<any> = ({ dispatch, loading }) => {
     const history = useHistory();
@@ -21,8 +21,8 @@ const Companies: React.FC<any> = ({ dispatch, loading }) => {
     }, []);
 
     const companyId = async (id: Number) => {
-        console.log(id,"id")
-        history.push(`/agentList/${id}`)
+        console.log(id, "id");
+        history.push(`/agentList/${id}`);
     };
     return (
         <div>
@@ -38,7 +38,7 @@ const Companies: React.FC<any> = ({ dispatch, loading }) => {
             <div className="card mb-4">
                 <div className="card-header">
                     <i className="fa fa-home mr-3"></i>
-                COMPANIES LIST
+                    COMPANIES LIST
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
