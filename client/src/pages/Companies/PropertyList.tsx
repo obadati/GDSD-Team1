@@ -171,7 +171,7 @@ const PropertyList: React.FC<any> = (props) => {
                         )}
                         <label>Featured Image</label>
                         <img
-                            className="square-image"
+                            className="square-imageProperty"
                             src={`${BASE_URL}/` + featureImage}
                             alt="Avatar"
                         />
