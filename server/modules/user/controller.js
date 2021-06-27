@@ -75,7 +75,7 @@ exports.create = async (req, res) => {
       let userData = {
         firstName,
         lastName,
-        image: "/assests/uploads/avatar/avatar.png",
+        image: "assests/uploads/avatar/avatar.png",
         email,
         password: passwordHash,
         role,
@@ -118,7 +118,7 @@ exports.create = async (req, res) => {
       let user = {
         firstName,
         lastName,
-        image: "/assests/uploads/avatar/avatar.png",
+        image: "assests/uploads/avatar/avatar.png",
         email,
         password: passwordHash,
         role,
