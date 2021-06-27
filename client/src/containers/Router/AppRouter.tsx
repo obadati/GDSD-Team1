@@ -19,11 +19,14 @@ import EditProperty from "../../pages/EditProperty/EditProperty";
 import Approval from "../../pages/ApprovalManagement/ApprovalDashboard/Approval";
 import AgentApproval from "../../pages/ApprovalManagement/AgentApporval/AgentApproval";
 import PropertyApproval from "../../pages/ApprovalManagement/PropertyApproval/PropertyApproval";
+import UserQueries from "../../pages/Queries/Queries";
+import Queries from "../../pages/Queries/Queries";
 import ViewCompanies from "../../pages/Companies/ViewCompany";
 import AddCompanies from "../../pages/Companies/AddComapnies";
 import Companies from "../../pages/Companies/Companies";
 import PropertyList from "../../pages/Companies/PropertyList";
 import AgentList from "../../pages/Companies/AgentList";
+
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
@@ -106,6 +109,10 @@ const AppRouter: React.FC<any> = () => {
                 exact
             ></PrivateRoute>
             <PrivateRoute
+
+                path={AppRoutes.Queries}
+                component={Queries}
+
                 path={AppRoutes.ViewCompanies}
                 component={ViewCompanies}
                 exact
