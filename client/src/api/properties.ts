@@ -47,6 +47,7 @@ export const updateProperty = (property: Property, token: string) => {
         size,
         category: { id: categoryId },
         images: image,
+        city,
     } = property;
     let formData = new FormData();
     formData.append("title", title);
@@ -55,8 +56,9 @@ export const updateProperty = (property: Property, token: string) => {
     formData.append("location", location);
     formData.append("room", room.toString());
     formData.append("size", size);
-    formData.append("category", categoryId);
-    formData.append("images", image);
+    formData.append("categoryId", categoryId);
+    formData.append("city", city);
+    formData.append("image", image);
     return axios.put(
         `${BASE_URL}${PropertiesEndpoints.UpdateProperty.replace(
             ":uid",
@@ -65,7 +67,7 @@ export const updateProperty = (property: Property, token: string) => {
         formData,
         {
             headers: {
-                // "Content-Type": "application/form-data",
+                "Content-Type": "application/form-data",
                 Authorization: `Bearer ${token}`,
             },
         }

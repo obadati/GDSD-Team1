@@ -26,7 +26,7 @@ export const signUpUser = (
     role: string,
     firstName: string,
     lastName: string,
-    companyId?: string | null
+    companyId = "0"
 ) => {
     return httpPOST(`${BASE_URL}${UserEndpoints.SignUp}`, {
         firstName,
