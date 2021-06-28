@@ -9,7 +9,8 @@ router.post("/conversation", controller.createConversation);
 router.get("/conversation/:userId", controller.getuserConversations);
 router.post("/sendMessage", controller.sendMessage);
 router.get("/getMessages/:userId", controller.getMessages);
-
+router.get("/getNewMessages/:userId", controller.getuserNewMassages);
+router.put("/readMassages", controller.readMassages);
 
 
 /*Export  Router*/

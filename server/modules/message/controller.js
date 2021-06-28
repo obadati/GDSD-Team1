@@ -23,6 +23,7 @@ exports.createConversation = async (req, res) => {
         let data = {
           sndId: req.body.sndId,
           rcvId: req.body.rcvId,
+          read: 1
         };
         console.log(data);
         await Message.create(data);
@@ -55,6 +56,27 @@ exports.getuserConversations = async (req, res) => {
   }
 };
 
+
+
+
+// get unread massages
+exports.getuserNewMassages = async (req, res) => {
+  try {
+    let id = req.params.userId;
+    const [results, metadata] = await db.sequelize.query("SELECT count(*) unread FROM dev_real_state.messages where messages.read=0 and rcvId=:id;",
+      {
+        replacements: { id: id }
+      });
+    if (results != null) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(404).json({ results: "Data Not Found" });
+    }
+  } catch (err) {
+    return res.status(500).json({ error: err.results });
+  }
+};
+
 //send Message
 exports.sendMessage = async (req, res) => {
 
@@ -68,7 +90,8 @@ exports.sendMessage = async (req, res) => {
         let data = {
           sndId: req.body.sndId,
           rcvId: req.body.rcvId,
-          messageTxt: req.body.messageTxt
+          messageTxt: req.body.messageTxt,
+          read: 0
         };
         console.log(data);
         const meesage = await Message.create(data);
@@ -79,6 +102,34 @@ exports.sendMessage = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+//send Message
+exports.readMassages = async (req, res) => {
+  try {
+    upload(req, res, async function (err) {
+      if (err) {
+        res.status(400).json({
+          message: err.message,
+        });
+      } else {
+        let rcvId = req.body.sndId;
+        let sndId = req.body.rcvId;
+        await Message.update(
+          {
+            read: 1,
+          },
+          { where: { rcvId: rcvId, sndId: sndId } }
+        );
+        return res.status(200).json({
+          message: "Message Read Successfully",
+        });
+      }
+    });
+  }
+  catch (err) {
+    return res.status(500).json({ error: err.results });
   }
 };
 
@@ -100,6 +151,3 @@ exports.getMessages = async (req, res) => {
     return res.status(500).json({ error: err.results });
   }
 };
-/******************************************************Admin Dashboard***********************************/
-
-/*Create Company */
