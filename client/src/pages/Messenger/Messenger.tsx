@@ -9,7 +9,7 @@ import axios, { AxiosResponse } from "axios";
 import { httpGET, httpPOST } from "../../utility/http";
 import { useAuth } from "../../hooks/auth";
 import { io } from "socket.io-client";
-import { BASE_URL } from "../../api/properties";
+import { BASE_URL } from "../../constants/constants";
 
 const MessengerPage: React.FC<any> = () => {
 
