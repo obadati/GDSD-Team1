@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { Link, NavLink, useHistory } from "react-router-dom";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { NavLink, useHistory } from "react-router-dom";
 import AppLogo from "../../assets/images/logo.png";
 import { AppRoutes } from "../../containers/Router/routes";
 import { useAuth } from "../../hooks/auth";
 import axios from "axios";
-import { setActiveTab } from "../../store/navigation/actions";
 import { NavigationTab, UserActions } from "../../store/navigation/types";
 import { AppState } from "../../store/rootReducer";
 import { BASE_URL } from "../../constants/constants";
+import msgIcon from "../../assets/images/messenger.png";
 
 import "./Navigation.scss";
 
@@ -30,7 +29,8 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
         const getNewMassages = async () => {
             try {
                 const res = await axios.get(
-                    BASE_URL + "/api/message/getNewMessages/" + id);
+                    BASE_URL + "/api/message/getNewMessages/" + id
+                );
                 setNewMessages(res as any);
             } catch (err) {
                 console.log(err);
@@ -86,18 +86,17 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
             <div
                 key={`navigation-tab-${index}`}
                 onClick={() => handleUserAction(tab.label)}
-                className={`app-navigation__tab app-navigation__tab${activeTab.label === tab.label ? "--selected" : ""
-                    } ${tab.label === username
+                className={`app-navigation__tab app-navigation__tab${
+                    activeTab.label === tab.label ? "--selected" : ""
+                } ${
+                    tab.label === username
                         ? `app-navigation__tab--username`
                         : ""
-                    }`}
+                }`}
             >
-
                 {tab.label}
-
             </div>
         ));
-
 
     const renderIntro = (): JSX.Element => (
         <div className="app-intro">
@@ -118,12 +117,27 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
                 <div className="user-actions">
                     {username ? (
                         <>
-                            <div className="topbarIconItem" onClick={() => history.push(AppRoutes.Messenger)}>
-                                <Chat />
-                                <span className="topbarIconBadge"> {newMessages.map((m: any) => (m.unread))}</span>
-                            </div>   </>) : (<p></p>)
-                    }
-                    {renderUserActions()}</div>
+                            <div
+                                className="topbarIconItem"
+                                onClick={() =>
+                                    history.push(AppRoutes.Messenger)
+                                }
+                            >
+                                <img
+                                    style={{ height: "20px", width: "20px" }}
+                                    src={msgIcon}
+                                    alt=""
+                                />
+                                <span className="topbarIconBadge">
+                                    {newMessages.map((m: any) => m.unread)}
+                                </span>
+                            </div>{" "}
+                        </>
+                    ) : (
+                        <p></p>
+                    )}
+                    {renderUserActions()}
+                </div>
             </div>
         );
     };
