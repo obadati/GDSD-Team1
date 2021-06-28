@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import { AppRoutes } from "../../containers/Router/routes";
 import { loginUser, UserRoles } from "../../api/user";
 import { setAppUser } from "../../store/user/actions";
-import { AppUser } from "../../models/AppUser";
 
 const LoginPage: React.FC<PropsFromRedux> = ({ dispatch }) => {
     const [user, setUser] = useState<{
@@ -29,9 +28,9 @@ const LoginPage: React.FC<PropsFromRedux> = ({ dispatch }) => {
             user.password,
             user.role
         );
+        dispatch(setAppUser(authenticatedUser as any));
         localStorage.setItem("auth-user", JSON.stringify(authenticatedUser));
         history.push(AppRoutes.Landing);
-        dispatch(setAppUser(authenticatedUser as any));
     };
 
     const renderUserRoles = () => {

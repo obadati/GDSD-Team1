@@ -11,9 +11,15 @@ import { BASE_URL } from "../../constants/constants";
 import msgIcon from "../../assets/images/messenger.png";
 
 import "./Navigation.scss";
+import { setAppUser } from "../../store/user/actions";
+import { dummyUser } from "../../store/user/reducer";
 
-const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
-    const { id, authenticated, username } = useAuth();
+const Navigation: React.FC<PropsFromRedux> = ({
+    activeTab,
+    dispatch,
+    user,
+}) => {
+    const { id, token, username } = user;
     const [newMessages, setNewMessages] = useState([] as any);
     const tabs: NavigationTab[] = [
         { label: "home", to: AppRoutes.Landing },
@@ -38,20 +44,16 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
         };
         getNewMassages();
     }, []);
+
     useEffect(() => {
-        if (username) {
-            setUserActions([...userActions, { label: username }]);
-        }
-        if (authenticated) {
+        setUserActions([]);
+        if (token) {
             setUserActions([
-                ...userActions,
+                { label: username },
                 { label: "Log Out", to: AppRoutes.Login },
             ]);
         } else {
-            setUserActions([
-                ...userActions,
-                { label: "Log In", to: AppRoutes.Login },
-            ]);
+            setUserActions([{ label: "Log In", to: AppRoutes.Login }]);
             userActions.push();
         }
     }, [username]);
@@ -75,6 +77,7 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     const handleUserAction = (label: string) => {
         if (label === "Log Out") {
             localStorage.clear();
+            dispatch(setAppUser(dummyUser));
             history.push(AppRoutes.Landing);
         } else {
             if (label !== username) history.push(AppRoutes.Login);
@@ -152,6 +155,7 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
 
 const mapStateToProps = (state: AppState) => ({
     activeTab: state.navigation.activeTab,
+    user: state.user,
 });
 
 const connector = connect(mapStateToProps);
