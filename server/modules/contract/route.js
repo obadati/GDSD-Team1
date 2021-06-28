@@ -11,11 +11,11 @@ router.post("/",controller.create);
 /*Edit Contract */
 router.patch("/:id",controller.edit);
 
+/*Get Contract By Agent */
+router.get("/userId/",controller.getAllContractByAgent);
+
 /*Get Contract By Id */
 router.get("/:id",controller.getById);
-
-/*Get Contract By Agent */
-router.get("/agent/all/:page",controller.getAllContractByAgent);
 
 /*Get Contract By Status */
 router.get("/agent/status/:page",controller.getAllContractByAgentStatus);
@@ -24,7 +24,7 @@ router.get("/agent/status/:page",controller.getAllContractByAgentStatus);
 router.delete("/:id",controller.delete);
 
 /*Edit Contract */
-router.patch("/",controller.endContract);
+router.patch("/:id",controller.endContract);
 
 /*************************************************Buyer Route**********************************************/
 /*Accept Contract */

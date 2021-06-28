@@ -108,8 +108,8 @@ exports.getAllContractByAgent = async (req, res) => {
     try {
       let limit = 8;
       let offset = 0;
-      let{agentId, status} = req.query;
-      let page= req.params.page; 
+      let{agentId,page} = req.query;
+      console.log(agentId)
       Contract.findAndCountAll({where:{agentId:agentId}}).then((data) => {
         
         let pages = Math.ceil(data.count / limit);
@@ -118,6 +118,7 @@ exports.getAllContractByAgent = async (req, res) => {
         Contract.findAll({
           attributes: [
             "id",
+            "propertyId",
             "title",
             "description",
             "dateCreate",
@@ -126,10 +127,10 @@ exports.getAllContractByAgent = async (req, res) => {
             "status",
           ],
           order: [["id", "DESC"]],
-          include: {
-            model: db.user,
-            attributes: ["id", "firstName","lastName"],
-          },
+          include: [{
+            model:db.propertyDetail,
+            attributes:["id","images"]
+          }],
           where:{agentId:agentId},
           limit: limit,
           offset: offset,
