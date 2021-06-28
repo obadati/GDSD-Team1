@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { Contract, getUserContracts } from "../../api/contracts";
+import { useAuth } from "../../hooks/auth";
 import { AppState } from "../../store/rootReducer";
 import ContractCard from "./components/ContractCard/ContractCard";
 import "./Contracts.scss";
 
 const ContractsPage: React.FC<PropsFromRedux> = ({ properties }) => {
+    const { id } = useAuth();
+    const [contracts, setContracts] = useState<Contract[]>([]);
+
+    useEffect(() => {
+        if (id) {
+            loadData();
+        }
+    }, [id]);
+
+    const loadData = async () => {
+        const { result } = await getUserContracts(id.toString());
+        setContracts(result);
+    };
+
     return (
         <div className="app-page contracts-page">
             <h3 className="page-title">Contracts</h3>
             <div className="contracts-wrapper">
-                {properties.map((property) => (
-                    <ContractCard
-                        title={property.title}
-                        imgUrl={property.images}
-                    />
-                ))}
+                {contracts.length ? (
+                    contracts.map((contract) => (
+                        <ContractCard
+                            title={contract.title}
+                            imgUrl={contract.propertyDetail.images}
+                        />
+                    ))
+                ) : (
+                    <p>No contracts yet!</p>
+                )}
             </div>
         </div>
     );

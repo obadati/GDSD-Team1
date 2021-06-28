@@ -53,12 +53,18 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
                         </span>
                     </div>
                     {userRole === UserRoles.Agent && (
-                        <div
-                            className="property-card__actions"
-                            onClick={handleEditProperty}
-                        >
-                            <div className="card-action">
+                        <div className="property-card__actions">
+                            <div
+                                className="card-action"
+                                onClick={handleEditProperty}
+                            >
                                 <img src={editIcon}></img>
+                            </div>
+                            <div
+                                className="card-action"
+                                onClick={handleEditProperty}
+                            >
+                                C
                             </div>
                         </div>
                     )}
