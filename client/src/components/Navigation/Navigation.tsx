@@ -9,7 +9,7 @@ import axios from "axios";
 import { setActiveTab } from "../../store/navigation/actions";
 import { NavigationTab, UserActions } from "../../store/navigation/types";
 import { AppState } from "../../store/rootReducer";
-import { BASE_URL } from "../../api/properties";
+import { BASE_URL } from "../../constants/constants";
 
 import "./Navigation.scss";
 
