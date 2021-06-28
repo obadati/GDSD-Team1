@@ -19,6 +19,8 @@ export interface Property {
     size: string;
     room: number;
     city: string;
+    imageProperties: string[];
+    agentId: string;
 }
 
 export interface User {

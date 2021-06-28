@@ -15,29 +15,27 @@ const PropertyDetail: React.FC<any> = () => {
     const history = useHistory();
     const property: Property = (history.location.state as any).property;
     const [isLoading, setIsLoading] = useState(false);
-    const [userInfo, setUserInfo] = useState({
+    const [agentInfo, setAgentInfo] = useState({
         firstName: "",
         lastName: "",
         companyName: "",
         rating: 0,
         image: "",
     });
-    const { token } = useAuth();
 
     const loadUserData = async () => {
-        setIsLoading(true);
-        let obj: any;
-        obj = jwtDecode(token);
-        const user = await getUserInfo(obj.id);
-        setUserInfo(user);
-        setIsLoading(false);
-        console.log(user, "user");
+        if (property.agentId) {
+            setIsLoading(true);
+            const user = await getUserInfo(parseInt(property.agentId));
+            setAgentInfo(user);
+            setIsLoading(false);
+            console.log(user, "user");
+        }
     };
     useEffect(() => {
         loadUserData();
     }, []);
 
-    console.log(userInfo, "userInfo");
     return (
         <div className="property-detail-page app-page">
             <div className="aside">
@@ -46,12 +44,12 @@ const PropertyDetail: React.FC<any> = () => {
                         <LoaderComponent title="sit tight!"></LoaderComponent>
                     )}
                     <SellerProfile
-                        image={`${BASE_URL}/${userInfo.image}`}
-                        stars={userInfo.rating}
+                        image={`${BASE_URL}/${agentInfo.image}`}
+                        stars={agentInfo.rating}
                         sellerName={
-                            userInfo.firstName + " " + userInfo.lastName
+                            agentInfo.firstName + " " + agentInfo.lastName
                         }
-                        sellerCompany={userInfo.companyName}
+                        sellerCompany={agentInfo.companyName}
                         actions={[
                             "message-agent",
                             "create-contact",
@@ -81,48 +79,12 @@ const PropertyDetail: React.FC<any> = () => {
                 <div className="image-gallery-wrapper">
                     <CarouselComponent
                         rounded
-                        images={[
-                            property.images,
-                            "assests/uploads/propertyImage/image-1624801866564.jpg",
-                            "assests/uploads/propertyImage/image-1624803117211.jpg",
-                            "assests/uploads/propertyImage/image-1624803387547.jpg",
-                        ]}
+                        images={property.imageProperties}
                     />
                 </div>
                 <div className="description">
                     <h3>{property.category.name}</h3>
-                    <p>
-                        {property.description} Lorem, ipsum dolor sit amet
-                        consectetur adipisicing elit. Pariatur aut voluptatem,
-                        illo accusantium consectetur blanditiis, eius beatae non
-                        dolore quo similique facilis molestias quas. Dicta, cum.
-                        Pariatur quas natus temporibus. Recusandae amet
-                        voluptatem sapiente sequi expedita impedit vitae
-                        adipisci culpa quo dolore maiores dignissimos deserunt,
-                        ex asperiores. Unde autem, tempora ab itaque voluptatum
-                        neque doloribus impedit molestias dolorum animi iste!
-                        Accusantium, maxime ipsam nihil eveniet suscipit ullam
-                        assumenda nisi distinctio aut deserunt et nam inventore
-                        nulla voluptatum obcaecati commodi vitae quaerat
-                        voluptas. Impedit aliquam iusto quam ratione harum culpa
-                        porro. Dignissimos exercitationem maiores ad fugiat
-                        ipsum harum minima modi porro? Delectus, ea illo.
-                        Architecto nesciunt assumenda hic dolores maiores
-                        excepturi? Autem omnis explicabo beatae, architecto
-                        eligendi quisquam minima a commodi? Molestias sed
-                        commodi nemo, enim vel totam inventore placeat iste
-                        deserunt, magnam architecto iure minus quisquam nisi
-                        facere voluptatem consectetur vero dolor laboriosam
-                        tempora debitis natus repudiandae nobis animi. Quas?
-                        Distinctio molestiae labore sit perspiciatis vitae animi
-                        vel amet debitis, natus error porro numquam voluptatibus
-                        minus quod ipsa vero provident sapiente harum hic iste
-                        quia libero, at nulla magnam. Quod. Quo, reprehenderit
-                        corporis! Aspernatur, autem omnis? Magni velit minima ea
-                        ullam, fuga impedit eligendi doloremque corrupti nulla
-                        quasi quas laborum, molestiae dicta? Minima a quod
-                        pariatur. Sit, nobis! Voluptatibus,
-                    </p>
+                    <p>{property.description}</p>
                 </div>
             </div>
         </div>
