@@ -52,7 +52,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
                             {property.size} m²
                         </span>
                     </div>
-                    {userRole !== UserRoles.Buyer && (
+                    {userRole === UserRoles.Agent && (
                         <div
                             className="property-card__actions"
                             onClick={handleEditProperty}
