@@ -1,13 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { useHistory } from "react-router";
 import { updateProperty } from "../../api/properties";
 import { PropertyCategories } from "../../components/Filters/Filters";
 import { useAuth } from "../../hooks/auth";
+import { setLoadingState } from "../../store/loader/actions";
 import { Property } from "../../store/properties/types";
 import "./EditProperty.scss";
 
-const EditProperty = () => {
+const EditProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
     const history = useHistory();
     const { id: agentId, token } = useAuth();
     const {
@@ -37,8 +39,14 @@ const EditProperty = () => {
         return PropertyCategories.House;
     };
 
-    const handleFormSubmit = () => {
-        updateProperty(formData, token);
+    const handleFormSubmit = async () => {
+        try {
+            dispatch(setLoadingState(true));
+            await updateProperty(formData, token);
+            dispatch(setLoadingState(false));
+        } catch (e) {
+            dispatch(setLoadingState(false));
+        }
     };
 
     const handleImageChange = (e: any) => {
@@ -171,6 +179,7 @@ const EditProperty = () => {
                         type="file"
                         name="myImage"
                         accept="image/png, image/gif, image/jpeg"
+                        max={20000}
                     />
                 </form>
                 <button
@@ -185,4 +194,6 @@ const EditProperty = () => {
     );
 };
 
-export default EditProperty;
+const connector = connect();
+type PropsFromRedux = ConnectedProps<typeof connector>;
+export default connector(EditProperty);
