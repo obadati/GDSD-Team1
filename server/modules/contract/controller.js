@@ -196,7 +196,7 @@ exports.getAllContractByAgentStatus = async (req, res) => {
 /*End Contract*/
 exports.endContract = async (req, res) => {
     try {
-      let id = req.params.id;
+      const{id, status}= req.query;
       let contract = await Contract.findOne({ where: { id: id } });
       if (contract == null) {
         return res.status(404).json({ message: "No Contract Found" });
@@ -204,7 +204,7 @@ exports.endContract = async (req, res) => {
           
         await Contract.update(
           {
-            status: "cancelled",
+            status: status,
           },
           { where: { id: id } }
         );

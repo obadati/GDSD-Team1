@@ -1,3 +1,4 @@
+import { BASE_URL } from "../constants/constants";
 import { Property } from "../store/properties/types";
 import { httpGET, httpPOST, httpPUT } from "../utility/http";
 
@@ -7,9 +8,8 @@ export enum PropertiesEndpoints {
     SearchByCategory = "/api/properties/category",
     GetAgentProperties = "/api/properties/agentProperty/:page?agentId=:agentId",
     UpdateProperty = "/api/properties/:uid",
+    GetAllByAdminStatus = "/api/properties/getAllPropertyByAdminStatus",
 }
-
-export const BASE_URL = "http://18.185.96.197:5000";
 
 export const getAllProperties = (page: number = 1) => {
     return httpGET(`${BASE_URL}${PropertiesEndpoints.GetAll}${page}`);
@@ -72,5 +72,11 @@ export const updateProperty = (
             "Content-Type": "application/form-data",
             Authorization: `Bearer ${token}`,
         }
+    );
+};
+
+export const getAllPropertyByAdminStatus = (status: string, page = 1) => {
+    return httpGET(
+        `${BASE_URL}${PropertiesEndpoints.GetAllByAdminStatus}/${page}/?status=${status}`
     );
 };

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      user.belongsTo(models.company,{foreignKey: 'id' })
     }
   };
   user.init({
@@ -19,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     companyId: DataTypes.INTEGER,
-    postType: DataTypes.STRING,
+    role: DataTypes.STRING,
     status: DataTypes.STRING,
     rating: DataTypes.FLOAT,
     image: DataTypes.STRING,

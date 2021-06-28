@@ -3,9 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import { GuestRoute, PrivateRoute } from "../../components/Route/Route";
 import {
     HomePage,
-    LandingPage,
     PropertiesPage,
     MessengerPage,
+    AboutDeveloperPage,
 } from "../../pages";
 import AvgPriceCalculator from "../../pages/AvgPriceCalculator/AvgPriceCalculator";
 import Login from "../../pages/Login/Login";
@@ -19,11 +19,23 @@ import EditProperty from "../../pages/EditProperty/EditProperty";
 import Approval from "../../pages/ApprovalManagement/ApprovalDashboard/Approval";
 import AgentApproval from "../../pages/ApprovalManagement/AgentApporval/AgentApproval";
 import PropertyApproval from "../../pages/ApprovalManagement/PropertyApproval/PropertyApproval";
-
+import ViewCompanies from "../../pages/Companies/ViewCompany";
+import AddCompanies from "../../pages/Companies/AddComapnies";
+import Companies from "../../pages/Companies/Companies";
+import PropertyList from "../../pages/Companies/PropertyList";
+import AgentList from "../../pages/Companies/AgentList";
+import SignUpPage from "../../pages/SignUp/SignUp";
+import Reports from "../../pages/Reports/Reports";
+import Queries from "../../pages/Queries/Queries";
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
             <GuestRoute path={AppRoutes.Login} component={Login}></GuestRoute>
+            <GuestRoute
+                exact
+                path={AppRoutes.SignUp}
+                component={SignUpPage}
+            ></GuestRoute>
             <Route path={AppRoutes.Landing} exact component={HomePage}></Route>
             <Route
                 path={AppRoutes.Messenger}
@@ -35,6 +47,26 @@ const AppRouter: React.FC<any> = () => {
                 path={AppRoutes.AboutUs}
                 exact
                 component={AboutUsPage}
+            ></Route>
+            <Route
+                path={AppRoutes.AboutDeveloper}
+                exact
+                component={AboutDeveloperPage}
+            ></Route>
+            <Route
+                path={AppRoutes.Companies}
+                exact
+                component={Companies}
+            ></Route>
+            <Route
+                path={AppRoutes.AgentList}
+                exact
+                component={AgentList}
+            ></Route>
+            <Route
+                path={AppRoutes.PropertyList}
+                exact
+                component={PropertyList}
             ></Route>
             <PrivateRoute
                 exact
@@ -84,6 +116,27 @@ const AppRouter: React.FC<any> = () => {
             <PrivateRoute
                 path={AppRoutes.PropertyApprovals}
                 component={PropertyApproval}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.Reports}
+                component={Reports}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.Queries}
+                component={Queries}
+                exact
+            ></PrivateRoute>
+
+            <PrivateRoute
+                path={AppRoutes.ViewCompanies}
+                component={ViewCompanies}
+                exact
+            ></PrivateRoute>
+            <PrivateRoute
+                path={AppRoutes.AddCompanies}
+                component={AddCompanies}
                 exact
             ></PrivateRoute>
             <Route path="*" component={NotFound}></Route>

@@ -1,17 +1,13 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import propertyImage from "../../../assets/images/property.png";
 import agentImage from "../../../assets/images/agent.png";
 import "./Approval.scss";
 const Approval = () => {
     return (
-        <div>
+        <div className="approvals-page">
             <div>
-                <div className="container">
+                <div className="wrapper">
                     <div className="row">
                         <div className="col col style-box height">
                             <h3>PROPERTY MANAGEMENT</h3>
@@ -36,10 +32,7 @@ const Approval = () => {
                             </Link>
                         </div>
                         <div className="col style-box">
-                            <Link
-                                to="/propertyApproval"
-                                className="removeLine"
-                            >
+                            <Link to="/propertyApproval" className="removeLine">
                                 <img
                                     className="dimesion"
                                     src={propertyImage}

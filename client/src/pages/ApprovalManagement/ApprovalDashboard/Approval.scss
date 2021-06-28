@@ -1,20 +1,39 @@
-.dimesion{
+.approvals-page {
+    h3 {
+        color: grey;
+    }
+}
+
+.dimesion {
     height: 250px;
     width: auto;
 }
-.text-decoration{
+.text-decoration {
     text-decoration: none;
 }
-.style-box{
+.style-box {
     text-align: center;
     border-style: solid;
     border-color: white;
-    background-color:white;
+    background-color: white;
     margin: 5px;
 }
-.removeLine:hover{
-    text-decoration:none
+.removeLine:hover {
+    text-decoration: none;
 }
-h3{
-    color: grey
+
+.position {
+    max-height: 450px !important;
+    display: flex;
+
+    .wrapper {
+        border-radius: 10px;
+        padding: 2rem;
+        background: #ffffff85;
+        border: 1px solid var(--app-color-border);
+        box-shadow: 0 2px 12px 1px #1174da4a;
+        max-width: 750px;
+        margin: auto;
+        min-width: 750px;
+    }
 }
