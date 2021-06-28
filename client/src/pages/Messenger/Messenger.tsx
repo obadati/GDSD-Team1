@@ -3,12 +3,13 @@ import Message from "../../components/message/Message";
 import { dummyDeveloper, getRandomBg } from "../../utility/static";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
 import Conversation from "../../components/conversations/Conversation";
+
 import "./Messenger.scss";
 import axios, { AxiosResponse } from "axios";
-import { getConfig } from "@testing-library/react";
 import { httpGET, httpPOST } from "../../utility/http";
 import { useAuth } from "../../hooks/auth";
 import { io } from "socket.io-client";
+import { BASE_URL } from "../../api/properties";
 
 const MessengerPage: React.FC<any> = () => {
 
@@ -22,12 +23,11 @@ const MessengerPage: React.FC<any> = () => {
     const [receviedMessage, setReceviedMessage] = useState(null as any);
     const socket = useRef(io());
     const scrollRef = useRef<null | HTMLDivElement>(null);
-    const { id, username, email } = useAuth();
-
+    const { id } = useAuth();
 
 
     useEffect(() => {
-        socket.current = io("ws://18.185.96.197:8900");
+        socket.current = io("ws://" + BASE_URL.split('//')[1].split(':')[0] + ":8900");
         socket.current.on("getMessage", (data) => {
             setReceviedMessage({
                 sndId: data.sndId,
@@ -39,23 +39,22 @@ const MessengerPage: React.FC<any> = () => {
     }, []);
 
     useEffect(() => {
-        receviedMessage &&
-            currentChat?.rcvId == receviedMessage.sndId &&
+        if (receviedMessage && currentChat?.rcvId == receviedMessage.sndId) {
             setMessages((prev) => [...prev, receviedMessage] as any);
+        }
+
     }, [receviedMessage]);
 
     useEffect(() => {
         socket.current.emit("addUser", id);
-        socket.current.on("getUsers", users => {
-            console.log(users)
-        })
+        //  socket.current.on("getUsers", users => { console.log(users) });
 
     }, []);
     useEffect(() => {
         const getImage = async () => {
             try {
                 const res = await axios.get(
-                    "http://18.185.96.197:5000/api/user/userImage/" +
+                    BASE_URL + "/api/user/userImage/" +
                     id
                 );
                 setUserImage(res as any);
@@ -69,7 +68,7 @@ const MessengerPage: React.FC<any> = () => {
         const getConversations = async () => {
             try {
                 const res = await axios.get(
-                    "http://18.185.96.197:5000/api/message/Conversation/" +
+                    BASE_URL + "/api/message/Conversation/" +
                     id
                 );
                 setConversations(res as any);
@@ -83,13 +82,14 @@ const MessengerPage: React.FC<any> = () => {
         const getMessages = async () => {
             try {
                 const res = await axios.get(
-                    "http://18.185.96.197:5000/api/message/getMessages/" +
+                    BASE_URL + "/api/message/getMessages/" +
                     id +
                     "?withUser=" +
                     currentChat.rcvId
                 );
                 setMessages(res as any);
-                console.log(res);
+                await axios.put(BASE_URL + "/api/message/readMassages", { rcvId: currentChat.rcvId, sndId: id });
+
             } catch (err) {
                 console.log(err);
             }
@@ -101,7 +101,7 @@ const MessengerPage: React.FC<any> = () => {
         const getConversations = async () => {
             try {
                 const res = await axios.get(
-                    "http://18.185.96.197:5000/api/message/Conversation/" +
+                    BASE_URL + "/api/message/Conversation/" +
                     id
                 );
                 // console.log(res);
@@ -123,7 +123,7 @@ const MessengerPage: React.FC<any> = () => {
 
         try {
             const res = await httpPOST(
-                "http://18.185.96.197:5000/api/message/sendMessage",
+                BASE_URL + "/api/message/sendMessage",
                 messageSend
             );
             setMessages([...messages, res as any] as any);
@@ -199,13 +199,7 @@ const MessengerPage: React.FC<any> = () => {
                 </div>
             </div>
 
-            <div className="chatOnline">
-                <div className="chatOnlineWrapper">
-                    <ChatOnline />
-                    <ChatOnline />
-                    <ChatOnline />
-                </div>
-            </div>
+
         </div>
     );
 };
