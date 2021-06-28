@@ -14,7 +14,6 @@ export const useAuth = (): AppUser => {
             email: "",
         };
     }
-
     const authUser = JSON.parse(user);
     let {
         token = "",

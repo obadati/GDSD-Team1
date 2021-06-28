@@ -26,6 +26,7 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
         { label: "about us", to: AppRoutes.AboutUs },
     ];
 
+    const [userActions, setUserActions] = useState<UserActions[]>([]);
     useEffect(() => {
         const getNewMassages = async () => {
             try {
@@ -38,16 +39,23 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
         };
         getNewMassages();
     }, []);
-
-    const userActions: UserActions[] = [];
-    if (username) {
-        userActions.push({ label: username });
-    }
-    if (authenticated) {
-        userActions.push({ label: "Log Out", to: AppRoutes.Login });
-    } else {
-        userActions.push({ label: "Log In", to: AppRoutes.Login });
-    }
+    useEffect(() => {
+        if (username) {
+            setUserActions([...userActions, { label: username }]);
+        }
+        if (authenticated) {
+            setUserActions([
+                ...userActions,
+                { label: "Log Out", to: AppRoutes.Login },
+            ]);
+        } else {
+            setUserActions([
+                ...userActions,
+                { label: "Log In", to: AppRoutes.Login },
+            ]);
+            userActions.push();
+        }
+    }, [username]);
 
     const history = useHistory();
 
@@ -68,9 +76,10 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     const handleUserAction = (label: string) => {
         if (label === "Log Out") {
             localStorage.clear();
+            history.push(AppRoutes.Landing);
+        } else {
+            if (label !== username) history.push(AppRoutes.Login);
         }
-
-        if (label !== username) history.push(AppRoutes.Login);
     };
 
     const renderUserActions = () =>

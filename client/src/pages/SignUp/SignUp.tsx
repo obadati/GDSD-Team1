@@ -33,7 +33,7 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
                 user.role,
                 user.firstName,
                 user.lastName,
-                user.company?.id || null
+                user.company?.id
             );
             dispatch(setLoadingState(false));
         } catch (e) {
