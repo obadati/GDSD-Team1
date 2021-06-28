@@ -167,6 +167,12 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
             onClick={handleSignUp}>
             Sign Up
           </button>
+          <p className='or-separator'>OR</p>
+          <button
+            className='btn btn-success'
+            onClick={() => history.push(AppRoutes.Login)}>
+            Login
+          </button>
         </div>
       </div>
     </div>
