@@ -21,7 +21,7 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
     }, [properties]);
 
     const handleFilterSelection = async (selected: number) => {
-        if (selected && selected > -1) {
+        if (selected > -1) {
             const { result } = await searchByCategory(selected + 1);
             if (result) {
             }

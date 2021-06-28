@@ -7,7 +7,7 @@ export enum PropertiesEndpoints {
     GetAll = "/api/properties/",
     SearchProperties = "/api/properties/search",
     SearchByCategory = "/api/properties/category",
-    GetAgentProperties = "/api/properties/agentProperty/:page?agentId=:agentId",
+    GetAgentProperties = "/api/properties?agentId=:agentId&page=:page",
     UpdateProperty = "/api/properties/:uid",
     GetAllByAdminStatus = "/api/properties/getAllPropertyByAdminStatus",
 }
@@ -27,7 +27,7 @@ export const getAgentProperties = (agentId: string, page: number = 1) => {
 
 export const searchForProperties = (query: string, page = 1) => {
     return httpGET(
-        `${BASE_URL}${PropertiesEndpoints.SearchProperties}/?text=${query}&page=${page}`
+        `${BASE_URL}${PropertiesEndpoints.SearchProperties}?query=${query}&page=${page}`
     );
 };
 

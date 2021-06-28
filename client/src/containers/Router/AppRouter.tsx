@@ -27,6 +27,7 @@ import AgentList from "../../pages/Companies/AgentList";
 import SignUpPage from "../../pages/SignUp/SignUp";
 import Reports from "../../pages/Reports/Reports";
 import Queries from "../../pages/Queries/Queries";
+import ContractsPage from "../../pages/Contracts/Contracts";
 const AppRouter: React.FC<any> = () => {
     return (
         <Switch>
@@ -76,7 +77,7 @@ const AppRouter: React.FC<any> = () => {
             <PrivateRoute
                 exact
                 path={`${AppRoutes.Contracts}`}
-                component={Dashboard}
+                component={ContractsPage}
             ></PrivateRoute>
             <PrivateRoute
                 exact
@@ -128,7 +129,6 @@ const AppRouter: React.FC<any> = () => {
                 component={Queries}
                 exact
             ></PrivateRoute>
-
             <PrivateRoute
                 path={AppRoutes.ViewCompanies}
                 component={ViewCompanies}

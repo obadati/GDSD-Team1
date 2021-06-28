@@ -51,6 +51,12 @@ body {
         .action-item {
             cursor: pointer;
         }
+
+        .raised-tile {
+            box-shadow: 0 2px 12px 1px #1174da4a;
+            border: 2px solid var(--app-color-border);
+            border-radius: 10px;
+        }
     }
 }
 

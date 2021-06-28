@@ -47,6 +47,7 @@ export const httpPOST = (
         }
     });
 };
+
 export const httpPUT = (
     url: string,
     body: object,
@@ -62,6 +63,23 @@ export const httpPUT = (
     return new Promise(async (resolve, reject) => {
         try {
             const data = await axios.put(url, body, {
+                headers: headers || {
+                    "Content-Type": "application/json",
+                },
+            });
+            resolve(data);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+export const httpPatch = (
+    url: string,
+    headers?: object
+): Promise<AxiosResponse> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const data = await axios.patch(url, {
                 headers: headers || {
                     "Content-Type": "application/json",
                 },
