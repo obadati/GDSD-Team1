@@ -167,6 +167,9 @@ exports.agentProperty = async (req, res) => {
         include: [{
           model: db.category,
           attributes: ["id", "name"],
+        },{
+          model: db.imageProperty,
+          attributes: ["id", "propertyId","image"],
         }],
         where: { agentId: agentId },
         limit: limit,
