@@ -61,8 +61,10 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
     const handleUserAction = (label: string) => {
         if (label === "Log Out") {
             localStorage.clear();
+            history.push(AppRoutes.Landing);
+        } else {
+            if (label !== username) history.push(AppRoutes.Login);
         }
-        if (label !== username) history.push(AppRoutes.Login);
     };
 
     const renderUserActions = () =>
