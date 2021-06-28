@@ -12,7 +12,7 @@ router.post("/",controller.create);
 router.patch("/:id",controller.edit);
 
 /*Get Contract By Agent */
-router.get("/userId/",controller.getAllContractByAgent);
+router.get("/agent/",controller.getAllContractByAgent);
 
 /*Get Contract By Id */
 router.get("/:id",controller.getById);
@@ -31,7 +31,7 @@ router.patch("/:id",controller.endContract);
 router.patch("/buyer/contract",controller.contract);
 
 /*Get Contract By Buyer */
-router.get("/buyer/all/:page",controller.getAllContractByBuyer);
+router.get("/buyer/:page/",controller.getAllContractByBuyer);
 
 /*Get Contract By Status */
 router.get("/buyer/status/:page",controller.getAllContractByBuyerStatus);
