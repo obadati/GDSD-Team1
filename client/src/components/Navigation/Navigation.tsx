@@ -134,7 +134,7 @@ const Navigation: React.FC<PropsFromRedux> = ({
                                 <span className="topbarIconBadge">
                                     {newMessages.map((m: any) => m.unread)}
                                 </span>
-                            </div>{" "}
+                            </div>
                         </>
                     ) : (
                         <p></p>

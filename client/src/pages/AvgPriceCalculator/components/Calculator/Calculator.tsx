@@ -11,7 +11,8 @@ interface CalculatorData {
 }
 
 const Calculator = () => {
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState<number>(-1);
+    console.log({ price });
 
     const fields: Array<{
         label: string;
@@ -71,10 +72,6 @@ const Calculator = () => {
             console.log(e.response.data.Message);
         }
     };
-    useEffect(() => {
-        onSubmit();
-    }, []);
-    useEffect(() => {}, [price]);
 
     return (
         <div className="price-calculator-component">
@@ -141,6 +138,10 @@ const Calculator = () => {
                 Get Price
             </button>
             {price > 0 && <p>Avg Price: € {price}</p>}
+            {price === 0 &&
+                `Looks like we don't have enough data for now, We'll keep
+                    crunching numbers for a better estimation next time you
+                    visit 😉`}
         </div>
     );
 };

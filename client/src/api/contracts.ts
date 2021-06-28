@@ -2,7 +2,7 @@ import { BASE_URL } from "../constants/constants";
 import { httpGET, httpPatch } from "../utility/http";
 
 enum ContractsEndpoints {
-    GetAllBuyerContracts = "/api/contracts?userId=:uid&page=:page",
+    GetAllBuyerContracts = "/api/contract?userId=:uid&page=:page",
     UpdateContractStatus = "/api/contracts/:uid?status=:status",
 }
 
@@ -11,7 +11,19 @@ enum ContractStatus {
     End = "end",
 }
 
-export const getBuyerContracts = (uid: string, page = 1) => {
+export interface Contract {
+    buyerId: number;
+    agentId: number;
+    description: string;
+    dateCreate: string;
+    dateValid: string;
+    propertyDetail: { id: number; images: string };
+    title: string;
+    status: string;
+    approve: string;
+}
+
+export const getUserContracts = (uid: string, page = 1): Promise<any> => {
     return httpGET(
         `${BASE_URL}${ContractsEndpoints.GetAllBuyerContracts.replace(
             ":page",

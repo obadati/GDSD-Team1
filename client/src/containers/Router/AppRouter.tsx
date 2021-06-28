@@ -89,11 +89,11 @@ const AppRouter: React.FC<any> = () => {
                 component={PropertiesPage}
                 exact
             ></Route>
-            <PrivateRoute
+            <Route
                 path={AppRoutes.PropertyDetail}
                 component={PropertyDetail}
                 exact
-            ></PrivateRoute>
+            ></Route>
             <PrivateRoute
                 path={AppRoutes.EditProperty}
                 component={EditProperty}
