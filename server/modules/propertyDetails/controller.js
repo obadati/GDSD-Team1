@@ -164,10 +164,10 @@ exports.agentProperty = async (req, res) => {
           "status",
         ],
         order: [["id", "DESC"]],
-        include: {
+        include: [{
           model: db.category,
           attributes: ["id", "name"],
-        },
+        }],
         where: { agentId: agentId },
         limit: limit,
         offset: offset,
@@ -245,7 +245,6 @@ exports.updateProperty = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const user = jwt.verify(token, secret);
-
 
     upload(req, res, async function (err) {
 
@@ -340,7 +339,7 @@ exports.updateProperty = async (req, res) => {
             { where: { id: id } }
           );
           console.log(propertyUpdate.images);
-          await fs.unlink(propertyUpdate.images, (err) => {
+           fs.unlink(propertyUpdate.images, (err) => {
             if (err) {
               console.log(err);
             }
@@ -376,6 +375,7 @@ exports.getAllProperty = (req, res) => {
         attributes: [
           "id",
           "title",
+          "agentId",
           "description",
           "price",
           "room",
@@ -388,10 +388,17 @@ exports.getAllProperty = (req, res) => {
           "status",
         ],
         order: [["id", "DESC"]],
-        include: {
+        include: [{
           model: db.category,
           attributes: ["id", "name"],
-        },
+        },{
+          model: db.user,
+          attributes: ["id", "firstName","lastName","rating"],
+        },{
+          model: db.imageProperty,
+          attributes: ["image"]
+          
+        }],
         limit: limit,
         offset: offset,
         where: { status: status },
