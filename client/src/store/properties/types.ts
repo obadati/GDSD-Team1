@@ -18,6 +18,7 @@ export interface Property {
     category: Category;
     size: string;
     room: number;
+    city: string;
 }
 
 export interface User {

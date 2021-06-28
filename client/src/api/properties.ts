@@ -1,3 +1,4 @@
+import axios from "axios";
 import { BASE_URL } from "../constants/constants";
 import { Property } from "../store/properties/types";
 import { httpGET, httpPOST, httpPUT } from "../utility/http";
@@ -36,11 +37,7 @@ export const searchByCategory = (categoryId: number, page = 1) => {
     );
 };
 
-export const updateProperty = (
-    property: Property,
-    agentId: string,
-    token: string
-) => {
+export const updateProperty = (property: Property, token: string) => {
     const {
         title,
         description,
@@ -50,27 +47,29 @@ export const updateProperty = (
         size,
         category: { id: categoryId },
         images: image,
+        city,
     } = property;
-    return httpPUT(
+    let formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price.toString());
+    formData.append("location", location);
+    formData.append("room", room.toString());
+    formData.append("size", size);
+    formData.append("categoryId", categoryId);
+    formData.append("city", city);
+    formData.append("image", image);
+    return axios.put(
         `${BASE_URL}${PropertiesEndpoints.UpdateProperty.replace(
             ":uid",
             property.id
         )}`,
+        formData,
         {
-            title,
-            description,
-            price,
-            location,
-            room,
-            size,
-            categoryId,
-            image,
-            agentId,
-            date: new Date(),
-        },
-        {
-            "Content-Type": "application/form-data",
-            Authorization: `Bearer ${token}`,
+            headers: {
+                "Content-Type": "application/form-data",
+                Authorization: `Bearer ${token}`,
+            },
         }
     );
 };

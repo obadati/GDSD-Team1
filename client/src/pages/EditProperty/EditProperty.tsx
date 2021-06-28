@@ -38,7 +38,7 @@ const EditProperty = () => {
     };
 
     const handleFormSubmit = () => {
-        updateProperty(formData, agentId.toString(), token);
+        updateProperty(formData, token);
     };
 
     const handleImageChange = (e: any) => {
