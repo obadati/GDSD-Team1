@@ -14,7 +14,7 @@ router.post('/:uid/images', controller.addPropertyImage);
 router.post('/:uid', controller.create);
 
 /*Get Agent Properties */
-router.get('/agentProperty/:page', controller.agentProperty);
+router.get('/agentProperty/', controller.agentProperty);
 
 /*Get Agent Properties */
 router.get('/agentPropertyByStatus/:page', controller.agentPropertyByStatus);

@@ -136,14 +136,14 @@ exports.agentProperty = async (req, res) => {
   try {
     let limit = 8;
     let offset = 0;
-    const { agentId } = req.query;
+    const { agentId, page } = req.query;
     let agent = await User.findOne({
       attributes: ["id", "firstName", "lastName", "rating", "image"],
       where: { id: agentId },
     });
     console.log(agent);
     Property.findAndCountAll({ where: { agentId: agentId } }).then((data) => {
-      let page = req.params.page; // page number
+      
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
@@ -246,7 +246,58 @@ exports.updateProperty = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
     const user = jwt.verify(token, secret);
 
+
     upload(req, res, async function (err) {
+
+      if(req.file==null){
+       
+          const {
+            title,
+            categoryId,
+            description,
+            price,
+            location,
+            room,
+            size,
+            city,
+            agentId,
+          } = req.body;
+          const id = req.params.uid;
+         
+         
+          let propertyUpdate = await Property.findOne({
+            where: { id: id },
+          });
+          if (propertyUpdate.agentId == user.id) {
+            await Property.update(
+              {
+                
+                title: title,
+                categoryId: categoryId,
+                price: price,
+                location: location,
+                room: room,
+                size: size,
+                description: description,
+                city: city,
+                agentId: agentId,
+              },
+              { where: { id: id } }
+            );
+           
+            return res.status(200).json({
+              message: "Image Update Successfully",
+            });
+          } else {
+            return res.status(400).json({
+              message: "Invalid User",
+            });
+          }
+        }
+      
+
+
+
       if (err) {
         return res.status(400).json({
           message:
