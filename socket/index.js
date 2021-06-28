@@ -11,7 +11,7 @@ let users = [];
 const addUser = (userId, socketId) => { users.push({ userId, socketId }); };
 //remove user from array
 const removeUser = (socketId) => { users = users.filter((user) => user.socketId !== socketId); }
-//get users that are online and revivers of the massage
+//get revivers of the massage socket
 const getUser = (userId) => { return users.filter(user => user.userId === userId); }
 
 // when the user connect
