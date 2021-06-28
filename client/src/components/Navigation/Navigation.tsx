@@ -22,7 +22,6 @@ const Navigation: React.FC<PropsFromRedux> = ({ activeTab, dispatch }) => {
         { label: "average price", to: AppRoutes.AvgPrice },
         { label: "Dashboard", to: AppRoutes.Dashboard },
         { label: "companies", to: AppRoutes.Companies },
-        { label: "chat", to: AppRoutes.Messenger },
         { label: "about us", to: AppRoutes.AboutUs },
     ];
 
