@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, ConnectedProps, useStore } from "react-redux";
-import { getAllProperties } from "./api/properties";
+import { getAgentProperties, getAllProperties } from "./api/properties";
 import "./App.scss";
 import Navigation from "./components/Navigation/Navigation";
 import AppRouter from "./containers/Router/AppRouter";
@@ -14,11 +14,14 @@ import { getFromLocalStorage } from "./utility/localStorage";
 import { AUTH_USER_KEY } from "./constants/constants";
 import { getAllCompanies } from "./api/companies";
 import { setAllCompanies } from "./store/companies/actions";
+import { useAuth } from "./hooks/auth";
+import { UserRoles } from "./api/user";
 
 interface OwnProps extends PropsFromRedux {}
 
 const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
     const state = useStore();
+    const { role, id } = useAuth();
     console.log(state.getState());
     useEffect(() => {
         loadData();
@@ -28,7 +31,9 @@ const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
         dispatch(setLoadingState(true));
         dispatch(setAppUser(getFromLocalStorage(AUTH_USER_KEY)));
         try {
-            const { result: properties } = await getAllProperties();
+            const { result: properties } = await (role === UserRoles.Agent
+                ? getAgentProperties(id.toString())
+                : getAllProperties());
             const { result: companies } = await getAllCompanies();
 
             if (properties) {
