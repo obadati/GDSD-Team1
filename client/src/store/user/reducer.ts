@@ -3,7 +3,7 @@ import { UserRoles } from "../../api/user";
 import { AppUser } from "../../models/AppUser";
 import { UserStateActions } from "./actions";
 
-export const initialState: AppUser = {
+export const dummyUser: AppUser = {
     id: -1,
     username: "",
     email: "",
@@ -12,7 +12,7 @@ export const initialState: AppUser = {
     role: UserRoles.Buyer,
 };
 
-const reducer = (state: AppUser = initialState, action: StateAction) => {
+const reducer = (state: AppUser = dummyUser, action: StateAction) => {
     switch (action.type) {
         case UserStateActions.SetAppUser: {
             let { username = "", email = "", token } = action.payload;
