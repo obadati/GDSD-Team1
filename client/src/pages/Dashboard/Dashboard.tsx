@@ -38,7 +38,7 @@ const tabs: DashboardTile[] = [
     },
     {
         label: "Queries",
-        to: `${AppRoutes.Contact}`,
+        to: `${AppRoutes.Queries}`,
         icon: queryIcon,
         role: UserRoles.Admin,
     },
@@ -62,7 +62,6 @@ const Dashboard: React.FC<any> = () => {
 
     useEffect(() => {
         if (role) {
-            debugger;
             setDashboardTiles([
                 ...dashboardTiles.filter(
                     (tile) => tile.role === role || !tile.role

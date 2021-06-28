@@ -1,3 +1,4 @@
+import axios from "axios";
 import { BASE_URL } from "../constants/constants";
 import { Property } from "../store/properties/types";
 import { httpGET, httpPOST, httpPUT } from "../utility/http";
@@ -47,25 +48,26 @@ export const updateProperty = (property: Property, token: string) => {
         category: { id: categoryId },
         images: image,
     } = property;
-    return httpPUT(
+    let formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price.toString());
+    formData.append("location", location);
+    formData.append("room", room.toString());
+    formData.append("size", size);
+    formData.append("category", categoryId);
+    formData.append("images", image);
+    return axios.put(
         `${BASE_URL}${PropertiesEndpoints.UpdateProperty.replace(
             ":uid",
             property.id
         )}`,
+        formData,
         {
-            title,
-            description,
-            price,
-            location,
-            room,
-            size,
-            categoryId,
-            image,
-            date: new Date(),
-        },
-        {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            headers: {
+                // "Content-Type": "application/form-data",
+                Authorization: `Bearer ${token}`,
+            },
         }
     );
 };
