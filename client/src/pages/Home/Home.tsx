@@ -16,14 +16,8 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
     const heroProps: HeroProps = {
         heading:
             "Get real time market average prices based on your preferences",
-        description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
-    quaerat eos nihil repudiandae nulla vero in, aut officia cumque
-    dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
-    eius? Possimus, quos culpa officia neque voluptas exercitationem
-    tempora, consequuntur consequatur et alias dolorum dolores repellat
-    officiis impedit? Magni consequuntur animi in veritatis vitae,
-    necessitatibus earum itaque saepe aut placeat aliquid! Excepturi culpa,
-    minima ipsa veniam suscipit commodi`,
+        description: `Now you can check the average price you are expected to pay for a house at a slected location, 
+        you can enter number of room and size and get the middle price accross all our online offer that match your description`,
         cta: {
             label: "get avg prices",
             handler: () => {
@@ -41,7 +35,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
     eius? Possimus, quos culpa officia neque voluptas exercitationem
     tempora, consequuntur consequatur et alias dolorum dolores repellat
     officiis impedit?`,
-            cta: { label: "Read More", handler: () => {} },
+            cta: { label: "Read More", handler: () => { } },
         },
         {
             heading: "5 room house for sharing",
@@ -51,7 +45,7 @@ const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
     eius? Possimus, quos culpa officia neque voluptas exercitationem
     tempora, consequuntur consequatur et alias dolorum dolores repellat
     officiis impedit?`,
-            cta: { label: "Read More", handler: () => {} },
+            cta: { label: "Read More", handler: () => { } },
         },
     ];
 
