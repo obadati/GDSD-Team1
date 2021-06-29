@@ -44,12 +44,6 @@ const PropertyDetail: React.FC<any> = () => {
             stars={agentInfo.rating}
             sellerName={agentInfo.firstName + " " + agentInfo.lastName}
             sellerCompany={agentInfo.companyName}
-            actions={[
-              "message-agent",
-              "create-contact",
-              "get-average-price",
-              "add-to-compare",
-            ]}
           />
         </div>
         <div className='property-tags'>
