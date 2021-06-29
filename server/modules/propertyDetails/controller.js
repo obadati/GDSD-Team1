@@ -60,6 +60,9 @@ var uploadMultipleImage = multer({
 /*Create Property By Agent*/
 exports.create = async (req, res) => {
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const user = jwt.verify(token, secret);
+
     upload(req, res, async function (err) {
       if (err) {
         res.status(400).json({
@@ -69,7 +72,7 @@ exports.create = async (req, res) => {
               : err.message,
         });
       } else {
-        let uid = req.params.uid;
+        //let uid = req.params.uid;
         let data = {
           title: req.body.title,
           description: req.body.description,
@@ -81,7 +84,7 @@ exports.create = async (req, res) => {
           size: req.body.size,
           images: req.file.path,
           city: req.body.city,
-          agentId: uid,
+          agentId: user.id,
           date: date,
         };
         console.log(data);

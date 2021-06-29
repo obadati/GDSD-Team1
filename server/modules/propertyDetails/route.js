@@ -11,7 +11,7 @@ const controller = require('./controller');
 router.post('/:uid/images', controller.addPropertyImage);
 
 /*Create Properties */
-router.post('/:uid', controller.create);
+router.post('/', controller.create);
 
 /*Filter Property By Text */
 router.get('/search', controller.searchPropertyByText);
