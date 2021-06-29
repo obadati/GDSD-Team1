@@ -33,7 +33,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
 
   const handleCreateContract = (e: any) => {
     e.stopPropagation();
-    history.push(AppRoutes.CreateContracts, { property });
+    history.push(AppRoutes.Contracts, { property });
   };
 
   return (
@@ -48,7 +48,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
         <div className='tags-and-actions'>
           <div className='tags'>
             <span className='property-card__content__tag property-card__content__tag--category'>
-              {property.category.name}
+              {property.category?.name}
             </span>
             <span className='property-card__content__tag property-card__content__tag--size'>
               {property.size} m²

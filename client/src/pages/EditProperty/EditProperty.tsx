@@ -34,14 +34,16 @@ const EditProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
   }
 
   const resolveCategory = (label: string): PropertyCategories => {
-    if (label.toLowerCase() === PropertyCategories.Apartment) {
-      return PropertyCategories.Apartment;
-    }
-    if (label.toLowerCase() === PropertyCategories.Rent) {
-      return PropertyCategories.Rent;
-    }
-    if (label.toLowerCase() === PropertyCategories.House) {
-      return PropertyCategories.House;
+    if (label) {
+      if (label.toLowerCase() === PropertyCategories.Apartment) {
+        return PropertyCategories.Apartment;
+      }
+      if (label.toLowerCase() === PropertyCategories.Rent) {
+        return PropertyCategories.Rent;
+      }
+      if (label.toLowerCase() === PropertyCategories.House) {
+        return PropertyCategories.House;
+      }
     }
     return PropertyCategories.House;
   };
@@ -91,7 +93,7 @@ const EditProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
               data-toggle='dropdown'
               aria-haspopup='true'
               aria-expanded='false'>
-              {resolveCategory(formData.category.name)}
+              {resolveCategory(formData.category?.name)}
             </button>
             <div
               style={{ width: "100%" }}

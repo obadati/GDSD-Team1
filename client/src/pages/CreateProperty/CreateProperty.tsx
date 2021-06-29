@@ -11,6 +11,7 @@ import {
 } from "../../api/properties";
 import { UserRoles } from "../../api/user";
 import { PropertyCategories } from "../../components/Filters/Filters";
+import { AppRoutes } from "../../containers/Router/routes";
 import { useAuth } from "../../hooks/auth";
 import { setLoadingState } from "../../store/loader/actions";
 import { setAllProperties } from "../../store/properties/actions";
@@ -28,23 +29,23 @@ const CreateProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
     price: 0,
     location: "",
     image: "",
-    categoryId: "2",
+    categoryId: "",
     size: "",
     room: 1,
     city: "",
   });
 
-  const resolveCategory = (label: string): PropertyCategories => {
-    if (label.toLowerCase() === PropertyCategories.Apartment) {
+  const resolveCategory = (index: number): PropertyCategories => {
+    if (index === 0) {
       return PropertyCategories.Apartment;
     }
-    if (label.toLowerCase() === PropertyCategories.Rent) {
+    if (index === 1) {
       return PropertyCategories.Rent;
     }
-    if (label.toLowerCase() === PropertyCategories.House) {
+    if (index === 2) {
       return PropertyCategories.House;
     }
-    return PropertyCategories.House;
+    return PropertyCategories.Apartment;
   };
 
   const handleFormSubmit = async () => {
@@ -55,6 +56,7 @@ const CreateProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
         ? getAllProperties()
         : getAgentProperties(agentId.toString()));
       await dispatch(setAllProperties(result));
+      history.push(AppRoutes.Properties);
       dispatch(setLoadingState(false));
     } catch (e) {
       dispatch(setLoadingState(false));
@@ -91,7 +93,7 @@ const CreateProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
               data-toggle='dropdown'
               aria-haspopup='true'
               aria-expanded='false'>
-              {/* {resolveCategory(formData.category.name)} */}
+              {resolveCategory(parseInt(formData.categoryId))}
             </button>
             <div
               style={{ width: "100%" }}
@@ -103,14 +105,10 @@ const CreateProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
                   onClick={() => {
                     setFormData({
                       ...formData,
-                      //   category: {
-                      //     ...formData.category,
-                      //     name: resolveCategory(x),
-                      //     id: JSON.stringify(index + 1),
-                      //   },
+                      categoryId: index.toString(),
                     });
                   }}>
-                  {resolveCategory(x)}
+                  {resolveCategory(index)}
                 </a>
               ))}
             </div>
@@ -188,6 +186,21 @@ const CreateProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
             min={1}
             placeholder='rooms'
             value={formData.room}
+          />
+          <label htmlFor='price'>Price</label>
+          <input
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                price: parseInt(e.target.value),
+              })
+            }
+            className='form-control'
+            id='price'
+            type='number'
+            min={1}
+            placeholder='Price'
+            value={formData.price}
           />
 
           <label htmlFor='images'>Images</label>

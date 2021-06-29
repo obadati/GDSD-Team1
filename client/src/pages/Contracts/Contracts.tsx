@@ -34,12 +34,7 @@ const ContractsPage: React.FC<PropsFromRedux> = ({ properties }) => {
       <h3 className='page-title'>Contracts</h3>
       <div className='contracts-wrapper'>
         {contracts.length ? (
-          contracts.map((contract) => (
-            <ContractCard
-              title={contract.title}
-              imgUrl={contract.propertyDetail.images}
-            />
-          ))
+          contracts.map((contract) => <ContractCard contract={contract} />)
         ) : (
           <p>No contracts yet!</p>
         )}
