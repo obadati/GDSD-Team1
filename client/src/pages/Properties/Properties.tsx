@@ -27,8 +27,8 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
     if (selected > -1 && selected !== null) {
       const { result } = await searchByCategory(selected + 1);
       if (result) {
+        setFilteredProps(result);
       }
-      setFilteredProps(result);
     }
   };
 
@@ -46,13 +46,7 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
               setFilteredProps(list.length > 0 ? list : properties)
             }
           />
-          <div
-            className='create-property'
-            onClick={() => history.push(AppRoutes.CreateProperty)}>
-            Create
-          </div>
         </div>
-
         <PropertyList properties={filteredProps} />
       </div>
     </div>
