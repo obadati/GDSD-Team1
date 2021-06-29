@@ -50,8 +50,11 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
     <div className='search-box-component'>
       <input
         ref={inputRef}
+        maxLength={40}
         type='search'
-        placeholder={placeholderText || "Type to start searching"}
+        placeholder={
+          placeholderText || "Type to start searching (40 characters max)"
+        }
       />
       <button onClick={handleCustomSearch}>Go!</button>
     </div>

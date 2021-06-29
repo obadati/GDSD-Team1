@@ -31,6 +31,11 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
     });
   };
 
+  const handleCreateContract = (e: any) => {
+    e.stopPropagation();
+    history.push(AppRoutes.CreateContracts, { property });
+  };
+
   return (
     <div className='property-card' onClick={handleClick}>
       <div className='property-card__thumbnail'>
@@ -57,7 +62,7 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
               <div
                 style={{ marginLeft: "10px" }}
                 className='card-action'
-                onClick={handleEditProperty}>
+                onClick={handleCreateContract}>
                 <img src={contract}></img>
               </div>
             </div>

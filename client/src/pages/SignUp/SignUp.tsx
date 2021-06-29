@@ -74,7 +74,7 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
         <img src={logo} alt='' />
         <p className='tag-line'>Join us now!</p>
         {renderUserRoles()}
-        <div className='login-page__form'>
+        <div className='sign-up-page__form'>
           <form className='form-group'>
             <input
               className='form-control'

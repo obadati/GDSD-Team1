@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import { useState, useEffect } from "react";
 import CarouselComponent from "../../components/Carousel/Carousel";
-import { Property, User } from "../../store/properties/types";
+import { Property } from "../../store/properties/types";
 import "./PropertyDetail.scss";
 import SellerProfile from "../../components/SellerProfile/SellerProfile";
 import { getUserInfo } from "../../api/user";
@@ -59,7 +59,11 @@ const PropertyDetail: React.FC<any> = () => {
         <div className='image-gallery-wrapper'>
           <CarouselComponent
             rounded
-            images={property.imageProperties.map((prop) => prop.image)}
+            images={
+              property.imageProperties.length
+                ? property.imageProperties.map((prop) => prop.image)
+                : [property.images]
+            }
           />
         </div>
         <div className='description'>
