@@ -23,12 +23,12 @@ body {
     @include resetMargins;
     @include resetPaddings;
 
-    * {
-      ::-webkit-scrollbar {
-        width: 0px;
-        background: transparent;
-      }
-    }
+    // * {
+    //   ::-webkit-scrollbar {
+    //     width: 0px;
+    //     background: transparent;
+    //   }
+    // }
 
     .app-page {
       height: 100%;
@@ -61,6 +61,11 @@ body {
       box-shadow: 0 2px 12px 1px #1174da4a;
       border: 2px solid var(--app-color-border);
       border-radius: 10px;
+    }
+
+    .card-body {
+      max-height: 600px;
+      overflow: scroll;
     }
   }
 }
