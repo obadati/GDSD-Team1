@@ -159,6 +159,20 @@ const EditProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
             placeholder='Size'
             value={formData.size}
           />
+          <label htmlFor='=location'>Price</label>
+          <input
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                price: parseInt(e.target.value),
+              })
+            }
+            className='form-control'
+            id='price'
+            type='number'
+            placeholder='Size'
+            value={formData.price}
+          />
 
           <label htmlFor='rooms'>Rooms</label>
           <input

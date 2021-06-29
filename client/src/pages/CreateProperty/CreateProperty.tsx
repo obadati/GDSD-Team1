@@ -5,9 +5,11 @@ import { useHistory } from "react-router";
 import {
   createProperty,
   CreatePropertyParams,
+  getAgentProperties,
   getAllProperties,
   updateProperty,
 } from "../../api/properties";
+import { UserRoles } from "../../api/user";
 import { PropertyCategories } from "../../components/Filters/Filters";
 import { useAuth } from "../../hooks/auth";
 import { setLoadingState } from "../../store/loader/actions";
@@ -17,6 +19,7 @@ import "./CreateProperty.scss";
 
 const CreateProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
   const history = useHistory();
+  const { role } = useAuth();
   const { id: agentId, token } = useAuth();
   const [formData, setFormData] = useState<CreatePropertyParams>({
     token,
@@ -48,8 +51,10 @@ const CreateProperty: React.FC<PropsFromRedux> = ({ dispatch }) => {
     try {
       dispatch(setLoadingState(true));
       await createProperty(formData);
-      const { result } = await getAllProperties();
-      dispatch(setAllProperties(result));
+      const { result } = await (role === UserRoles.Buyer
+        ? getAllProperties()
+        : getAgentProperties(agentId.toString()));
+      await dispatch(setAllProperties(result));
       dispatch(setLoadingState(false));
     } catch (e) {
       dispatch(setLoadingState(false));

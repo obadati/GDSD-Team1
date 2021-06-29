@@ -14,12 +14,19 @@
 }
 
 .search-box-wrapper {
-  width: 400px;
+  width: 600px;
   padding-right: 2rem;
   align-self: center;
   display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+
   input {
     border-radius: 25px;
     border: 2px solid;
+  }
+
+  img {
+    margin-left: 1rem;
   }
 }

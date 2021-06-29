@@ -9,6 +9,7 @@ import { AppRoutes } from "../../containers/Router/routes";
 import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";
 import { PropertyList } from "./components";
+import addIcon from "../../assets/images/add.png";
 
 import "./Properties.scss";
 
@@ -46,6 +47,11 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
               setFilteredProps(list.length > 0 ? list : properties)
             }
           />
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => history.push(AppRoutes.CreateProperty)}>
+            <img style={{ height: "25px", width: "25px" }} src={addIcon}></img>
+          </div>
         </div>
         <PropertyList properties={filteredProps} />
       </div>
