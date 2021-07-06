@@ -1,22 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import Message from "../../components/message/Message";
-import { dummyDeveloper, getRandomBg } from "../../utility/static";
-import ChatOnline from "../../components/chatOnline/ChatOnline";
 import Conversation from "../../components/conversations/Conversation";
-
 import "./Messenger.scss";
-import axios, { AxiosResponse } from "axios";
-import { httpGET, httpPOST } from "../../utility/http";
+import axios from "axios";
+import { httpPOST } from "../../utility/http";
 import { useAuth } from "../../hooks/auth";
 import { io } from "socket.io-client";
 import { BASE_URL } from "../../constants/constants";
 
 const MessengerPage: React.FC<any> = () => {
-
+    // define the use state for react setter and getters and retive the user id from login
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null as any);
-    //const [socket, setsocket] = useState(null as any);
-
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [userImage, setUserImage] = useState([]);
@@ -24,8 +19,7 @@ const MessengerPage: React.FC<any> = () => {
     const socket = useRef(io());
     const scrollRef = useRef<null | HTMLDivElement>(null);
     const { id } = useAuth();
-
-
+    // to open a socket after accessing the page and reveive a massage that was sent to the user in real time
     useEffect(() => {
         socket.current = io("ws://" + BASE_URL.split('//')[1].split(':')[0] + ":8900");
         socket.current.on("getMessage", (data) => {
@@ -37,26 +31,22 @@ const MessengerPage: React.FC<any> = () => {
             });
         });
     }, []);
-
+    // to check if the user have to conversation of the massage that just arrived open, it will show it right away
     useEffect(() => {
         if (receviedMessage && currentChat?.rcvId == receviedMessage.sndId) {
             setMessages((prev) => [...prev, receviedMessage] as any);
         }
-
     }, [receviedMessage]);
-
+    // to send the user information to the socket notifing it that the user is online
     useEffect(() => {
         socket.current.emit("addUser", id);
-        //  socket.current.on("getUsers", users => { console.log(users) });
-
     }, []);
+    //  to get the image of the login user in order to show it in the chat
     useEffect(() => {
         const getImage = async () => {
             try {
                 const res = await axios.get(
-                    BASE_URL + "/api/user/userImage/" +
-                    id
-                );
+                    BASE_URL + "/api/user/userImage/" + id);
                 setUserImage(res as any);
             } catch (err) {
                 console.log(err);
@@ -64,13 +54,12 @@ const MessengerPage: React.FC<any> = () => {
         };
         getImage();
     }, []);
+    // to get the conversations that the user have (order and filtarting is done from backend)
     useEffect(() => {
         const getConversations = async () => {
             try {
                 const res = await axios.get(
-                    BASE_URL + "/api/message/Conversation/" +
-                    id
-                );
+                    BASE_URL + "/api/message/Conversation/" + id);
                 setConversations(res as any);
             } catch (err) {
                 console.log(err);
@@ -78,40 +67,21 @@ const MessengerPage: React.FC<any> = () => {
         };
         getConversations();
     }, []);
+    // to retrive the massages for the user ( this is after the user click on a conversation )
     useEffect(() => {
         const getMessages = async () => {
             try {
                 const res = await axios.get(
-                    BASE_URL + "/api/message/getMessages/" +
-                    id +
-                    "?withUser=" +
-                    currentChat.rcvId
-                );
+                    BASE_URL + "/api/message/getMessages/" + id + "?withUser=" + currentChat.rcvId);
                 setMessages(res as any);
                 await axios.put(BASE_URL + "/api/message/readMassages", { rcvId: currentChat.rcvId, sndId: id });
-
             } catch (err) {
                 console.log(err);
             }
-        };
-        getMessages();
+        }; getMessages();
     }, [currentChat]);
 
-    useEffect(() => {
-        const getConversations = async () => {
-            try {
-                const res = await axios.get(
-                    BASE_URL + "/api/message/Conversation/" +
-                    id
-                );
-                // console.log(res);
-                setConversations(res as any);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        getConversations();
-    }, []);
+    // handle the send button inside the conversation and record it with a post request in database and send it to socket 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const messageSend = {
@@ -119,18 +89,12 @@ const MessengerPage: React.FC<any> = () => {
             rcvId: currentChat.rcvId,
             messageTxt: newMessage,
         };
-
-
         try {
             const res = await httpPOST(
-                BASE_URL + "/api/message/sendMessage",
-                messageSend
-            );
+                BASE_URL + "/api/message/sendMessage", messageSend);
             setMessages([...messages, res as any] as any);
-
             setNewMessage("");
             socket.current.emit("sendMessage", messageSend);
-
         }
         catch (err) {
 
@@ -138,10 +102,12 @@ const MessengerPage: React.FC<any> = () => {
         }
     };
 
-
+    // to auto scroll the chat when clicking on a conversation or when new massage arrived
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
+
+    //the dynamic html script the desplay the conversation and chat windows and calling for conversations and massages componants
     return (
         <div className="messenger">
             <div className="chatMenu">
@@ -161,46 +127,41 @@ const MessengerPage: React.FC<any> = () => {
             </div>
             <div className="chatBox">
                 <div className="chatBoxWrapper">
-                    {currentChat ? (
-                        <>
-                            <div className="chatBoxTop">
-                                {messages.map((m: any) => (
-                                    <div ref={scrollRef}>
-                                        <Message
-                                            message={m}
-                                            own={m.rcvId !== id}
-                                            image={m.rcvId !== id ? userImage : currentChat}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="chatBoxBottom">
-                                <textarea
-                                    className="chatMessageInput"
-                                    placeholder="write something..."
-                                    onChange={(e) =>
-                                        setNewMessage(e.target.value)
-                                    }
-                                    value={newMessage}
-                                ></textarea>
-                                <button
-                                    className="chatSubmitButton"
-                                    onClick={handleSubmit}
-                                >
-                                    ➢
-                                </button>
-                            </div>{" "}
-                        </>
+                    {currentChat ? (<>
+                        <div className="chatBoxTop">
+                            {messages.map((m: any) => (
+                                <div ref={scrollRef}>
+                                    <Message
+                                        message={m}
+                                        own={m.rcvId !== id}
+                                        image={m.rcvId !== id ? userImage : currentChat}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="chatBoxBottom">
+                            <textarea
+                                className="chatMessageInput"
+                                placeholder="write something..."
+                                onChange={(e) =>
+                                    setNewMessage(e.target.value)
+                                }
+                                value={newMessage}
+                            ></textarea>
+                            <button
+                                className="chatSubmitButton"
+                                onClick={handleSubmit}
+                            >
+                                ➢
+                            </button>
+                        </div>{" "}
+                    </>
                     ) : (
                         <span className="noConversationText">
                             Please Chose a Conversation
-                        </span>
-                    )}
+                        </span>)}
                 </div>
             </div>
-
-
-        </div>
-    );
+        </div>);
 };
 export default MessengerPage;
