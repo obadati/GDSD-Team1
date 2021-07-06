@@ -285,6 +285,12 @@ exports.getAllContractByBuyer = async (req, res) => {
           "status",
         ],
         order: [["id", "DESC"]],
+        include: [
+          {
+            model: db.propertyDetail,
+            attributes: ["id", "images"],
+          },
+        ],
         where: { buyerId: buyerId },
         limit: limit,
         offset: offset,
