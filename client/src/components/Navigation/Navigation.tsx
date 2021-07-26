@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import AppLogo from "../../assets/images/logo.png";
 import { AppRoutes } from "../../containers/Router/routes";
+// Review: Remove unused import
 import { useAuth } from "../../hooks/auth";
 import axios from "axios";
 import { NavigationTab, UserActions } from "../../store/navigation/types";
@@ -20,7 +21,10 @@ const Navigation: React.FC<PropsFromRedux> = ({
   user,
 }) => {
   const { id, token, username } = user;
+  // Review: use proper typings
   const [newMessages, setNewMessages] = useState([] as any);
+
+  // Review: extract these to a constants.ts or types.ts file
   const tabs: NavigationTab[] = [
     { label: "home", to: AppRoutes.Landing },
     { label: "properties", to: AppRoutes.Properties },
@@ -35,6 +39,7 @@ const Navigation: React.FC<PropsFromRedux> = ({
     const getNewMassages = async () => {
       try {
         const res = await axios.get(
+          // Review: URL should be an enum
           BASE_URL + "/api/message/getNewMessages/" + id
         );
         setNewMessages(res as any);
@@ -74,6 +79,7 @@ const Navigation: React.FC<PropsFromRedux> = ({
   };
 
   const handleUserAction = (label: string) => {
+    // Review: Direct string comparisons are discouraged, this should be abstracted as an enum if possible
     if (label === "Log Out") {
       localStorage.clear();
       dispatch(setAppUser(dummyUser));
@@ -114,6 +120,10 @@ const Navigation: React.FC<PropsFromRedux> = ({
         <div className='user-actions'>
           {username ? (
             <>
+              {/**
+               * Review: fix spellings
+               * Review: class name should be more descriptive
+               */}
               <div
                 className='topbarIconItem'
                 onClick={() => history.push(AppRoutes.Messenger)}>
