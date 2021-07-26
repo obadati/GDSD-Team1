@@ -21,9 +21,11 @@ export interface Contract {
   propertyDetail: { id: number; images: string };
   title: string;
   status: string;
+  // Review: should be approved, requires frontend and backend changes
   approve: string;
 }
 
+// Review: Promise should have more specific return type
 export const getBuyerContracts = (uid: string, page = 1): Promise<any> => {
   return httpGET(
     `${BASE_URL}${ContractsEndpoints.GetAllBuyerContracts.replace(
@@ -42,6 +44,7 @@ export const getAgentContracts = (uid: string, page = 1): Promise<any> => {
   );
 };
 
+// Review: Add return type to function signature
 export const updateContractStatus = (uid: string, status: ContractStatus) => {
   httpPatch(
     `${BASE_URL}${ContractsEndpoints.UpdateContractStatus.replace(
