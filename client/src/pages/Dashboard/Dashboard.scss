@@ -1,47 +1,57 @@
 .user-dashboard {
+  display: flex;
+  padding: 5rem 10rem 0;
+
+  &__tiles {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 250px);
+    grid-template-rows: 250px;
+    grid-gap: 1rem;
+    a {
+      max-height: 250px;
+      text-decoration: none;
+    }
+
+    &__tile {
+      color: var(--app-color-text);
+      height: 100%;
+      display: flex;
+      font-weight: bold;
+      border: 2px solid var(--app-color-border);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 12px 1px #1174da4a;
+
+      .tile-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p {
+          text-transform: uppercase;
+        }
+        margin: auto;
+
+        img {
+          max-height: 80px;
+          margin: 1rem 0;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+  .username {
+    font-weight: bold;
+    color: var(--app-color-secondary);
+  }
+}
+
+@media (max-width: 768px) {
+  .user-dashboard {
+    padding: 1rem !important;
     display: flex;
-    padding: 5rem 10rem 0;
-
     &__tiles {
-        display: grid;
-        width: 100%;
-        grid-template-columns: repeat(4, 250px);
-        grid-template-rows: 250px;
-        grid-gap: 1rem;
-        a {
-            max-height: 250px;
-            text-decoration: none;
-        }
-
-        &__tile {
-            color: var(--app-color-text);
-            height: 100%;
-            display: flex;
-            font-weight: bold;
-            border: 2px solid var(--app-color-border);
-            border-radius: 10px;
-            padding: 1rem;
-            box-shadow: 0 2px 12px 1px #1174da4a;
-
-            .tile-content-wrapper {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                p {
-                    text-transform: uppercase;
-                }
-                margin: auto;
-
-                img {
-                    max-height: 80px;
-                    margin: 1rem 0;
-                    object-fit: contain;
-                }
-            }
-        }
+      grid-template-columns: repeat(2, 250px) !important;
     }
-    .username {
-        font-weight: bold;
-        color: var(--app-color-secondary);
-    }
+  }
 }

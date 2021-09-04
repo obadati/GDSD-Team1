@@ -60,9 +60,16 @@
     }
   }
 }
+
 @media (max-width: 1350px) {
   .trending-property-card {
     margin-right: 0;
     margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .trending-property-card {
+    width: 75%;
   }
 }

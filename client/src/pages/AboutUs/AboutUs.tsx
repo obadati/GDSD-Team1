@@ -42,9 +42,9 @@ const AboutUsPage: React.FC<any> = () => {
   const [selected, setSelected] = useState<any | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   return (
-    <div className="properties-page app-page">
-      <div className="aside">
-        <div className="app-filters">
+    <div className='about-us-page app-page'>
+      <div className='aside'>
+        <div className='app-filters'>
           {aboutComponent.map((filter, index) => (
             <div
               key={`app-filters-${filter.value}`}
@@ -54,14 +54,13 @@ const AboutUsPage: React.FC<any> = () => {
               }}
               className={`app-filter-type ${
                 index === selectedIndex ? `app-filter-type--selected` : ""
-              }`}
-            >
+              }`}>
               {filter.value}
             </div>
           ))}
         </div>
       </div>
-      <div className="center">
+      <div className='center'>
         {selected !== null ? (
           <Container selected={selected} />
         ) : (

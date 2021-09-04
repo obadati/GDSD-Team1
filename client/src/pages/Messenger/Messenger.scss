@@ -1,53 +1,53 @@
-
 .messenger {
-    height: calc(100vh - 170px);
-      display: flex;
+  height: calc(100vh - 170px);
+  display: flex;
 
   .chatMenu {
     flex: 2;
     border-radius: 25px;
+    // Review: use css variables
     border: 2px solid #215ead;
     padding: 10px;
     background-color: rgb(255, 255, 255);
   }
-  
-  
+
   .chatMenuInput {
     width: 100%;
     border: none;
     font-size: 90%;
     padding: 5px;
-    border:solid 1px rgb(1, 1, 24);
+    // Review: use css variables
+    border: solid 1px rgb(1, 1, 24);
+    // Review: use css variables
     background-color: rgb(243, 236, 236);
     border-radius: 25px;
+    // Review: use css variables
     border-bottom: 1px solid gray;
   }
-  
+
   .chatBox {
-    flex: 9 .5;
-   
+    flex: 9 0.5;
   }
-  
+
   .chatBoxWrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
   }
-  
+
   .chatBoxTop {
     height: 100%;
     overflow-y: scroll;
     padding-right: 10px;
   }
-  
+
   .chatBoxBottom {
- 
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  
+
   .chatMessageInput {
     width: 90%;
     border-radius: 25px;
@@ -55,32 +55,33 @@
     padding: 10px;
     resize: none;
   }
-  
+
   .chatSubmitButton {
     width: 70px;
     height: 40px;
     border: none;
     border-radius: 40px;
     cursor: pointer;
+    // Review: use css variables
     background-color: teal;
     font-size: 150%;
     color: white;
   }
-  
+
   .chatOnline {
     flex: 2;
     border-radius: 25px;
     padding: 10px;
     overflow-y: scroll;
+    // Review: use css variables
     background-color: rgb(255, 255, 255);
   }
-  
-  .chatMenuSearchWrapper{
+
+  .chatMenuSearchWrapper {
     padding: 10px;
     height: 5%;
   }
-  .chatMenuWrapper{
-  
+  .chatMenuWrapper {
     margin-top: 20px;
     height: 90%;
     overflow-y: scroll;
@@ -91,29 +92,30 @@
     padding: 10px;
     height: 100%;
   }
-  
+
   .noConversationText {
     position: absolute;
     top: 10%;
     font-size: 50px;
+    // Review: use css variables
     color: rgb(224, 220, 220);
     cursor: default;
   }
-  
+
   @media screen and (max-width: 768px) {
     .chatMenu {
       flex: 1;
     }
-  
+
     .chatMenuInput {
       display: none;
     }
-  
-    .chatBox{
+
+    .chatBox {
       flex: 10;
     }
-  
-    .chatOnline{
+
+    .chatOnline {
       flex: 1px;
     }
   }
