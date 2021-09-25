@@ -606,7 +606,7 @@ exports.findAvgPrice = async (req, res) => {
 };
 
 exports.computeApproxAvgPrice = (req, res) => {
-  const { city = "", categoryId = -1, room = 1, size = 10 } = req.body;
+  const { city = "", categoryId = -1, room = 1, size = 10 } = req.query;
   const AVG_SIZE_RENT = 18;
   const AVG_SIZE_APARTMENT = 91;
   const AVG_SIZE_HOUSE = (87 + 109) / 2;
