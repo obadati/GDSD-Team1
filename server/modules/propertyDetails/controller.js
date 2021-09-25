@@ -644,6 +644,12 @@ exports.computeApproxAvgPrice = (req, res) => {
       ? AVG_SIZE_APARTMENT
       : -1;
 
+  if (!keyToMatch || avgFactorToUse < 0) {
+    return res
+      .status(400)
+      .json({ error: "Missing/incorrect properties: city, categoryId" });
+  }
+
   const avgPrice =
     (matchingCity[keyToMatch].lowest + matchingCity[keyToMatch].highest) / 2;
   const pricePerSqMeter = avgPrice / avgFactorToUse;
