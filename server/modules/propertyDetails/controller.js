@@ -116,7 +116,7 @@ exports.addPropertyImage = async (req, res) => {
         sendData();
         async function sendData() {
           var images = req.files;
-          const  propertyId  = req.params.uid;
+          const propertyId = req.params.uid;
           for (const filess of images) {
             let data = {
               propertyId: propertyId,
@@ -147,7 +147,6 @@ exports.agentProperty = async (req, res) => {
     });
     console.log(agent);
     Property.findAndCountAll({ where: { agentId: agentId } }).then((data) => {
-      
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
@@ -168,13 +167,16 @@ exports.agentProperty = async (req, res) => {
           "status",
         ],
         order: [["id", "DESC"]],
-        include: [{
-          model: db.category,
-          attributes: ["id", "name"],
-        },{
-          model: db.imageProperty,
-          attributes: ["id", "propertyId","image"],
-        }],
+        include: [
+          {
+            model: db.category,
+            attributes: ["id", "name"],
+          },
+          {
+            model: db.imageProperty,
+            attributes: ["id", "propertyId", "image"],
+          },
+        ],
         where: { agentId: agentId },
         limit: limit,
         offset: offset,
@@ -254,55 +256,48 @@ exports.updateProperty = async (req, res) => {
     const user = jwt.verify(token, secret);
 
     upload(req, res, async function (err) {
+      if (req.file == null) {
+        const {
+          title,
+          categoryId,
+          description,
+          price,
+          location,
+          room,
+          size,
+          city,
+          agentId,
+        } = req.body;
+        const id = req.params.uid;
 
-      if(req.file==null){
-       
-          const {
-            title,
-            categoryId,
-            description,
-            price,
-            location,
-            room,
-            size,
-            city,
-            agentId,
-          } = req.body;
-          const id = req.params.uid;
-         
-         
-          let propertyUpdate = await Property.findOne({
-            where: { id: id },
+        let propertyUpdate = await Property.findOne({
+          where: { id: id },
+        });
+        if (propertyUpdate.agentId == user.id) {
+          await Property.update(
+            {
+              title: title,
+              categoryId: categoryId,
+              price: price,
+              location: location,
+              room: room,
+              size: size,
+              description: description,
+              city: city,
+              agentId: agentId,
+            },
+            { where: { id: id } }
+          );
+
+          return res.status(200).json({
+            message: "Image Update Successfully",
           });
-          if (propertyUpdate.agentId == user.id) {
-            await Property.update(
-              {
-                
-                title: title,
-                categoryId: categoryId,
-                price: price,
-                location: location,
-                room: room,
-                size: size,
-                description: description,
-                city: city,
-                agentId: agentId,
-              },
-              { where: { id: id } }
-            );
-           
-            return res.status(200).json({
-              message: "Image Update Successfully",
-            });
-          } else {
-            return res.status(400).json({
-              message: "Invalid User",
-            });
-          }
+        } else {
+          return res.status(400).json({
+            message: "Invalid User",
+          });
         }
-      
-
-
+      }
 
       if (err) {
         return res.status(400).json({
@@ -325,7 +320,7 @@ exports.updateProperty = async (req, res) => {
         } = req.body;
         const id = req.params.uid;
         let path = req.file.path;
-        console.log(id)
+        console.log(id);
         let propertyUpdate = await Property.findOne({
           where: { id: id },
         });
@@ -346,7 +341,7 @@ exports.updateProperty = async (req, res) => {
             { where: { id: id } }
           );
           console.log(propertyUpdate.images);
-           fs.unlink(propertyUpdate.images, (err) => {
+          fs.unlink(propertyUpdate.images, (err) => {
             if (err) {
               console.log(err);
             }
@@ -395,17 +390,20 @@ exports.getAllProperty = (req, res) => {
           "status",
         ],
         order: [["id", "DESC"]],
-        include: [{
-          model: db.category,
-          attributes: ["id", "name"],
-        },{
-          model: db.user,
-          attributes: ["id", "firstName","lastName","rating"],
-        },{
-          model: db.imageProperty,
-          attributes: ["image"]
-          
-        }],
+        include: [
+          {
+            model: db.category,
+            attributes: ["id", "name"],
+          },
+          {
+            model: db.user,
+            attributes: ["id", "firstName", "lastName", "rating"],
+          },
+          {
+            model: db.imageProperty,
+            attributes: ["image"],
+          },
+        ],
         limit: limit,
         offset: offset,
         where: { status: status },
@@ -601,10 +599,10 @@ exports.findAvgPrice = async (req, res) => {
       });
     } else {
       this.computeApproxAvgPrice(req, res);
-      }
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
-      }
+  }
 };
 
 exports.computeApproxAvgPrice = (req, res) => {
@@ -617,14 +615,14 @@ exports.computeApproxAvgPrice = (req, res) => {
     return res
       .status(400)
       .json({ error: "Missing properties: city, categoryId" });
-      }
+  }
 
   const matchingCity = citiesList[city];
   if (!matchingCity) {
     return res.status(200).json({
       msg: "Sorry we keep crunching number but for now we don't have any records for your city",
-        });
-      }
+    });
+  }
 
   const keyToMatch =
     categoryId == 1
@@ -654,69 +652,71 @@ exports.computeApproxAvgPrice = (req, res) => {
     (matchingCity[keyToMatch].lowest + matchingCity[keyToMatch].highest) / 2;
   const pricePerSqMeter = avgPrice / avgFactorToUse;
   const totalAvg = (pricePerSqMeter * size * room).toFixed(2);
-        return res.json({
+  return res.json({
     category: keyToMatch,
     city,
     room,
     size,
     totalSize: size * room,
     avgPrice: totalAvg,
-        });
+  });
 };
 
 /*Agent List of Property */
 exports.approvedAgentProperty = async (req, res) => {
-    try {
-      let limit = 8;
-      let offset = 0;
-      const { agentId } = req.query;
-      let agent = await User.findOne({
-        attributes: ["id", "firstName", "lastName", "rating", "image"],
-        where: { id: agentId },
-      });
-      console.log(agent);
-      Property.findAndCountAll({ where: { agentId: agentId,status:status } }).then((data) => {
-        let page = req.params.page; // page number
-        let pages = Math.ceil(data.count / limit);
-        offset = limit * (page - 1);
-  
-        Property.findAll({
-          attributes: [
-            "id",
-            "title",
-            "description",
-            "price",
-            "room",
-            "size",
-            "location",
-            "city",
-            "images",
-            "agentId",
-            "createdAt",
-            "categoryId",
-            "status",
-          ],
-          order: [["id", "DESC"]],
-          include: {
-            model: db.category,
-            attributes: ["id", "name"],
-          },
-          where: { agentId: agentId, status:status },
-          limit: limit,
-          offset: offset,
-        }).then((property) => {
-          return res.status(200).json({
-            user: agent,
-            result: property,
-            count: data.count,
-            pages: pages,
-          });
+  try {
+    let limit = 8;
+    let offset = 0;
+    const { agentId } = req.query;
+    let agent = await User.findOne({
+      attributes: ["id", "firstName", "lastName", "rating", "image"],
+      where: { id: agentId },
+    });
+    console.log(agent);
+    Property.findAndCountAll({
+      where: { agentId: agentId, status: status },
+    }).then((data) => {
+      let page = req.params.page; // page number
+      let pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+
+      Property.findAll({
+        attributes: [
+          "id",
+          "title",
+          "description",
+          "price",
+          "room",
+          "size",
+          "location",
+          "city",
+          "images",
+          "agentId",
+          "createdAt",
+          "categoryId",
+          "status",
+        ],
+        order: [["id", "DESC"]],
+        include: {
+          model: db.category,
+          attributes: ["id", "name"],
+        },
+        where: { agentId: agentId, status: status },
+        limit: limit,
+        offset: offset,
+      }).then((property) => {
+        return res.status(200).json({
+          user: agent,
+          result: property,
+          count: data.count,
+          pages: pages,
         });
       });
-    } catch (err) {
-      return res.status(500).json({ error: err.message });
-    }
-  };
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
 
 /******************************************************Admin Dashboard***********************************/
 
