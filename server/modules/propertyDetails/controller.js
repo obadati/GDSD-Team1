@@ -11,6 +11,7 @@ const Op = Sequelize.Op;
 const status = "approved";
 const jwt = require("jsonwebtoken");
 const secret = require("../../utils/token").tokenEncryptionSecret;
+const citiesList = require("./citiesList").citiesList;
 
 /****************************************************Define Controller***********************************/
 
@@ -599,205 +600,62 @@ exports.findAvgPrice = async (req, res) => {
         avgPrice: avgPrice,
       });
     } else {
-      if (city == "Berlin" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 450,
-        });
+      this.computeApproxAvgPrice(req, res);
       }
-      if (city == "Berlin" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 10500,
-        });
-      }
-      if (city == "Berlin" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 6000,
-        });
-      }
-      if (city == "Munich" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 420,
-        });
-      }
-      if (city == "Munich" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 9650,
-        });
-      }
-      if (city == "Munich" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 5600,
-        });
-      }
-      if (city == "Frankfurt" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 400,
-        });
-      }
-      if (city == "Frankfurt" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 7450,
-        });
-      }
-      if (city == "Frankfurt" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 12050,
-        });
-      }
-      if (city == "Hamburg" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 390,
-        });
-      }
-      if (city == "Hamburg" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 6450,
-        });
-      }
-      if (city == "Hamburg" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 9050,
-        });
-      }
-      if (city == "Cologne" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 370,
-        });
-      }
-      if (city == "Cologne" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 6050,
-        });
-      }
-      if (city == "Cologne" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 12000,
-        });
-      }
-      if (city == "Heidelberg" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 350,
-        });
-      }
-      if (city == "Heidelberg" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 5050,
-        });
-      }
-      if (city == "Heidelberg" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 9067,
-        });
-      }
-      if (city == "Stuttgart" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 450,
-        });
-      }
-      if (city == "Stuttgart" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 290,
-        });
-      }
-      if (city == "Stuttgart" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 8950,
-        });
-      }
-      if (city == "Dresden" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 260,
-        });
-      }
-      if (city == "Dresden" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 4898,
-        });
-      }
-      if (city == "Dresden" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 8999,
-        });
-      }
-      if (city == "Fulda" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 250,
-        });
-      }
-      if (city == "Fulda" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 4050,
-        });
-      }
-      if (city == "Fulda" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 1030,
-        });
-      } else {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 0,
-        });
-      }
-    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
-  }
+      }
+};
+
+exports.computeApproxAvgPrice = (req, res) => {
+  const { city = "", categoryId = -1, room = 1, size = 10 } = req.body;
+  const AVG_SIZE_RENT = 18;
+  const AVG_SIZE_APARTMENT = 91;
+  const AVG_SIZE_HOUSE = (87 + 109) / 2;
+
+  if (!city || categoryId < 0 || categoryId > 3) {
+    return res
+      .status(400)
+      .json({ error: "Missing properties: city, categoryId" });
+      }
+
+  const matchingCity = citiesList[city];
+  if (!matchingCity) {
+    return res.status(200).json({
+      msg: "Sorry we keep crunching number but for now we don't have any records for your city",
+        });
+      }
+
+  const keyToMatch =
+    categoryId == 1
+      ? "rent"
+      : categoryId == 2
+      ? "house"
+      : categoryId == 3
+      ? "apartment"
+      : "";
+
+  const avgFactorToUse =
+    categoryId == 1
+      ? AVG_SIZE_RENT
+      : categoryId == 2
+      ? AVG_SIZE_HOUSE
+      : categoryId == 3
+      ? AVG_SIZE_APARTMENT
+      : -1;
+
+  const avgPrice =
+    (matchingCity[keyToMatch].lowest + matchingCity[keyToMatch].highest) / 2;
+  const pricePerSqMeter = avgPrice / avgFactorToUse;
+  const totalAvg = (pricePerSqMeter * size * room).toFixed(2);
+        return res.json({
+    category: keyToMatch,
+    city,
+    room,
+    size,
+    totalSize: size * room,
+    avgPrice: totalAvg,
+        });
 };
 
 /*Agent List of Property */
