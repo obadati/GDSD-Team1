@@ -1,3 +1,5 @@
+// source https://www.numbeo.com/cost-of-living/
+
 exports.citiesList = {
   berlin: {
     rent: { highest: 958.17, lowest: 669.66 },
