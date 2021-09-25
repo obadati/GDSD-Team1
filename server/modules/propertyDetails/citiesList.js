@@ -60,6 +60,10 @@ exports.citiesList = {
     rent: { highest: 526.92, lowest: 430 },
     apartment: { highest: 3650, lowest: 2450 },
   },
+  fulda: {
+    rent: { highest: 475, lowest: 400 },
+    apartment: { highest: 3500, lowest: 2500 },
+  },
   bochum: {
     rent: 958.17,
     apartment: 6443.27,
