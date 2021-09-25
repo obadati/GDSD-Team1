@@ -1,3 +1,5 @@
+// source https://www.numbeo.com/cost-of-living/
+
 exports.citiesList = {
   berlin: {
     rent: { highest: 958.17, lowest: 669.66 },
@@ -65,143 +67,147 @@ exports.citiesList = {
     apartment: { highest: 3500, lowest: 2500 },
   },
   bochum: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 513, lowest: 384 },
+    apartment: { highest: 1900, lowest: 1750 },
   },
   wuppertal: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 507.5, lowest: 305 },
+    apartment: { highest: 1490, lowest: 1390 },
   },
   bielefeld: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 806.25, lowest: 737.5 },
+    apartment: { highest: 2833.33, lowest: 2200 },
   },
   bonn: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 764.29, lowest: 603.85 },
+    apartment: { highest: 5700, lowest: 4450 },
   },
   mannheim: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 605, lowest: 450 },
+    apartment: { highest: 3933.33, lowest: 3340 },
   },
   karlsruhe: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 682.86, lowest: 565.38 },
+    apartment: { highest: 4302.86, lowest: 3570 },
   },
   gelsenkirchen: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 380, lowest: 290 },
+    apartment: { highest: 1629, lowest: 1437 },
   },
   wiesbaden: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 791.67, lowest: 637.5 },
+    apartment: { highest: 4910, lowest: 3832.5 },
   },
   muenster: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 760, lowest: 526 },
+    apartment: { highest: 6000, lowest: 3166.67 },
+  },
+  munster: {
+    rent: { highest: 760, lowest: 526 },
+    apartment: { highest: 6000, lowest: 3166.67 },
+  },
+  münster: {
+    rent: { highest: 760, lowest: 526 },
+    apartment: { highest: 6000, lowest: 3166.67 },
   },
   moenchengladbach: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 533.33, lowest: 500 },
+    apartment: { highest: 1705, lowest: 1460 },
   },
   chemnitz: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 404.29, lowest: 318.33 },
+    apartment: { highest: 3000, lowest: 2050.0 },
   },
   augsburg: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 668.75, lowest: 520 },
+    apartment: { highest: 4560, lowest: 2425 },
   },
   braunschweig: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 570, lowest: 447.5 },
+    apartment: { highest: 3656.67, lowest: 2425 },
   },
   aachen: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 548, lowest: 394.17 },
+    apartment: { highest: 4560, lowest: 2425 },
   },
   krefeld: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 427.5, lowest: 345 },
+    apartment: { highest: 1866.67, lowest: 1550 },
   },
   halle: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 427.5, lowest: 276 },
+    apartment: { highest: 1750, lowest: 1100 },
   },
   kiel: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 516.67, lowest: 370 },
+    apartment: { highest: 6166.67, lowest: 2500 },
   },
   magdeburg: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 325, lowest: 242 },
+    apartment: { highest: 1700, lowest: 1100 },
   },
   oberhausen: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 500, lowest: 300 },
+    apartment: { highest: 1733, lowest: 1603.87 },
   },
   lübeck: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 612.5, lowest: 487.5 },
+    apartment: { highest: 4500, lowest: 2366.67 },
+  },
+  luebeck: {
+    rent: { highest: 612.5, lowest: 487.5 },
+    apartment: { highest: 4500, lowest: 2366.67 },
   },
   freiburg: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 787.28, lowest: 707.03 },
+    apartment: { highest: 7660, lowest: 5500 },
   },
   hagen: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 400, lowest: 350 },
+    apartment: { highest: 1600, lowest: 1200 },
   },
   erfurt: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 643.33, lowest: 466.67 },
+    apartment: { highest: 3179.63, lowest: 2903.25 },
   },
   kassel: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 750, lowest: 550 },
+    apartment: { highest: 3600, lowest: 2000 },
   },
   rostock: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 428.33, lowest: 290 },
+    apartment: { highest: 3479, lowest: 2315 },
   },
   mainz: {
-    rent: 958.17,
-    apartment: 6443.27,
-  },
-  hamm: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 798.88, lowest: 610 },
+    apartment: { highest: 4516, lowest: 3516 },
   },
   saarbruecken: {
-    rent: 958.17,
-    apartment: 6443.27,
-  },
-  herne: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 519.22, lowest: 459.12 },
+    apartment: { highest: 2640, lowest: 2200 },
   },
   muelheim: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 600, lowest: 437.5 },
+    apartment: { highest: 1700, lowest: 1622.67 },
   },
   solingen: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 653.33, lowest: 516.67 },
+    apartment: { highest: 1817, lowest: 1478 },
   },
   osnabrueck: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 427, lowest: 351.67 },
+    apartment: { highest: 2465.5, lowest: 1750 },
   },
   ludwigshafen: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 487, lowest: 472.5 },
+    apartment: { highest: 3000, lowest: 2233.33 },
   },
   leverkusen: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 700, lowest: 600 },
+    apartment: { highest: 4000, lowest: 3200 },
   },
   oldenburg: {
-    rent: 958.17,
-    apartment: 6443.27,
+    rent: { highest: 550, lowest: 400 },
+    apartment: { highest: 3750, lowest: 3000 },
   },
 };
