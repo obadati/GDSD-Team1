@@ -16,6 +16,7 @@ interface CalculatorData {
 
 const Calculator = () => {
   const [price, setPrice] = useState<number>(-1);
+  const [city, setCity] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   console.log({ price });
 
@@ -68,6 +69,7 @@ const Calculator = () => {
         value = MIN_ROOMS_ALLOWED.toString();
       }
     }
+    setError(false);
     setFormData({ ...formData, [name]: value });
   };
 
@@ -80,6 +82,7 @@ const Calculator = () => {
         formData.size
       );
       setPrice(property.avgPrice);
+      setCity(property.city);
     } catch (e: any) {
       setError(true);
       console.log(e.response.data.Message);
@@ -150,12 +153,12 @@ const Calculator = () => {
           {price > 0 && (
             <p style={{ margin: "0.5rem 0" }}>
               You can expect to pay approximately € {price} in{" "}
-              {formData.location}
+              {city || "your city"}
             </p>
           )}
           {price === 0 && (
             <p style={{ margin: "0.5rem 0" }}>
-              Looks like we don't have enough data for {formData.location},
+              Looks like we don't have enough data for {city || "your city"},{" "}
               We'll keep crunching numbers for a better estimation next time you
               visit 😉
             </p>
