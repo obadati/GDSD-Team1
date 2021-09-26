@@ -83,7 +83,6 @@ exports.getAllContractByAgent = async (req, res) => {
     let limit = 8;
     let offset = 0;
     let { agentId, page } = req.query;
-    // console.log(agentId)
     Contract.findAndCountAll({ where: { agentId: agentId } }).then((data) => {
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
@@ -97,7 +96,9 @@ exports.getAllContractByAgent = async (req, res) => {
           "dateCreate",
           "dateValid",
           "agentId",
+          "seller",
           "buyerId",
+          "buyer",
           "status",
         ],
         order: [["id", "DESC"]],
