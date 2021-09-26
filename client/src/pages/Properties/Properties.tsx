@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { useHistory } from "react-router";
-import { searchByCategory } from "../../api/properties";
+import { getAllProperties, searchByCategory } from "../../api/properties";
 import { UserRoles } from "../../api/user";
 import Filters from "../../components/Filters/Filters";
 import SearchBoxComponent from "../../components/SearchBox/SearchBox";
@@ -13,18 +13,44 @@ import addIcon from "../../assets/images/add.png";
 
 import "./Properties.scss";
 import { useAuth } from "../../hooks/auth";
+import { appendToProperties } from "../../store/properties/actions";
+import { RESULTS_PER_PAGE } from "../../constants/constants";
 
 interface OwnProps extends PropsFromRedux {}
 
-const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
+const PropertiesPage: React.FC<OwnProps> = ({
+  properties,
+  userRole,
+  dispatch,
+}) => {
   const history = useHistory();
   const { role } = useAuth();
   const [filteredProps, setFilteredProps] = useState<Property[]>([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [hasMoreProperties, setHasMoreProperties] = useState(true);
+
   useEffect(() => {
     if (properties.length > -1) {
       setFilteredProps(properties);
     }
   }, [properties]);
+
+  useEffect(() => {
+    if (pageNumber > 1) {
+      loadMoreProperties(pageNumber);
+    }
+  }, [pageNumber]);
+
+  const loadMoreProperties = async (page: number) => {
+    const { result: loadedProperties } = await getAllProperties(page);
+    if (
+      loadMoreProperties.length < RESULTS_PER_PAGE ||
+      !loadMoreProperties.length
+    ) {
+      setHasMoreProperties(false);
+    }
+    dispatch(appendToProperties(loadedProperties));
+  };
 
   const handleFilterSelection = async (selected: number) => {
     if (selected > -1 && selected !== null) {
@@ -33,6 +59,10 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
         setFilteredProps(result);
       }
     }
+  };
+
+  const handleLoadMore = () => {
+    setPageNumber(pageNumber + 1);
   };
 
   return (
@@ -59,7 +89,11 @@ const PropertiesPage: React.FC<OwnProps> = ({ properties, userRole }) => {
             </div>
           )}
         </div>
-        <PropertyList properties={filteredProps} />
+        <PropertyList
+          hasMoreProperties={hasMoreProperties}
+          onLoadMore={handleLoadMore}
+          properties={filteredProps}
+        />
       </div>
     </div>
   );
