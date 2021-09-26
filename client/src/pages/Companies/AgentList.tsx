@@ -82,7 +82,7 @@ const AgentList: React.FC<any> = (props: any) => {
                               type='button'
                               data-toggle='tooltip'
                               data-placement='top'
-                              title='Delete'
+                              title='View'
                               onClick={() => {
                                 propertyRecord(item.id);
                               }}>

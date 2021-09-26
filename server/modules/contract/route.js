@@ -5,13 +5,12 @@ const controller = require('./controller');
 /**********************************Register Controller & Define Routing Path*****************************/
 
 /***********************************Agent Route**********************************************************/
-/*Create Contract */
-router.post("/",controller.create);
+
 
 /*Edit Contract */
 router.patch("/:id",controller.edit);
 
-/*Get Contract By Agent */
+/*1. Get Contract By Agent */
 router.get("/agent/",controller.getAllContractByAgent);
 
 /*Get Contract By Id */
@@ -27,10 +26,15 @@ router.delete("/:id",controller.delete);
 router.patch("/:id",controller.endContract);
 
 /*************************************************Buyer Route**********************************************/
+ /*1. Create Contract Request */
+router.post("/",controller.createRequest);
+
+
+
 /*Accept Contract */
 router.patch("/buyer/contract",controller.contract);
 
-/*Get Contract By Buyer */
+/*2. Get Contract of Buyer */
 router.get("/buyer/:page/",controller.getAllContractByBuyer);
 
 /*Get Contract By Status */
