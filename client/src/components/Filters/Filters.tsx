@@ -9,10 +9,17 @@ export enum PropertyCategories {
 
 interface OwnProps {
   onFilterSelected: (selected: number) => void;
+  reset: boolean;
 }
-const Filters: React.FC<OwnProps> = ({ onFilterSelected }) => {
+const Filters: React.FC<OwnProps> = ({ onFilterSelected, reset }) => {
   const [selected, setSelected] = useState<number | null>(null);
   useEffect(() => onFilterSelected(selected as number), [selected]);
+
+  useEffect(() => {
+    if (reset) {
+      setSelected(null);
+    }
+  }, [reset]);
 
   return (
     <div className='app-filters'>
