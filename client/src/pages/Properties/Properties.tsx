@@ -26,6 +26,7 @@ const PropertiesPage: React.FC<OwnProps> = ({
   const history = useHistory();
   const { role } = useAuth();
   const [filteredProps, setFilteredProps] = useState<Property[]>([]);
+  const [resetFilters, setResetFilters] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMoreProperties, setHasMoreProperties] = useState(true);
 
@@ -61,14 +62,23 @@ const PropertiesPage: React.FC<OwnProps> = ({
     }
   };
 
+  const handleResetFilters = () => {
+    setResetFilters(true);
+  };
+
   const handleLoadMore = () => {
+    setFilteredProps(properties);
+    handleResetFilters();
     setPageNumber(pageNumber + 1);
   };
 
   return (
     <div className='properties-page app-page'>
       <div className='aside'>
-        <Filters onFilterSelected={handleFilterSelection} />
+        <Filters
+          reset={resetFilters}
+          onFilterSelected={handleFilterSelection}
+        />
       </div>
       <div className='center'>
         <div className='search-box-wrapper'>
