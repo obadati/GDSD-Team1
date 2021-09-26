@@ -8,7 +8,7 @@ const User = db.user;
 
 /**********************************************************Agent Dashboard ******************************/
 
-/*Edit Contract*/
+/*4. Edit Contract*/
 exports.edit = async (req, res) => {
   try {
     let id = req.params.id;
@@ -17,23 +17,16 @@ exports.edit = async (req, res) => {
       return res.status(404).json({ message: "No Contract Found" });
     } else {
       let {
-        title,
-        description,
         dateCreate,
         dateValid,
-        buyerId,
         status,
-        approve,
+       
       } = req.body;
       await Contract.update(
         {
-          title: title,
-          description: description,
           status: status,
-          approve: approve,
-          dateCreate: dateCreate,
+          dateCreate: new Date().toLocaleDateString(),
           dateValid: dateValid,
-          buyerId: buyerId,
         },
         { where: { id: id } }
       );
@@ -77,7 +70,7 @@ exports.delete = async (req, res) => {
   }
 };
 
-/*List Of All Contrct By Agent */
+/*3. List Of All Contrct By Agent */
 exports.getAllContractByAgent = async (req, res) => {
   try {
     let limit = 8;

@@ -10,7 +10,7 @@ const controller = require('./controller');
 /*Edit Contract */
 router.patch("/:id",controller.edit);
 
-/*Get Contract By Agent */
+/*1. Get Contract By Agent */
 router.get("/agent/",controller.getAllContractByAgent);
 
 /*Get Contract By Id */
@@ -34,7 +34,7 @@ router.post("/",controller.createRequest);
 /*Accept Contract */
 router.patch("/buyer/contract",controller.contract);
 
-/*Get Contract of Buyer */
+/*2. Get Contract of Buyer */
 router.get("/buyer/:page/",controller.getAllContractByBuyer);
 
 /*Get Contract By Status */
