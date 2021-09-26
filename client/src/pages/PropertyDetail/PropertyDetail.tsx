@@ -5,12 +5,19 @@ import CarouselComponent from "../../components/Carousel/Carousel";
 import { Property } from "../../store/properties/types";
 import "./PropertyDetail.scss";
 import SellerProfile from "../../components/SellerProfile/SellerProfile";
-import { getUserInfo } from "../../api/user";
+import { getUserInfo, UserRoles } from "../../api/user";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { BASE_URL } from "../../constants/constants";
+import { createContractRequest } from "../../api/contracts";
+import { AppState } from "../../store/rootReducer";
+import { connect, ConnectedProps } from "react-redux";
+import { setLoadingState } from "../../store/loader/actions";
+import { AppRoutes } from "../../containers/Router/routes";
 
-
-const PropertyDetail: React.FC<any> = () => {
+const PropertyDetail: React.FC<PropsFromRedux> = ({
+  user: appUser,
+  dispatch,
+}) => {
   const history = useHistory();
   const property: Property = (history.location.state as any).property;
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +27,7 @@ const PropertyDetail: React.FC<any> = () => {
     companyName: "",
     rating: 0,
     image: "",
+    id: -1,
   });
 
   const loadUserData = async () => {
@@ -28,7 +36,6 @@ const PropertyDetail: React.FC<any> = () => {
       const user = await getUserInfo(parseInt(property.agentId));
       setAgentInfo(user);
       setIsLoading(false);
-      console.log(user, "user");
     }
   };
 
@@ -36,6 +43,24 @@ const PropertyDetail: React.FC<any> = () => {
   useEffect(() => {
     loadUserData();
   }, []);
+
+  const handleRequestContract = async () => {
+    try {
+      dispatch(setLoadingState(true));
+      await createContractRequest(
+        property.id,
+        agentInfo.id.toString(),
+        appUser.id
+      );
+      dispatch(setLoadingState(false));
+    } catch (e) {
+      dispatch(setLoadingState(false));
+    }
+  };
+
+  const handleViewContractRequests = () => {
+    history.push(AppRoutes.Contracts);
+  };
 
   return (
     <div className='property-detail-page app-page'>
@@ -48,6 +73,13 @@ const PropertyDetail: React.FC<any> = () => {
             stars={agentInfo.rating}
             sellerName={agentInfo.firstName + " " + agentInfo.lastName}
             sellerCompany={agentInfo.companyName}
+            sellerId={agentInfo.id}
+            onRequestContract={handleRequestContract}
+            onViewContractRequests={
+              appUser.role === UserRoles.Agent
+                ? handleViewContractRequests
+                : undefined
+            }
           />
         </div>
         <div className='property-tags'>
@@ -79,4 +111,10 @@ const PropertyDetail: React.FC<any> = () => {
   );
 };
 
-export default PropertyDetail;
+const mapStateToProps = (state: AppState) => ({
+  user: state.user,
+});
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(PropertyDetail);

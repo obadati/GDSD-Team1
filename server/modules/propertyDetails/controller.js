@@ -598,15 +598,15 @@ exports.findAvgPrice = async (req, res) => {
         avgPrice: avgPrice,
       });
     } else {
-      this.computeApproxAvgPrice(req, res);
+      this.computeApproxAvgPrice(req, res,city);
     }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-exports.computeApproxAvgPrice = (req, res) => {
-  const { city = "", categoryId = -1, room = 1, size = 10 } = req.query;
+exports.computeApproxAvgPrice = (req, res,c) => {
+  const { city = c, categoryId = -1, room = 1, size = 10 } = req.query;
   const AVG_SIZE_RENT = 18;
   const AVG_SIZE_APARTMENT = 91;
   const AVG_SIZE_HOUSE = (87 + 109) / 2;
@@ -621,7 +621,8 @@ exports.computeApproxAvgPrice = (req, res) => {
   if (!matchingCity) {
     return res.status(200).json({
       avgPrice: 0,
-      msg: "Sorry we keep crunching number but for now we don't have any records for your city",
+      msg: `Sorry we don't have any records for your city ${c}`,
+      city: `${c}`,
     });
   }
 

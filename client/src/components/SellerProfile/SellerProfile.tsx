@@ -18,7 +18,8 @@ interface SellerProfileProps extends PropsFromRedux {
   stars: number;
   sellerName: string;
   sellerCompany: string;
-
+  onRequestContract: () => void;
+  onViewContractRequests?: () => void;
 }
 
 
@@ -30,6 +31,8 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   sellerName,
   sellerCompany,
   user: appUser,
+  onRequestContract,
+  onViewContractRequests,
 }) => {
   const { id } = useAuth();
   const history = useHistory();
@@ -62,28 +65,38 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
         <h2 className='seller-name'>{sellerName}</h2>
         <h3 className='seller-company'>{sellerCompany}</h3>
       </div>
-      <div className='rating'>
-        <ReactStars
-          count={5}
-          value={stars}
-          edit={false}
-          size={18}
-          color2={"#ffd700"}
-        />
-      </div>
+      {appUser.role === UserRoles.Buyer && (
+        <div className='rating'>
+          <ReactStars
+            count={5}
+            value={stars}
+            edit={false}
+            size={18}
+            color2={"#ffd700"}
+          />
+        </div>
+      )}
       <div>
         {appUser.role === UserRoles.Buyer && (
-          <button
-            className='action'
-            onClick={handleSubmit}>
-            Message Agent
-          </button>
+          <>
+            <button
+              className='action'
+              onClick={handleSubmit}>
+              Message Agent
+            </button>
+
+            <button className='action' onClick={onRequestContract}>
+              Request Contract
+            </button>
+          </>
         )}
-        <button
-          className='action'
-          onClick={() => history.push(AppRoutes.AvgPrice)}>
-          Get Average Price
-        </button>
+        {appUser.role === UserRoles.Agent && (
+          <>
+            <button className='action' onClick={onViewContractRequests}>
+              View Requests
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

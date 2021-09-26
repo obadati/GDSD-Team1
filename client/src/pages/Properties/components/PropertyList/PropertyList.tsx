@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { PropertyCard } from "..";
-import {
-  getAgentProperties,
-  getAllProperties,
-} from "../../../../api/properties";
 import { Property } from "../../../../store/properties/types";
 import "./PropertyList.scss";
 

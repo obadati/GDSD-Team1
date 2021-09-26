@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./Calculator.scss";
 import { PropertyCategories } from "../../../../components/Filters/Filters";
 import { AvgPrice } from "../../../../api/avg-price";
+import {
+  MAX_ROOMS_ALLOWED,
+  MIN_ROOMS_ALLOWED,
+} from "../../../../constants/constants";
 
 interface CalculatorData {
   location: string;
@@ -12,6 +16,8 @@ interface CalculatorData {
 
 const Calculator = () => {
   const [price, setPrice] = useState<number>(-1);
+  const [city, setCity] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
   console.log({ price });
 
   const fields: Array<{
@@ -56,6 +62,14 @@ const Calculator = () => {
   });
 
   const handleInputChange = (value: string, name: string) => {
+    if (name === "rooms") {
+      if (parseInt(value) > MAX_ROOMS_ALLOWED) {
+        value = MAX_ROOMS_ALLOWED.toString();
+      } else if (parseInt(value) < MIN_ROOMS_ALLOWED) {
+        value = MIN_ROOMS_ALLOWED.toString();
+      }
+    }
+    setError(false);
     setFormData({ ...formData, [name]: value });
   };
 
@@ -68,7 +82,9 @@ const Calculator = () => {
         formData.size
       );
       setPrice(property.avgPrice);
+      setCity(property.city);
     } catch (e: any) {
+      setError(true);
       console.log(e.response.data.Message);
     }
   };
@@ -132,11 +148,28 @@ const Calculator = () => {
         disabled={!formData.location || !formData.category}>
         Get Price
       </button>
-      {price > 0 && <p>Avg Price: € {price}</p>}
-      {price === 0 &&
-        `Looks like we don't have enough data for now, We'll keep
-                    crunching numbers for a better estimation next time you
-                    visit 😉`}
+      {!error && (
+        <>
+          {price > 0 && (
+            <p style={{ margin: "0.5rem 0" }}>
+              You can expect to pay approximately € {price} in{" "}
+              {city || "your city"}
+            </p>
+          )}
+          {price === 0 && (
+            <p style={{ margin: "0.5rem 0" }}>
+              Looks like we don't have enough data for {city || "your city"},{" "}
+              We'll keep crunching numbers for a better estimation next time you
+              visit 😉
+            </p>
+          )}
+        </>
+      )}
+      {error && (
+        <p style={{ margin: "0.5rem 0", color: "red" }}>
+          Looks like something went wrong, refresh and try again
+        </p>
+      )}
     </div>
   );
 };

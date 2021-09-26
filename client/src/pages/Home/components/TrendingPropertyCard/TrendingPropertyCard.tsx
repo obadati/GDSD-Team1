@@ -18,7 +18,7 @@ const TrendingPropertyCard: React.FC<TrendingCardProps> = ({
   thumbnail,
 }) => {
   return (
-    <div className='trending-property-card'>
+    <div className='trending-property-card  pop-shadow'>
       <h3 className='trending-property-card__heading'>{heading}</h3>
       <div className='trending-property-card__content'>
         <div className='trending-property-card__content__description'>

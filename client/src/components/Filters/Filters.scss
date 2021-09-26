@@ -26,6 +26,7 @@
     display: flex;
     margin: 1rem 0;
     border-bottom: 2px solid var(--app-color-border);
+    flex-wrap: wrap;
 
     .app-filter-type {
       font-size: 0.75rem;
