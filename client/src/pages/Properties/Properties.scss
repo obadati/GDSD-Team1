@@ -30,3 +30,17 @@
     margin-left: 1rem;
   }
 }
+
+@media (max-width: 768px) {
+  .properties-page {
+    flex-direction: column;
+
+    .aside {
+      width: 100%;
+    }
+    .search-box-wrapper {
+      width: 100%;
+      padding: unset;
+    }
+  }
+}

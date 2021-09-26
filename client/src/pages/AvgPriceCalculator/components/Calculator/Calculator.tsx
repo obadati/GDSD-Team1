@@ -68,7 +68,7 @@ const Calculator = () => {
         formData.size
       );
       setPrice(property.avgPrice);
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.response.data.Message);
     }
   };

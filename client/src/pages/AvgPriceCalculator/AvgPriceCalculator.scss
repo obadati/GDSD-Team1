@@ -1,22 +1,35 @@
 .avg-price-calculator-page {
-    max-height: 450px !important;
-    display: flex;
+  max-height: 450px !important;
+  display: flex;
 
+  .wrapper {
+    border-radius: 10px;
+    padding: 2rem;
+    background: #ffffff85;
+    border: 1px solid var(--app-color-border);
+    box-shadow: 0 2px 12px 1px #1174da4a;
+    max-width: 750px;
+    margin: auto;
+    min-width: 750px;
+  }
+
+  .page-title {
+    font-weight: 900;
+    margin-bottom: 1rem !important;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    max-height: 600px !important;
     .wrapper {
-        border-radius: 10px;
-        padding: 2rem;
-        background: #ffffff85;
-        border: 1px solid var(--app-color-border);
-        box-shadow: 0 2px 12px 1px #1174da4a;
-        max-width: 750px;
-        margin: auto;
-        min-width: 750px;
+      min-width: unset;
+      max-width: 400px;
+      width: 100%;
     }
 
     .page-title {
-        font-weight: 900;
-        margin-bottom: 1rem !important;
-        text-transform: uppercase;
-        font-size: 1.25rem;
+      font-size: 14px;
     }
+  }
 }
