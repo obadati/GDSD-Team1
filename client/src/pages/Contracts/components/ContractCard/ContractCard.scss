@@ -7,6 +7,16 @@
   position: relative;
   overflow: hidden;
 
+  &--pending {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--can-edit {
+    opacity: 1;
+    cursor: pointer;
+  }
+
   .paper-clip-icon {
     height: 20px;
     width: 20px;
@@ -52,5 +62,35 @@
 
   .valid-till {
     padding-bottom: 0.5rem !important;
+  }
+
+  .modal {
+    border-radius: 8px;
+
+    .app-button {
+      font-size: 0.75rem !important;
+      padding: 0.5rem 1rem !important;
+    }
+
+    .modal-body {
+      padding: 0;
+      .contract-details {
+        padding: 1rem;
+      }
+
+      .modal-image-wrapper {
+        width: 100%;
+        max-width: 100%;
+        img {
+          width: 100%;
+
+          object-fit: contain;
+        }
+      }
+
+      .status-selector {
+        display: flex;
+      }
+    }
   }
 }
