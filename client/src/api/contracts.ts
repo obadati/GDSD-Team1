@@ -1,10 +1,11 @@
 import { BASE_URL } from "../constants/constants";
-import { httpGET, httpPatch } from "../utility/http";
+import { httpGET, httpPatch, httpPOST } from "../utility/http";
 
 enum ContractsEndpoints {
   GetAllBuyerContracts = "/api/contract/buyer/:page/?buyerId=:uid",
   GetAllAgentContracts = "/api/contract/agent/?agentId=:uid&page=:page",
   UpdateContractStatus = "/api/contracts/:uid?status=:status",
+  CreateContractRequest = "/api/contract",
 }
 
 enum ContractStatus {
@@ -20,9 +21,11 @@ export interface Contract {
   dateValid: string;
   propertyDetail: { id: number; images: string };
   title: string;
-  status: string;
-  // Review: should be approved, requires frontend and backend changes
+  status: "approved" | "pending" | "rejected";
   approve: string;
+  id: number;
+  seller: string;
+  buyer: string;
 }
 
 // Review: Promise should have more specific return type
@@ -52,4 +55,16 @@ export const updateContractStatus = (uid: string, status: ContractStatus) => {
       uid
     ).replace(":status", status)}`
   );
+};
+
+export const createContractRequest = (
+  propertyId: string,
+  agentId: string,
+  buyerId: string
+) => {
+  httpPOST(`${BASE_URL}${ContractsEndpoints.CreateContractRequest}`, {
+    propertyId,
+    agentId,
+    buyerId,
+  });
 };
