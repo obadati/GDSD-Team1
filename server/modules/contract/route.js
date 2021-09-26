@@ -34,7 +34,7 @@ router.post("/",controller.createRequest);
 /*Accept Contract */
 router.patch("/buyer/contract",controller.contract);
 
-/*Get Contract By Buyer */
+/*Get Contract of Buyer */
 router.get("/buyer/:page/",controller.getAllContractByBuyer);
 
 /*Get Contract By Status */

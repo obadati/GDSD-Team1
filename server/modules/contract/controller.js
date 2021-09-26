@@ -195,11 +195,13 @@ exports.endContract = async (req, res) => {
 };
 /**********************************************************Buyer Dashboard ******************************/
 
-/*Create Contract By Agent*/
+/*1. Create Contract Request By Buyer*/
 exports.createRequest = async (req, res) => {
   try {
     let { propertyId, agentId,buyerId } = req.body;
     let property = await Property.findOne({ where: { id: propertyId } });
+    let agent =await User.findOne({where:{id:agentId}})
+    let buyer =await User.findOne({where:{id:buyerId}})
       if (property != null) {
           let data = {
             buyerId: buyerId,
@@ -211,6 +213,8 @@ exports.createRequest = async (req, res) => {
             dateValid:null,
             status: "pending",
             approve: "no",
+            seller:agent.firstName+' '+agent.lastName,
+            buyer:buyer.firstName+' '+buyer.lastName,
           };
           await Contract.create(data);
           return res.status(200).json(data);
@@ -251,12 +255,14 @@ exports.contract = async (req, res) => {
   }
 };
 
-/*List Of All Contrct By Buyer*/
+/*2. List Of All Contrct By Buyer*/
 exports.getAllContractByBuyer = async (req, res) => {
   try {
     let limit = 8;
     let offset = 0;
     let { buyerId } = req.query;
+
+    
 
     Contract.findAndCountAll({ where: { buyerId: buyerId } }).then((data) => {
       let page = req.params.page;
@@ -271,6 +277,9 @@ exports.getAllContractByBuyer = async (req, res) => {
           "dateCreate",
           "dateValid",
           "buyerId",
+          "buyer",
+          "seller",
+          "agentId",
           "status",
         ],
         order: [["id", "DESC"]],
@@ -278,7 +287,7 @@ exports.getAllContractByBuyer = async (req, res) => {
           {
             model: db.propertyDetail,
             attributes: ["id", "images"],
-          },
+          }
         ],
         where: { buyerId: buyerId },
         limit: limit,
