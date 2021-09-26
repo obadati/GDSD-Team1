@@ -4,13 +4,14 @@ import { httpGET, httpPatch, httpPOST } from "../utility/http";
 enum ContractsEndpoints {
   GetAllBuyerContracts = "/api/contract/buyer/:page/?buyerId=:uid",
   GetAllAgentContracts = "/api/contract/agent/?agentId=:uid&page=:page",
-  UpdateContractStatus = "/api/contracts/:uid?status=:status",
+  UpdateContractStatus = "/api/contract/:uid",
   CreateContractRequest = "/api/contract",
 }
 
-enum ContractStatus {
-  Accept = "accept",
-  End = "end",
+export enum ContractStatus {
+  Approved = "approved",
+  Pending = "pending",
+  Rejected = "rejected",
 }
 
 export interface Contract {
@@ -21,7 +22,7 @@ export interface Contract {
   dateValid: string;
   propertyDetail: { id: number; images: string };
   title: string;
-  status: "approved" | "pending" | "rejected";
+  status: ContractStatus;
   approve: string;
   id: number;
   seller: string;
@@ -48,12 +49,17 @@ export const getAgentContracts = (uid: string, page = 1): Promise<any> => {
 };
 
 // Review: Add return type to function signature
-export const updateContractStatus = (uid: string, status: ContractStatus) => {
-  httpPatch(
+export const updateContract = (
+  uid: number,
+  status: ContractStatus,
+  dateValid: string
+) => {
+  return httpPatch(
     `${BASE_URL}${ContractsEndpoints.UpdateContractStatus.replace(
       ":uid",
-      uid
-    ).replace(":status", status)}`
+      uid.toString()
+    )}`,
+    { status, dateValid }
   );
 };
 
