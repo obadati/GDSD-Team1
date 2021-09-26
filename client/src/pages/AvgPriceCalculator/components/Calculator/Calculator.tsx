@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./Calculator.scss";
 import { PropertyCategories } from "../../../../components/Filters/Filters";
 import { AvgPrice } from "../../../../api/avg-price";
+import {
+  MAX_ROOMS_ALLOWED,
+  MIN_ROOMS_ALLOWED,
+} from "../../../../constants/constants";
 
 interface CalculatorData {
   location: string;
@@ -57,6 +61,13 @@ const Calculator = () => {
   });
 
   const handleInputChange = (value: string, name: string) => {
+    if (name === "rooms") {
+      if (parseInt(value) > MAX_ROOMS_ALLOWED) {
+        value = MAX_ROOMS_ALLOWED.toString();
+      } else if (parseInt(value) < MIN_ROOMS_ALLOWED) {
+        value = MIN_ROOMS_ALLOWED.toString();
+      }
+    }
     setFormData({ ...formData, [name]: value });
   };
 
