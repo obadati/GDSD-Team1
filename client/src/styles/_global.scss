@@ -23,12 +23,12 @@ body {
     @include resetMargins;
     @include resetPaddings;
 
-    // * {
-    //   ::-webkit-scrollbar {
-    //     width: 0px;
-    //     background: transparent;
-    //   }
-    // }
+    * {
+      ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+      }
+    }
 
     .app-page {
       height: 100%;
@@ -36,6 +36,11 @@ body {
       max-height: calc(100vh - 150px);
       overflow-y: scroll;
       margin-top: 1.5rem;
+
+      @media (max-width: 768px) {
+        margin-top: 1.25rem;
+        max-height: calc(100vh - 230px);
+      }
     }
 
     .app-button {
@@ -50,6 +55,10 @@ body {
       &.disabled {
         cursor: not-allowed;
         opacity: 0.5;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 0.75rem;
       }
     }
 

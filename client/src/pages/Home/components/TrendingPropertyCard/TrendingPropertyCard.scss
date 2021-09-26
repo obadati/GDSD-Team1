@@ -70,6 +70,33 @@
 
 @media (max-width: 768px) {
   .trending-property-card {
-    width: 75%;
+    width: 100%;
+    max-width: 500px;
+
+    padding: 1.25rem;
+    height: 200px !important;
+
+    &__heading {
+      font-size: 1rem;
+    }
+
+    &__content {
+      &__description {
+        font-size: 0.75rem;
+        max-height: 90px;
+        overflow: hidden;
+      }
+
+      img {
+        max-height: 90px;
+      }
+
+      &__cta {
+        margin-top: 0.5rem !important;
+        max-width: unset;
+        width: 100%;
+        font-size: 0.75rem;
+      }
+    }
   }
 }

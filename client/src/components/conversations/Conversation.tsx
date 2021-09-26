@@ -1,6 +1,7 @@
 import "./Conversation.scss";
 // remove unused imports
 import React, { useState, useEffect } from "react";
+import { BASE_URL } from "../../constants/constants";
 
 // Review: Component should have correct typing
 const Conversation: React.FC<any> = ({ conversation }) => {
@@ -12,7 +13,7 @@ const Conversation: React.FC<any> = ({ conversation }) => {
     <div className='conversation'>
       <img
         className='conversationImg'
-        src={`http://18.185.96.197:5000/${conversation.image}`}
+        src={`${BASE_URL}/${conversation.image}`}
         alt=''
       />
 

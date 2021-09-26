@@ -96,7 +96,13 @@ const Navigation: React.FC<PropsFromRedux> = ({
         onClick={() => handleUserAction(tab.label)}
         className={`app-navigation__tab app-navigation__tab${
           activeTab.label === tab.label ? "--selected" : ""
-        } ${tab.label === username ? `app-navigation__tab--username` : ""}`}>
+        } ${
+          tab.label === username
+            ? `app-navigation__tab--username`
+            : tab.label.toLowerCase() === "log out"
+            ? `app-navigation__tab--logout`
+            : ""
+        }`}>
         {tab.label}
       </div>
     ));

@@ -4,6 +4,20 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
+    @media (max-width: 425px) {
+      margin-top: 1rem;
+    }
   }
   overflow: scroll;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .trending {
+      margin-top: 1rem !important;
+    }
+  }
 }

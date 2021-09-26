@@ -1,23 +1,26 @@
 .property-card {
   box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
-  height: 400px;
-  width: 400px;
+  height: 500px;
+  width: 95%;
   margin: 1rem;
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 0.404);
   transition: 0.4s ease-in-out;
   cursor: pointer;
+  position: relative;
+  box-shadow: 0 2px 12px 1px #1174da4a;
+  border-radius: 8px;
+  overflow: hidden;
 
   &:hover {
-    width: 415px;
+    width: 100%;
   }
 
   &__thumbnail {
     width: 100%;
-    min-height: 250px;
-    max-height: 250px;
     overflow: hidden;
+    height: 100%;
     img {
       width: 100%;
       height: 100%;
@@ -27,7 +30,13 @@
 
   &__content {
     flex: 1;
-    padding: 1rem;
+    padding: 1.5rem;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(362deg, black, transparent);
+    color: white;
 
     &__name {
       font-weight: bold;
@@ -40,6 +49,9 @@
 
     &__location {
       font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     &__category {
@@ -90,8 +102,12 @@
   }
 }
 
+@media (max-width: 1205px) {
+}
+
 @media (max-width: 768px) {
   .property-card {
     width: 100%;
+    margin: 0.5rem 0;
   }
 }
