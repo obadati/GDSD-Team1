@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Message from "../../components/message/Message";
 
-// Review: Remove unused imports
-import { dummyDeveloper, getRandomBg } from "../../utility/static";
-import ChatOnline from "../../components/chatOnline/ChatOnline";
 import Conversation from "../../components/conversations/Conversation";
 import "./Messenger.scss";
 import axios from "axios";
@@ -15,9 +12,6 @@ import { BASE_URL } from "../../constants/constants";
 const MessengerPage: React.FC<any> = () => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null as any);
-  // Review: Remove Dead code
-  //const [socket, setsocket] = useState(null as any);
-
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [userImage, setUserImage] = useState([]);
@@ -26,7 +20,7 @@ const MessengerPage: React.FC<any> = () => {
   const scrollRef = useRef<null | HTMLDivElement>(null);
   const { id } = useAuth();
 
-  useEffect(() => {
+  useEffect(() => { // connect to socket
     socket.current = io(
       "ws://" + BASE_URL.split("//")[1].split(":")[0] + ":8900"
     );
@@ -41,18 +35,18 @@ const MessengerPage: React.FC<any> = () => {
     });
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {   // when recive a real-time massage
     // Review: Fix spellings
     if (receviedMessage && currentChat?.rcvId == receviedMessage.sndId) {
       setMessages((prev) => [...prev, receviedMessage] as any);
     }
   }, [receviedMessage]);
 
-  useEffect(() => {
+  useEffect(() => { //report the new user as online to the socket server
     socket.current.emit("addUser", id);
-    //  socket.current.on("getUsers", users => { console.log(users) });
   }, []);
-  useEffect(() => {
+
+  useEffect(() => { //retrive the image for the user
     const getImage = async () => {
       try {
         // Review: Url should be an enum
@@ -171,15 +165,12 @@ const MessengerPage: React.FC<any> = () => {
           {currentChat ? (
             <>
               <div className='chatBoxTop'>
-                {/**
-                 * Review: variable should be descriptive 'm' doesn't convey clear intent
-                 */}
-                {messages.map((m: any) => (
+                {messages.map((massage: any) => (
                   <div ref={scrollRef}>
                     <Message
-                      message={m}
-                      own={m.rcvId !== id}
-                      image={m.rcvId !== id ? userImage : currentChat}
+                      message={massage}
+                      own={massage.rcvId !== id}
+                      image={massage.rcvId !== id ? userImage : currentChat}
                     />
                   </div>
                 ))}
