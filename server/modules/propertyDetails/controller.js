@@ -617,7 +617,7 @@ exports.computeApproxAvgPrice = (req, res) => {
       .json({ error: "Missing properties: city, categoryId" });
   }
 
-  const matchingCity = citiesList[city];
+  const matchingCity = citiesList[city.toLowerCase()];
   if (!matchingCity) {
     return res.status(200).json({
       avgPrice: 0,
