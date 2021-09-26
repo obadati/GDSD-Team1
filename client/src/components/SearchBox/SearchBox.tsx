@@ -49,6 +49,7 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
   return (
     <div className='search-box-component'>
       <input
+        onChange={(e) => handleFuzzySearch(e.target.value)}
         ref={inputRef}
         maxLength={40}
         type='search'

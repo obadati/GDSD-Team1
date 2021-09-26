@@ -12,6 +12,7 @@ interface CalculatorData {
 
 const Calculator = () => {
   const [price, setPrice] = useState<number>(-1);
+  const [error, setError] = useState<boolean>(false);
   console.log({ price });
 
   const fields: Array<{
@@ -69,6 +70,7 @@ const Calculator = () => {
       );
       setPrice(property.avgPrice);
     } catch (e: any) {
+      setError(true);
       console.log(e.response.data.Message);
     }
   };
@@ -132,11 +134,28 @@ const Calculator = () => {
         disabled={!formData.location || !formData.category}>
         Get Price
       </button>
-      {price > 0 && <p>Avg Price: € {price}</p>}
-      {price === 0 &&
-        `Looks like we don't have enough data for now, We'll keep
-                    crunching numbers for a better estimation next time you
-                    visit 😉`}
+      {!error && (
+        <>
+          {price > 0 && (
+            <p style={{ margin: "0.5rem 0" }}>
+              You can expect to pay approximately € {price} in{" "}
+              {formData.location}
+            </p>
+          )}
+          {price === 0 && (
+            <p style={{ margin: "0.5rem 0" }}>
+              Looks like we don't have enough data for {formData.location},
+              We'll keep crunching numbers for a better estimation next time you
+              visit 😉
+            </p>
+          )}
+        </>
+      )}
+      {error && (
+        <p style={{ margin: "0.5rem 0", color: "red" }}>
+          Looks like something went wrong, refresh and try again
+        </p>
+      )}
     </div>
   );
 };
