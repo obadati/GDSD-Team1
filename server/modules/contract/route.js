@@ -5,8 +5,7 @@ const controller = require('./controller');
 /**********************************Register Controller & Define Routing Path*****************************/
 
 /***********************************Agent Route**********************************************************/
-/*Create Contract */
-router.post("/",controller.create);
+
 
 /*Edit Contract */
 router.patch("/:id",controller.edit);
@@ -27,6 +26,11 @@ router.delete("/:id",controller.delete);
 router.patch("/:id",controller.endContract);
 
 /*************************************************Buyer Route**********************************************/
+ /*1. Create Contract Request */
+router.post("/",controller.createRequest);
+
+
+
 /*Accept Contract */
 router.patch("/buyer/contract",controller.contract);
 

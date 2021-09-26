@@ -7,50 +7,7 @@ const User = db.user;
 /****************************************************Define Controller***********************************/
 
 /**********************************************************Agent Dashboard ******************************/
-/*Create Contract By Agent*/
-exports.create = async (req, res) => {
-  try {
-    let { propertyId, title, description, dateCreate, dateValid, buyerEmail } =
-      req.body;
-    let property = await Property.findOne({ where: { id: propertyId } });
-    let contractExist = await Contract.findOne({
-      where: { propertyId: propertyId },
-    });
-    if (!contractExist) {
-      if (property != null) {
-        let buyerId = await User.findOne({ where: { email: buyerEmail } });
-       
-        if (buyerId != null) {
-          let data = {
-            buyerId: buyerId.id,
-            agentId: property.agentId,
-            propertyId,
-            title,
-            description,
-            dateCreate,
-            dateValid,
-            status: "available",
-            approve: "no",
-          };
-          await Contract.create(data);
-          return res.status(200).json(data);
-        } else {
-          return res
-            .status(404)
-            .json({ message: "No Buyer Found With This Email" });
-        }
-      } else {
-        return res.status(404).json({ message: "No Property Found" });
-      }
-    } else {
-      return res.status(404).json({ message: "Contract Already Exist" });
-    }
-  } catch (err) {
-    return res.status(500).json({
-      error: err.message,
-    });
-  }
-};
+
 /*Edit Contract*/
 exports.edit = async (req, res) => {
   try {
@@ -237,6 +194,39 @@ exports.endContract = async (req, res) => {
   }
 };
 /**********************************************************Buyer Dashboard ******************************/
+
+/*Create Contract By Agent*/
+exports.createRequest = async (req, res) => {
+  try {
+    let { propertyId, agentId,buyerId } = req.body;
+    let property = await Property.findOne({ where: { id: propertyId } });
+      if (property != null) {
+          let data = {
+            buyerId: buyerId,
+            agentId: agentId,
+            propertyId,
+            title:property.title,
+            description:property.description,
+            dateCreate:null,
+            dateValid:null,
+            status: "pending",
+            approve: "no",
+          };
+          await Contract.create(data);
+          return res.status(200).json(data);
+        
+      } else {
+        return res.status(404).json({ message: "No Property Found" });
+      }
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message,
+    });
+  }
+};
+
+
+
 exports.contract = async (req, res) => {
   try {
     let { id, buyerId } = req.query;
