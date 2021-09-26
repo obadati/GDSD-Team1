@@ -239,7 +239,6 @@ exports.endContract = async (req, res) => {
 /**********************************************************Buyer Dashboard ******************************/
 exports.contract = async (req, res) => {
   try {
-    console.log("asdasdasdasdsa");
     let { id, buyerId } = req.query;
 
     let contract = await Contract.findOne({ where: { id: id } });
