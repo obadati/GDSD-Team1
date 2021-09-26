@@ -22,7 +22,7 @@ const MessengerPage: React.FC<any> = () => {
 
   useEffect(() => { // connect to socket
     socket.current = io(
-      "ws://" + BASE_URL.split("//")[1].split(":")[0] + ":8900"
+      "wss://" + BASE_URL.split("//")[1].split(":")[0] + ":8900"
     );
     socket.current.on("getMessage", (data) => {
       // Review: Fix spellings
@@ -50,7 +50,7 @@ const MessengerPage: React.FC<any> = () => {
     const getImage = async () => {
       try {
         // Review: Url should be an enum
-        const res = await axios.get(BASE_URL + "/api/user/userImage/" + id);
+        const res = await axios.get(BASE_URL + "/api/user/" + id);
         setUserImage(res as any);
       } catch (err) {
         console.log(err);
