@@ -2,6 +2,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+
   form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -23,5 +24,15 @@
   .app-button {
     margin-top: 1rem;
     text-transform: uppercase !important;
+  }
+
+  @media (max-width: 768px) {
+    form {
+      grid-template-columns: 1fr;
+      font-size: 10px;
+      input {
+        font-size: 10px;
+      }
+    }
   }
 }
