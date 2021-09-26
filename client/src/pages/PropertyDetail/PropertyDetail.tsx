@@ -9,6 +9,7 @@ import { getUserInfo } from "../../api/user";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
 import { BASE_URL } from "../../constants/constants";
 
+
 const PropertyDetail: React.FC<any> = () => {
   const history = useHistory();
   const property: Property = (history.location.state as any).property;
@@ -30,6 +31,8 @@ const PropertyDetail: React.FC<any> = () => {
       console.log(user, "user");
     }
   };
+
+
   useEffect(() => {
     loadUserData();
   }, []);
@@ -41,6 +44,7 @@ const PropertyDetail: React.FC<any> = () => {
           {isLoading && <LoaderComponent title='sit tight!'></LoaderComponent>}
           <SellerProfile
             image={`${BASE_URL}/${agentInfo.image}`}
+            sellerId={parseInt(property.agentId)}
             stars={agentInfo.rating}
             sellerName={agentInfo.firstName + " " + agentInfo.lastName}
             sellerCompany={agentInfo.companyName}
