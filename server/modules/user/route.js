@@ -11,7 +11,7 @@ router.post("/",controller.create);
 router.post("/login",controller.login);
 
 /*Get User Image*/
-router.get("/userImage/:id",controller.image);
+router.get("/:id",controller.image);
 
 /*Update User Image */
 router.patch("/updateImage/:id",controller.updateImage);
