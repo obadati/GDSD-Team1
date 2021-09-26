@@ -620,6 +620,7 @@ exports.computeApproxAvgPrice = (req, res) => {
   const matchingCity = citiesList[city];
   if (!matchingCity) {
     return res.status(200).json({
+      avgPrice: 0,
       msg: "Sorry we keep crunching number but for now we don't have any records for your city",
     });
   }
