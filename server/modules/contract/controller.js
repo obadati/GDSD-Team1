@@ -78,8 +78,8 @@ exports.getAllContractByAgent = async (req, res) => {
     
     let limit = 8;
     let offset = 0;
-    let { agentId } = req.query;
-    let {page} =req.params;
+    let { agentId,page } = req.query;
+  
     if(page < 0){
       Contract.findAndCountAll({ where: { agentId: agentId } }).then((data) => {
        
@@ -279,31 +279,6 @@ exports.createRequest = async (req, res) => {
   }
 };
 
-
-
-exports.contract = async (req, res) => {
-  try {
-    let { id, buyerId } = req.query;
-
-    let contract = await Contract.findOne({ where: { id: id } });
-    if (contract == null) {
-      return res.status(404).json({ message: "No Contract Found" });
-    } else {
-      await Contract.update(
-        {
-          status: "occupy",
-          buyerId: buyerId,
-        },
-        { where: { id: id } }
-      );
-      return res.status(200).json({
-        message: "Please Wait For Agent To Approve The Contract",
-      });
-    }
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-};
 
 /*2. List Of All Contrct By Buyer*/
 exports.getAllContractByBuyer = async (req, res) => {
