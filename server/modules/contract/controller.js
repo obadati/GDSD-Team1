@@ -74,11 +74,59 @@ exports.delete = async (req, res) => {
 /*3. List Of All Contrct By Agent */
 exports.getAllContractByAgent = async (req, res) => {
   try {
-    const pending= "pending";
+
     
     let limit = 8;
     let offset = 0;
-    let { agentId, page } = req.query;
+    let { agentId } = req.query;
+    let {page} =req.params;
+    if(page < 0){
+      Contract.findAndCountAll({ where: { agentId: agentId } }).then((data) => {
+       
+  
+        Contract.findAll({
+          
+          attributes: [
+            "id",
+            "propertyId",
+            "title",
+            "description",
+            "dateCreate",
+            "dateValid",
+            "agentId",
+            "seller",
+            "buyerId",
+            "buyer",
+            "status",
+          ],
+          order: [["id", "DESC"]],
+          include: [
+            {
+              model: db.propertyDetail,
+              attributes: ["id", "images"],
+            },
+          ],
+          
+          where: { agentId: agentId},
+          limit: limit,
+          offset: offset,
+  
+          
+        }).then((property) => {
+          if (property.length > 0) {
+            return res
+              .status(200)
+              .json({ result: property, count: data.count, pages: 1 });
+          } else {
+            return res.status(404).json([]);
+          }
+        });
+      });
+    }
+    else{
+
+    
+
     Contract.findAndCountAll({ where: { agentId: agentId } }).then((data) => {
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
@@ -106,7 +154,7 @@ exports.getAllContractByAgent = async (req, res) => {
           },
         ],
         
-        where: { agentId: agentId,status:pending},
+        where: { agentId: agentId},
         limit: limit,
         offset: offset,
 
@@ -121,6 +169,7 @@ exports.getAllContractByAgent = async (req, res) => {
         }
       });
     });
+  }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -262,11 +311,55 @@ exports.getAllContractByBuyer = async (req, res) => {
     let limit = 8;
     let offset = 0;
     let { buyerId } = req.query;
+    let page = req.params.page;
+
+    if(page < 0){
+
+      Contract.findAndCountAll({ where: { buyerId: buyerId } }).then((data) => {
+     
+       
+        Contract.findAll({
+          attributes: [
+            "id",
+            "title",
+            "description",
+            "dateCreate",
+            "dateValid",
+            "buyerId",
+            "buyer",
+            "seller",
+            "agentId",
+            "status",
+          ],
+          order: [["id", "DESC"]],
+          include: [
+            {
+              model: db.propertyDetail,
+              attributes: ["id", "images"],
+            }
+          ],
+          where: { buyerId: buyerId },
+          limit: limit,
+          offset: offset,
+        }).then((property) => {
+          if (property.length > 0) {
+            return res
+              .status(200)
+              .json({ result: property, count: data.count, pages: 1 });
+          } else {
+            return res.status(404).json([]);
+          }
+        });
+      });
+    }
+    else{
+
+    
 
     
 
     Contract.findAndCountAll({ where: { buyerId: buyerId } }).then((data) => {
-      let page = req.params.page;
+     
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
@@ -303,6 +396,7 @@ exports.getAllContractByBuyer = async (req, res) => {
         }
       });
     });
+  }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
