@@ -14,8 +14,10 @@ interface SellerProfileProps extends PropsFromRedux {
   sellerName: string;
   sellerCompany: string;
   sellerId: number;
+  propertyId: string;
   onRequestContract: () => void;
   onViewContractRequests?: () => void;
+  onImagesSelected: (a: any[]) => void;
 }
 
 const SellerProfileComponent: React.FC<SellerProfileProps> = ({
@@ -26,8 +28,74 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   user: appUser,
   onRequestContract,
   onViewContractRequests,
+  onImagesSelected,
+  propertyId,
 }) => {
+  const [images, setImages] = useState<any[]>([]);
   const history = useHistory();
+  const handleImageSelection = (e: any) => {
+    if (e.target.files.length > 0) {
+      setImages(e.target.files);
+    }
+  };
+
+  const handleUpload = () => {
+    debugger;
+    onImagesSelected([...images]);
+  };
+  console.log({ images });
+  const renderModal = () => {
+    return (
+      <>
+        <div
+          className='modal fade'
+          id={`contract-detail-${propertyId}`}
+          role='dialog'
+          tabIndex={-1}
+          data-backdrop='static'
+          data-keyboard='false'
+          aria-labelledby={`contract-detail-label-${propertyId}`}
+          aria-hidden='true'>
+          <div className='modal-dialog modal-dialog-centered ' role='document'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <h3>Add Images</h3>
+                <button
+                  type='button'
+                  className='close'
+                  data-dismiss='modal'
+                  aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div className='modal-body'>
+                <input
+                  onChange={handleImageSelection}
+                  placeholder='images'
+                  multiple
+                  id='images'
+                  type='file'
+                  name='myImage'
+                  accept='image/png, image/gif, image/jpeg'
+                  max={20000}
+                />
+              </div>
+              <div className='modal-footer'>
+                <button
+                  onClick={handleUpload}
+                  className={`app-button ${!images.length ? "disabled" : ""}`}
+                  data-dismiss='modal'
+                  disabled={!images.length}>
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className='seller-info-card'>
       <div className='avatar'>
@@ -67,6 +135,13 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
             <button className='action' onClick={onViewContractRequests}>
               View Requests
             </button>
+            <button
+              data-toggle='modal'
+              data-target={`#contract-detail-${propertyId}`}
+              className='action add-more-images'>
+              Add images
+            </button>
+            {renderModal()}
           </>
         )}
       </div>
