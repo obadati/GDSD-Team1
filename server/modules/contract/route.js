@@ -11,7 +11,7 @@ const controller = require('./controller');
 router.patch("/:id",controller.edit);
 
 /*1. Get Contract By Agent */
-router.get("/agent/",controller.getAllContractByAgent);
+router.get("/agent/:page",controller.getAllContractByAgent);
 
 /*Get Contract By Id */
 router.get("/:id",controller.getById);
