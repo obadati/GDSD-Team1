@@ -73,6 +73,8 @@ exports.delete = async (req, res) => {
 /*3. List Of All Contrct By Agent */
 exports.getAllContractByAgent = async (req, res) => {
   try {
+    const pending= "pending";
+    
     let limit = 8;
     let offset = 0;
     let { agentId, page } = req.query;
@@ -81,6 +83,7 @@ exports.getAllContractByAgent = async (req, res) => {
       offset = limit * (page - 1);
 
       Contract.findAll({
+        
         attributes: [
           "id",
           "propertyId",
@@ -101,9 +104,12 @@ exports.getAllContractByAgent = async (req, res) => {
             attributes: ["id", "images"],
           },
         ],
-        where: { agentId: agentId },
+        
+        where: { agentId: agentId,status:pending},
         limit: limit,
         offset: offset,
+
+        
       }).then((property) => {
         if (property.length > 0) {
           return res
@@ -135,18 +141,18 @@ exports.getAllContractByAgentStatus = async (req, res) => {
       Contract.findAll({
         attributes: [
           "id",
+          "propertyId",
           "title",
           "description",
           "dateCreate",
           "dateValid",
+          "agentId",
+          "seller",
           "buyerId",
+          "buyer",
           "status",
         ],
         order: [["id", "DESC"]],
-        include: {
-          model: db.user,
-          attributes: ["id", "firstName", "lastName"],
-        },
         where: { agentId: agentId, status: status },
         limit: limit,
         offset: offset,
