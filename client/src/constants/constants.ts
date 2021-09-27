@@ -12,5 +12,8 @@ export const NavigationTabData = [
     { label: 'companies', to: AppRoutes.Companies },
     { label: 'about us', to: AppRoutes.AboutUs },
   ];
-  export const API_MSG_URL = '/api/message/getNewMessages';
-  export const LOG_OUT = "Log Out";
+export const API_MSG_URL = '/api/message/getNewMessages';
+export const LOG_OUT = "Log Out";
+export const MAX_ROOMS_ALLOWED = 8;
+export const MIN_ROOMS_ALLOWED = 1;
+export const MAX_SIZE_ALLOWED = 500;

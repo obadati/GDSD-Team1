@@ -22,6 +22,7 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
 }) => {
   const [searcher, setSearcher] = useState<fuse<any>>();
   const inputRef = useRef<any>();
+
   const handleFuzzySearch = debounce((query = "") => {
     if (!query.trim()) {
       onSearchComplete([]);
@@ -49,6 +50,7 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
   return (
     <div className='search-box-component'>
       <input
+        onChange={(e) => handleFuzzySearch(e.target.value)}
         ref={inputRef}
         maxLength={40}
         type='search'

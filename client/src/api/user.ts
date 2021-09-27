@@ -10,7 +10,7 @@ export enum UserRoles {
 enum UserEndpoints {
   SignUp = "/api/user/",
   Login = "/api/user/login",
-  GetUserInfo = "/api/user/userImage",
+  GetUserInfo = "/api/user/:userId",
 }
 
 export const loginUser = (username: string, password: string, role: string) => {
@@ -40,5 +40,7 @@ export const signUpUser = (
 };
 
 export const getUserInfo = (id: number) => {
-  return httpGET(`${BASE_URL}${UserEndpoints.GetUserInfo}/${id}`);
+  return httpGET(
+    `${BASE_URL}${UserEndpoints.GetUserInfo.replace(":userId", id.toString())}`
+  );
 };
