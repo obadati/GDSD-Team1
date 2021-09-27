@@ -3,7 +3,7 @@
 
 /*Create Admin*/
 [HttpPost]
-http://18.185.96.197:5000/api/admin/create
+https://www.homeforme-aws.de:5000/api/admin/create
 data:{
     username:"",
     password:""
@@ -11,7 +11,7 @@ data:{
 
 /*Login Admin*/
 [HttpPost]
-http://18.185.96.197:5000/api/admin/login
+https://www.homeforme-aws.de:5000/api/admin/login
 data:{
     username:"",
     password:""
@@ -20,24 +20,24 @@ data:{
 /*List of All Agents*/
 [HttpGet]
 1 is pageNumber;
-http://18.185.96.197:5000/api/admin/allAgent/1
+https://www.homeforme-aws.de:5000/api/admin/allAgent/1
 
 /*List of Agent By Status*/
 [HttpGet]
 1 is pageNumber;
-http://18.185.96.197:5000/api/admin/agentByStatus/1?status=Approved
+https://www.homeforme-aws.de:5000/api/admin/agentByStatus/1?status=Approved
 
 /*Approve Agent Status*/
 [HttpPatch]
 5 is agentId;
-http://18.185.96.197:5000/api/admin/approveStatus/5?status=Approved
+https://www.homeforme-aws.de:5000/api/admin/approveStatus/5?status=Approved
 
 ********************************************************
 /*Users*/
 
 /*Create User*/
 [HttpPost]
-http://18.185.96.197:5000/api/user
+https://www.homeforme-aws.de:5000/api/user
 if role = Agent then companyId field add in data.
 data:{
     "firstName":"",
@@ -49,7 +49,7 @@ data:{
 
 /*Login User*/
 [HttpPost]
-http://18.185.96.197:5000/api/user/login
+https://www.homeforme-aws.de:5000/api/user/login
 data:{
     "email":"",
     "password":""
@@ -57,11 +57,11 @@ data:{
 
 /*Show User Image*/
 [HttpGet]
-http://18.185.96.197:5000/api/user/userImage/4
+https://www.homeforme-aws.de:5000/api/user/userImage/4
 
 /*Update User Image*/
 [HttpPatch]
-http://18.185.96.197:5000/api/user/updateImage/2
+https://www.homeforme-aws.de:5000/api/user/updateImage/2
 formData:{
     image:image
 }
@@ -71,21 +71,21 @@ formData:{
 
 /*Create Category*/
 [HttpPost]
-http://18.185.96.197:5000/api/categories
+https://www.homeforme-aws.de:5000/api/categories
 Body:{ name:"" }
 
 /*All Categories (Dropdown)*/
 [HttpGet]
-http://18.185.96.197:5000/api/categories
+https://www.homeforme-aws.de:5000/api/categories
 
 /*Get Property By CategoryId and Search Query*/
 [HttpGet]
 3 is categoryId
-http://18.185.96.197:5000/api/categories/3/search?query=Trier
+https://www.homeforme-aws.de:5000/api/categories/3/search?query=Trier
 
 /*Delete Category*/
 [HttpDelete]
-http://18.185.96.197:5000/api/categories/{id}
+https://www.homeforme-aws.de:5000/api/categories/{id}
 
 
 ********************************************************
@@ -93,28 +93,28 @@ http://18.185.96.197:5000/api/categories/{id}
 
 /*Create Property*/
 [HttpPost]
-http://18.185.96.197:5000/api/properties
+https://www.homeforme-aws.de:5000/api/properties
 Form-Data : [title, description, price, location, city,room,size,categoryId, property(Image)]
 
 /*All properties*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/{pageNumber}
+https://www.homeforme-aws.de:5000/api/properties/{pageNumber}
 
 /*All properties By Category Filter*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/category/{pageNumber}?categoryId={categoryId}
+https://www.homeforme-aws.de:5000/api/properties/category/{pageNumber}?categoryId={categoryId}
 
 /*Get Property By Search (Input Field Text Search)*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/search/?text={text}&page={pageNumber}
+https://www.homeforme-aws.de:5000/api/properties/search/?text={text}&page={pageNumber}
 
 /*Delete Property*/
 [HttpDelete]
-http://18.185.96.197:5000/api/properties/{id}
+https://www.homeforme-aws.de:5000/api/properties/{id}
 
 /*Add More Image To Properties*/
 [HttpPost]
-http://18.185.96.197:5000/api/properties/images/
+https://www.homeforme-aws.de:5000/api/properties/images/
 formData:{
     property: images,
     propertyId: propertyId
@@ -122,30 +122,30 @@ formData:{
 
 /*Get Property Detail By Id*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/propertyDetail/19
+https://www.homeforme-aws.de:5000/api/properties/propertyDetail/19
 
 /*Agent Property List*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/agentProperty/1?agentId=2
+https://www.homeforme-aws.de:5000/api/properties/agentProperty/1?agentId=2
 
 /*Agent Property List By Status*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/agentPropertyByStatus/1?agentId=5&status=Pending
+https://www.homeforme-aws.de:5000/api/properties/agentPropertyByStatus/1?agentId=5&status=Pending
 
 /*Update Property*/
 [HttpPatch]
-http://18.185.96.197:5000/api/properties/updateProperty/19
+https://www.homeforme-aws.de:5000/api/properties/updateProperty/19
 Form-Data : [title, description, price, location, city,room,size,categoryId, property(Image)]
 
 
 /*All Property List By Admin*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/getAllPropertyByAdmin/1
+https://www.homeforme-aws.de:5000/api/properties/getAllPropertyByAdmin/1
 
 /*Property List By Status Admin*/
 [HttpGet]
-http://18.185.96.197:5000/api/properties/getAllPropertyByAdminStatus/1?status=pending
+https://www.homeforme-aws.de:5000/api/properties/getAllPropertyByAdminStatus/1?status=pending
 
 /*Average Property Price Calculator*/
 [HTTPGET]
-API: http://18.185.96.197:5000/api/properties/user/findAvgPrice?city=Merzig&categoryId=3&room=3&size=154
+API: https://www.homeforme-aws.de:5000/api/properties/user/findAvgPrice?city=Merzig&categoryId=3&room=3&size=154
