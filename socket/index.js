@@ -1,17 +1,24 @@
-const io = require("socket.io")(8900, {
-    cors: {
-        origin: "http://localhost:3000",
-    },
+const fs = require('fs');
+const httpsServer = require("https").createServer({
+    key: fs.readFileSync("/etc/letsencrypt/live/homeforme-aws.de/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/homeforme-aws.de/fullchain.pem")
 });
 
+const options = {
+    cors: {
+        origin: "https://www.homeforme-aws.de",
+    },
+};
+
+const io = require("socket.io")(httpsServer, options);
+console.log("server is up ");
 //define online user array
 let users = [];
-
 //add user to array
 const addUser = (userId, socketId) => { users.push({ userId, socketId }); };
 //remove user from array
 const removeUser = (socketId) => { users = users.filter((user) => user.socketId !== socketId); }
-//get revivers of the massage socket
+//get users that are online and revivers of the massage
 const getUser = (userId) => { return users.filter(user => user.userId === userId); }
 
 // when the user connect
@@ -44,3 +51,4 @@ io.on("connection", (socket) => {
     });
 });
 
+httpsServer.listen(8900);
