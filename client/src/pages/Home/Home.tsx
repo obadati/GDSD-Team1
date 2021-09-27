@@ -7,73 +7,71 @@ import { Property } from "../../store/properties/types";
 import { AppState } from "../../store/rootReducer";
 import Hero, { HeroProps } from "./components/Hero/Hero";
 import TrendingPropertyCard, {
-    TrendingCardProps,
+  TrendingCardProps,
 } from "./components/TrendingPropertyCard/TrendingPropertyCard";
 import "./Home.scss";
 
 const HomePage: React.FC<PropsFromRedux> = ({ properties }) => {
-    const history = useHistory();
-    const heroProps: HeroProps = {
-        heading:
-            "Get real time market average prices based on your preferences",
-        description: `Now you can check the average price you are expected to pay for a house at a slected location, 
-        you can enter number of room and size and get the middle price accross all our online offer that match your description`,
-        cta: {
-            label: "get avg prices",
-            handler: () => {
-                history.push(AppRoutes.AvgPrice);
-            },
-        },
-    };
+  const history = useHistory();
+  const heroProps: HeroProps = {
+    heading: "Get real time market average prices based on your preferences",
+    description: `Our tools helps you take a quick glance at what cost of living you can expect in a city of your choice. We use data from several sources as well as our own to give you real estimations`,
+    cta: {
+      label: "get avg prices",
+      handler: () => {
+        history.push(AppRoutes.AvgPrice);
+      },
+    },
+  };
 
-    const trendingProperties: TrendingCardProps[] = [
-        {
-            heading: "Nice house 45km away from city center",
-            description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
+  const trendingProperties: TrendingCardProps[] = [
+    {
+      heading: "Nice house 45km away from city center",
+      description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
     quaerat eos nihil repudiandae nulla vero in, aut officia cumque
     dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
     eius? Possimus, quos culpa officia neque voluptas exercitationem
     tempora, consequuntur consequatur et alias dolorum dolores repellat
     officiis impedit?`,
-            cta: { label: "Read More", handler: () => { } },
-        },
-        {
-            heading: "5 room house for sharing",
-            description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
+      cta: { label: "Read More", handler: () => { } },
+    },
+    {
+      heading: "5 room house for sharing",
+      description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis at
     quaerat eos nihil repudiandae nulla vero in, aut officia cumque
     dignissimos obcaecati, esse quisquam sunt. Atque earum nam quisquam
     eius? Possimus, quos culpa officia neque voluptas exercitationem
     tempora, consequuntur consequatur et alias dolorum dolores repellat
     officiis impedit?`,
-            cta: { label: "Read More", handler: () => { } },
-        },
-    ];
+      cta: { label: "Read More", handler: () => { } },
+    },
+  ];
 
-    const handleReadMore = () => {
-        history.push(AppRoutes.Properties);
-    };
+  const handleReadMore = () => {
+    history.push(AppRoutes.Properties);
+  };
 
-    return (
-        <div className="home-page app-page">
-            <Hero {...heroProps} />
-            <div className="trending">
-                {/* select top 2 */}
-                {properties.slice(0, 2).map((property: Property) => (
-                    <TrendingPropertyCard
-                        key={`trending-card-${property.id}`}
-                        heading={property.title}
-                        description={property.description}
-                        thumbnail={`${BASE_URL}/${property.images}`}
-                        cta={{ label: "See More", handler: handleReadMore }}
-                    />
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className='home-page app-page'>
+      <Hero {...heroProps} />
+      <div className='trending'>
+        {/* select top 2 */}
+        {properties.slice(0, 2).map((property: Property) => (
+          <TrendingPropertyCard
+            key={`trending-card-${property.id}`}
+            heading={property.title}
+            description={property.description}
+            thumbnail={`${BASE_URL}/${property.images}`}
+            cta={{ label: "See More", handler: handleReadMore }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state: AppState) => ({
-    properties: state.properties.properties,
+  properties: state.properties.properties,
 });
 const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;

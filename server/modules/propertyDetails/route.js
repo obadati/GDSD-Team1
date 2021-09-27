@@ -11,10 +11,13 @@ const controller = require('./controller');
 router.post('/:uid/images', controller.addPropertyImage);
 
 /*Create Properties */
-router.post('/:uid', controller.create);
+router.post('/', controller.create);
+
+/*Filter Property By Text */
+router.get('/search', controller.searchPropertyByText);
 
 /*Get Agent Properties */
-router.get('/agentProperty/', controller.agentProperty);
+router.get('/', controller.agentProperty);
 
 /*Get Agent Properties */
 router.get('/agentPropertyByStatus/:page', controller.agentPropertyByStatus);
@@ -33,8 +36,7 @@ router.get('/propertyDetail/:id', controller.getPropertyById);
 /*Filter Property By Category */
 router.get('/category/:page', controller.propertyByCategoryId);
 
-/*Filter Property By Text */
-router.get('/user/search', controller.searchPropertyByText);
+
 
 /*Find Property Average Price*/
 router.get('/user/findAvgPrice', controller.findAvgPrice);

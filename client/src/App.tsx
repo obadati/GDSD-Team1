@@ -19,48 +19,49 @@ import { UserRoles } from "./api/user";
 
 interface OwnProps extends PropsFromRedux {}
 
-const App: React.FC<OwnProps> = ({ dispatch, loading }) => {
-    const state = useStore();
-    const { role, id } = useAuth();
-    console.log(state.getState());
-    useEffect(() => {
-        loadData();
-    }, []);
+const App: React.FC<OwnProps> = ({ dispatch, loading, user }) => {
+  const state = useStore();
+  const { role, id } = user;
+  console.log(state.getState());
+  useEffect(() => {
+    loadData();
+  }, [role, id]);
 
-    const loadData = async () => {
-        dispatch(setLoadingState(true));
-        dispatch(setAppUser(getFromLocalStorage(AUTH_USER_KEY)));
-        try {
-            const { result: properties } = await (role === UserRoles.Agent
-                ? getAgentProperties(id.toString())
-                : getAllProperties());
-            const { result: companies } = await getAllCompanies();
+  const loadData = async () => {
+    dispatch(setLoadingState(true));
+    dispatch(setAppUser(getFromLocalStorage(AUTH_USER_KEY)));
+    try {
+      const { result: properties } = await (role === UserRoles.Agent
+        ? getAgentProperties(id.toString())
+        : getAllProperties());
+      const { result: companies } = await getAllCompanies();
 
-            if (properties) {
-                dispatch(setAllProperties(properties));
-            }
-            if (companies) {
-                dispatch(setAllCompanies(companies));
-            }
-            dispatch(setLoadingState(false));
-        } catch (e) {
-            dispatch(setLoadingState(false));
-        }
-    };
+      if (properties) {
+        dispatch(setAllProperties(properties));
+      }
+      if (companies) {
+        dispatch(setAllCompanies(companies));
+      }
+      dispatch(setLoadingState(false));
+    } catch (e) {
+      dispatch(setLoadingState(false));
+    }
+  };
 
-    return (
-        <div className="app-wrapper">
-            {loading && <LoaderComponent title="sit tight!"></LoaderComponent>}
-            <Router>
-                <Navigation />
-                <AppRouter />
-            </Router>
-        </div>
-    );
+  return (
+    <div className='app-wrapper'>
+      {loading && <LoaderComponent title='sit tight!'></LoaderComponent>}
+      <Router>
+        <Navigation />
+        <AppRouter />
+      </Router>
+    </div>
+  );
 };
 
 const mapStateToProps = (state: AppState) => ({
-    loading: state.loader.loading,
+  loading: state.loader.loading,
+  user: state.user,
 });
 const connector = connect(mapStateToProps);
 

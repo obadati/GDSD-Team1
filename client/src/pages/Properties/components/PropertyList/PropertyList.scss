@@ -4,4 +4,10 @@
   flex-wrap: wrap;
   height: calc(85vh - 120px);
   overflow-y: scroll;
+
+  .load-more-button {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+  }
 }
