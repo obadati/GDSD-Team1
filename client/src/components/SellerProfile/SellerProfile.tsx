@@ -37,20 +37,14 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   const { id } = useAuth();
   const history = useHistory();
   const handleSubmit = async (e: any) => {
-
     e.preventDefault();
-
     const makeConversation = {
       sndId: id,
       rcvId: sellerId,
     };
-
     try {
       const res = await httpPOST(
-        BASE_URL + "/api/message/conversation",
-        makeConversation
-
-      );
+        BASE_URL + "/api/message/conversation", makeConversation);
       history.push(AppRoutes.Messenger)
     } catch (err) {
       console.log(err);

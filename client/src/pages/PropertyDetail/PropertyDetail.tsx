@@ -69,7 +69,6 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
           {isLoading && <LoaderComponent title='sit tight!'></LoaderComponent>}
           <SellerProfile
             image={`${BASE_URL}/${agentInfo.image}`}
-            sellerId={parseInt(property.agentId)}
             stars={agentInfo.rating}
             sellerName={agentInfo.firstName + " " + agentInfo.lastName}
             sellerCompany={agentInfo.companyName}
