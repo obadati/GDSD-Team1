@@ -1,52 +1,55 @@
 .message {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  
-  .messageTop{
-      display: flex;
-  }
-  
-  .messageImg {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .messageBubble{
-    border-radius: 15px;
-    padding: 5px;
-    background-color: #1877f2;
-    max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
-  .messageText{
-      padding: 20px;
-      color: white;
-  }
-  
-  .messageBottom{
-      font-size: 12px;
-      margin-top: 2px;
-      margin-left: 45px;
-      font-style: italic;
-  }
-  
-  .message.own{
-      align-items: flex-end;
-  }
-  
-  .message.own .messageText{
 
-      color: black;
-  }
-  .message.own .messageBubble{
-    background-color: rgb(218, 218, 218);
-
+.messageTop {
+  display: flex;
 }
-.message.own .messageBottom{
-    margin-right: 5px;
 
+.messageImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.messageBubble {
+  border-radius: 15px;
+  padding: 5px;
+  // Review: Should use css variables defined in variables.scss
+  background-color: #1877f2;
+  max-width: 450px;
+}
+
+.messageText {
+  padding: 20px;
+  color: white;
+}
+
+.messageBottom {
+  font-size: 12px;
+  margin-top: 2px;
+  margin-left: 45px;
+  font-style: italic;
+}
+
+.message.own {
+  align-items: flex-end;
+}
+
+.message.own .messageText {
+  // Review: Should use css variables defined in variables.scss
+  color: black;
+}
+
+.message.own .messageBubble {
+  // Review: Should use css variables defined in variables.scss
+  background-color: rgb(218, 218, 218);
+}
+
+.message.own .messageBottom {
+  margin-right: 5px;
 }

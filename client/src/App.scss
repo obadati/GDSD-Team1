@@ -3,4 +3,12 @@
   height: 100vh;
   overflow: hidden;
   padding: 0 12rem;
+
+  @media (max-width: 1350px) {
+    padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }

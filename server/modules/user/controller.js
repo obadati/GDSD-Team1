@@ -259,7 +259,7 @@ exports.login = async (req, res) => {
 /*User Image*/
 exports.image = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params.userId;
     let image = await User.findOne({
       where: { id: id },
       attributes: ["id", "firstName","lastName","image", "rating"],

@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      contract.belongsTo(models.user,{foreignKey: 'buyerId' })
+      // contract.belongsTo(models.user,{foreignKey: 'buyerId' })
+      // contract.belongsTo(models.user,{foreignKey: 'agentId' })
+      contract.belongsTo(models.propertyDetail,{foreignKey: 'propertyId' })
 
     }
   };
@@ -22,8 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     dateCreate: DataTypes.STRING,
     dateValid: DataTypes.STRING,
     agentId: DataTypes.INTEGER,
+    seller: DataTypes.STRING,
     status: DataTypes.STRING,
     buyerId: DataTypes.INTEGER,
+    buyer: DataTypes.STRING,
     approve: DataTypes.STRING
   }, {
     sequelize,

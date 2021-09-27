@@ -15,77 +15,83 @@ import { useState } from "react";
 import reportsIcon from "../../assets/images/approval.png";
 
 interface DashboardTile extends NavigationTab {
-    icon: string;
-    role?: UserRoles;
+  icon: string;
+  role?: UserRoles | UserRoles[];
 }
 
 const tabs: DashboardTile[] = [
-    {
-        label: "Messages",
-        to: `${AppRoutes.Messenger}`,
-        icon: msgIcon,
-    },
-    {
-        label: "Approvals",
-        to: `${AppRoutes.Approvals}`,
-        icon: approvalIcon,
-        role: UserRoles.Admin,
-    },
-    {
-        label: "Contracts",
-        to: `${AppRoutes.Contracts}`,
-        icon: contractIcon,
-    },
-    {
-        label: "Queries",
-        to: `${AppRoutes.Queries}`,
-        icon: queryIcon,
-        role: UserRoles.Admin,
-    },
-    {
-        label: "Companies",
-        to: `${AppRoutes.Companies}`,
-        icon: companyIcon,
-        role: UserRoles.Admin,
-    },
-    {
-        label: "Properties",
-        to: `${AppRoutes.Properties}`,
-        icon: homeIcon,
-        role: UserRoles.Agent,
-    },
+  {
+    label: "Messages",
+    to: `${AppRoutes.Messenger}`,
+    icon: msgIcon,
+    role: [UserRoles.Agent, UserRoles.Buyer],
+  },
+  {
+    label: "Approvals",
+    to: `${AppRoutes.Approvals}`,
+    icon: approvalIcon,
+    role: UserRoles.Admin,
+  },
+  {
+    label: "Contracts",
+    to: `${AppRoutes.Contracts}`,
+    icon: contractIcon,
+    role: [UserRoles.Agent, UserRoles.Buyer],
+  },
+  {
+    label: "Queries",
+    to: `${AppRoutes.Queries}`,
+    icon: queryIcon,
+    role: UserRoles.Admin,
+  },
+  {
+    label: "Companies",
+    to: `${AppRoutes.Companies}`,
+    icon: companyIcon,
+    role: UserRoles.Admin,
+  },
+  {
+    label: "Properties",
+    to: `${AppRoutes.Properties}`,
+    icon: homeIcon,
+    role: UserRoles.Agent,
+  },
 ];
 
 const Dashboard: React.FC<any> = () => {
-    const { role } = useAuth();
-    const [dashboardTiles, setDashboardTiles] = useState<DashboardTile[]>(tabs);
+  const { role } = useAuth();
+  const [dashboardTiles, setDashboardTiles] = useState<DashboardTile[]>(tabs);
 
-    useEffect(() => {
-        if (role) {
-            setDashboardTiles([
-                ...dashboardTiles.filter(
-                    (tile) => tile.role === role || !tile.role
-                ),
-            ]);
-        }
-    }, [role]);
+  useEffect(() => {
+    if (role) {
+      setDashboardTiles([
+        ...dashboardTiles.filter((tile) => {
+          if (Array.isArray(tile.role)) {
+            return tile.role.find((x) => x === role);
+          } else {
+            return tile.role === role || !tile.role;
+          }
+        }),
+      ]);
+    }
+  }, [role]);
 
-    return (
-        <div className="app-page user-dashboard ">
-            <div className="user-dashboard__tiles">
-                {dashboardTiles.map((tab) => (
-                    <Link to={tab.to}>
-                        <div className="user-dashboard__tiles__tile">
-                            <div className="tile-content-wrapper">
-                                <img src={tab.icon} alt="" />
-                                <p>{tab.label}</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
+  return (
+    <div className='app-page user-dashboard '>
+      <div className='user-dashboard__tiles'>
+        {dashboardTiles.map((tab) => (
+          <Link to={tab.to}>
+            <div className='user-dashboard__tiles__tile'>
+              <div className='tile-content-wrapper'>
+                <img src={tab.icon} alt='' />
+                <p>{tab.label}</p>
+              </div>
             </div>
-        </div>
-    );
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;

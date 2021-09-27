@@ -214,7 +214,7 @@ const PropertyApproval: React.FC<any> = () => {
                         )}
                         <label>Featured Image</label>
                         <img
-                            className="square-image"
+                            className="square-imageProperty"
                             src={`${BASE_URL}/` + featureImage}
                             alt="Avatar"
                         />

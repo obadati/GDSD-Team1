@@ -5,17 +5,16 @@ const controller = require('./controller');
 /**********************************Register Controller & Define Routing Path*****************************/
 
 /***********************************Agent Route**********************************************************/
-/*Create Contract */
-router.post("/",controller.create);
+
 
 /*Edit Contract */
 router.patch("/:id",controller.edit);
 
+/*1. Get Contract By Agent */
+router.get("/agent/",controller.getAllContractByAgent);
+
 /*Get Contract By Id */
 router.get("/:id",controller.getById);
-
-/*Get Contract By Agent */
-router.get("/agent/all/:page",controller.getAllContractByAgent);
 
 /*Get Contract By Status */
 router.get("/agent/status/:page",controller.getAllContractByAgentStatus);
@@ -24,14 +23,19 @@ router.get("/agent/status/:page",controller.getAllContractByAgentStatus);
 router.delete("/:id",controller.delete);
 
 /*Edit Contract */
-router.patch("/",controller.endContract);
+router.patch("/:id",controller.endContract);
 
 /*************************************************Buyer Route**********************************************/
+ /*1. Create Contract Request */
+router.post("/",controller.createRequest);
+
+
+
 /*Accept Contract */
 router.patch("/buyer/contract",controller.contract);
 
-/*Get Contract By Buyer */
-router.get("/buyer/all/:page",controller.getAllContractByBuyer);
+/*2. Get Contract of Buyer */
+router.get("/buyer/:page/",controller.getAllContractByBuyer);
 
 /*Get Contract By Status */
 router.get("/buyer/status/:page",controller.getAllContractByBuyerStatus);

@@ -1,6 +1,6 @@
 import { StateAction } from "../index";
 import { PropertiesStateActions } from "./actions";
-import { PropertiesState } from "./types";
+import { PropertiesState, Property } from "./types";
 
 const initialState: PropertiesState = {
   properties: [],
@@ -13,7 +13,13 @@ const reducer = (
 ) => {
   switch (action.type) {
     case PropertiesStateActions.SetAll: {
-      return { ...state, properties: action.payload };
+      return { ...state, properties: action.payload as Property[] };
+    }
+    case PropertiesStateActions.AppendToProperties: {
+      return {
+        ...state,
+        properties: [...state.properties, ...(action.payload as Property[])],
+      };
     }
 
     case PropertiesStateActions.SetAgentProperties: {

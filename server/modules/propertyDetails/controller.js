@@ -11,6 +11,7 @@ const Op = Sequelize.Op;
 const status = "approved";
 const jwt = require("jsonwebtoken");
 const secret = require("../../utils/token").tokenEncryptionSecret;
+const citiesList = require("./citiesList").citiesList;
 
 /****************************************************Define Controller***********************************/
 
@@ -60,6 +61,9 @@ var uploadMultipleImage = multer({
 /*Create Property By Agent*/
 exports.create = async (req, res) => {
   try {
+    const token = req.headers.authorization.split(" ")[1];
+    const user = jwt.verify(token, secret);
+
     upload(req, res, async function (err) {
       if (err) {
         res.status(400).json({
@@ -69,7 +73,7 @@ exports.create = async (req, res) => {
               : err.message,
         });
       } else {
-        let uid = req.params.uid;
+        //let uid = req.params.uid;
         let data = {
           title: req.body.title,
           description: req.body.description,
@@ -81,7 +85,7 @@ exports.create = async (req, res) => {
           size: req.body.size,
           images: req.file.path,
           city: req.body.city,
-          agentId: uid,
+          agentId: user.id,
           date: date,
         };
         console.log(data);
@@ -112,7 +116,7 @@ exports.addPropertyImage = async (req, res) => {
         sendData();
         async function sendData() {
           var images = req.files;
-          const  propertyId  = req.params.uid;
+          const propertyId = req.params.uid;
           for (const filess of images) {
             let data = {
               propertyId: propertyId,
@@ -136,14 +140,13 @@ exports.agentProperty = async (req, res) => {
   try {
     let limit = 8;
     let offset = 0;
-    const { agentId } = req.query;
+    const { agentId, page } = req.query;
     let agent = await User.findOne({
       attributes: ["id", "firstName", "lastName", "rating", "image"],
       where: { id: agentId },
     });
     console.log(agent);
     Property.findAndCountAll({ where: { agentId: agentId } }).then((data) => {
-      let page = req.params.page; // page number
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
 
@@ -164,10 +167,16 @@ exports.agentProperty = async (req, res) => {
           "status",
         ],
         order: [["id", "DESC"]],
-        include: {
-          model: db.category,
-          attributes: ["id", "name"],
-        },
+        include: [
+          {
+            model: db.category,
+            attributes: ["id", "name"],
+          },
+          {
+            model: db.imageProperty,
+            attributes: ["id", "propertyId", "image"],
+          },
+        ],
         where: { agentId: agentId },
         limit: limit,
         offset: offset,
@@ -247,6 +256,49 @@ exports.updateProperty = async (req, res) => {
     const user = jwt.verify(token, secret);
 
     upload(req, res, async function (err) {
+      if (req.file == null) {
+        const {
+          title,
+          categoryId,
+          description,
+          price,
+          location,
+          room,
+          size,
+          city,
+          agentId,
+        } = req.body;
+        const id = req.params.uid;
+
+        let propertyUpdate = await Property.findOne({
+          where: { id: id },
+        });
+        if (propertyUpdate.agentId == user.id) {
+          await Property.update(
+            {
+              title: title,
+              categoryId: categoryId,
+              price: price,
+              location: location,
+              room: room,
+              size: size,
+              description: description,
+              city: city,
+              agentId: agentId,
+            },
+            { where: { id: id } }
+          );
+
+          return res.status(200).json({
+            message: "Image Update Successfully",
+          });
+        } else {
+          return res.status(400).json({
+            message: "Invalid User",
+          });
+        }
+      }
+
       if (err) {
         return res.status(400).json({
           message:
@@ -268,7 +320,7 @@ exports.updateProperty = async (req, res) => {
         } = req.body;
         const id = req.params.uid;
         let path = req.file.path;
-        console.log(id)
+        console.log(id);
         let propertyUpdate = await Property.findOne({
           where: { id: id },
         });
@@ -289,7 +341,7 @@ exports.updateProperty = async (req, res) => {
             { where: { id: id } }
           );
           console.log(propertyUpdate.images);
-          await fs.unlink(propertyUpdate.images, (err) => {
+          fs.unlink(propertyUpdate.images, (err) => {
             if (err) {
               console.log(err);
             }
@@ -325,6 +377,7 @@ exports.getAllProperty = (req, res) => {
         attributes: [
           "id",
           "title",
+          "agentId",
           "description",
           "price",
           "room",
@@ -337,10 +390,20 @@ exports.getAllProperty = (req, res) => {
           "status",
         ],
         order: [["id", "DESC"]],
-        include: {
-          model: db.category,
-          attributes: ["id", "name"],
-        },
+        include: [
+          {
+            model: db.category,
+            attributes: ["id", "name"],
+          },
+          {
+            model: db.user,
+            attributes: ["id", "firstName", "lastName", "rating"],
+          },
+          {
+            model: db.imageProperty,
+            attributes: ["image"],
+          },
+        ],
         limit: limit,
         offset: offset,
         where: { status: status },
@@ -535,260 +598,127 @@ exports.findAvgPrice = async (req, res) => {
         avgPrice: avgPrice,
       });
     } else {
-      if (city == "Berlin" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 450,
-        });
-      }
-      if (city == "Berlin" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 10500,
-        });
-      }
-      if (city == "Berlin" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 6000,
-        });
-      }
-      if (city == "Munich" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 420,
-        });
-      }
-      if (city == "Munich" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 9650,
-        });
-      }
-      if (city == "Munich" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 5600,
-        });
-      }
-      if (city == "Frankfurt" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 400,
-        });
-      }
-      if (city == "Frankfurt" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 7450,
-        });
-      }
-      if (city == "Frankfurt" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 12050,
-        });
-      }
-      if (city == "Hamburg" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 390,
-        });
-      }
-      if (city == "Hamburg" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 6450,
-        });
-      }
-      if (city == "Hamburg" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 9050,
-        });
-      }
-      if (city == "Cologne" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 370,
-        });
-      }
-      if (city == "Cologne" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 6050,
-        });
-      }
-      if (city == "Cologne" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 12000,
-        });
-      }
-      if (city == "Heidelberg" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 350,
-        });
-      }
-      if (city == "Heidelberg" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 5050,
-        });
-      }
-      if (city == "Heidelberg" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 9067,
-        });
-      }
-      if (city == "Stuttgart" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 450,
-        });
-      }
-      if (city == "Stuttgart" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 290,
-        });
-      }
-      if (city == "Stuttgart" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 8950,
-        });
-      }
-      if (city == "Dresden" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 260,
-        });
-      }
-      if (city == "Dresden" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 4898,
-        });
-      }
-      if (city == "Dresden" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 8999,
-        });
-      }
-      if (city == "Fulda" && categoryId == 1) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 250,
-        });
-      }
-      if (city == "Fulda" && categoryId == 2) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 4050,
-        });
-      }
-      if (city == "Fulda" && categoryId == 3) {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 1030,
-        });
-      } else {
-        return res.json({
-          sumofProperty: 0,
-          totalProperty: 0,
-          avgPrice: 0,
-        });
-      }
+      this.computeApproxAvgPrice(req, res,city);
     }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
+exports.computeApproxAvgPrice = (req, res,c) => {
+  const { city = c, categoryId = -1, room = 1, size = 10 } = req.query;
+  const AVG_SIZE_RENT = 18;
+  const AVG_SIZE_APARTMENT = 91;
+  const AVG_SIZE_HOUSE = (87 + 109) / 2;
+
+  if (!city || categoryId < 0 || categoryId > 3) {
+    return res
+      .status(400)
+      .json({ error: "Missing properties: city, categoryId" });
+  }
+
+  const matchingCity = citiesList[city.toLowerCase()];
+  if (!matchingCity) {
+    return res.status(200).json({
+      avgPrice: 0,
+      msg: `Sorry we don't have any records for your city ${c}`,
+      city: `${c}`,
+    });
+  }
+
+  const keyToMatch =
+    categoryId == 1
+      ? "rent"
+      : categoryId == 2
+      ? "house"
+      : categoryId == 3
+      ? "apartment"
+      : "";
+
+  const avgFactorToUse =
+    categoryId == 1
+      ? AVG_SIZE_RENT
+      : categoryId == 2
+      ? AVG_SIZE_HOUSE
+      : categoryId == 3
+      ? AVG_SIZE_APARTMENT
+      : -1;
+
+  if (!keyToMatch || avgFactorToUse < 0) {
+    return res
+      .status(400)
+      .json({ error: "Missing/incorrect properties: city, categoryId" });
+  }
+
+  const avgPrice =
+    (matchingCity[keyToMatch].lowest + matchingCity[keyToMatch].highest) / 2;
+  const pricePerSqMeter = avgPrice / avgFactorToUse;
+  const totalAvg = (pricePerSqMeter * size * room).toFixed(2);
+  return res.json({
+    category: keyToMatch,
+    city,
+    room,
+    size,
+    totalSize: size * room,
+    avgPrice: totalAvg,
+  });
+};
+
 /*Agent List of Property */
 exports.approvedAgentProperty = async (req, res) => {
-    try {
-      let limit = 8;
-      let offset = 0;
-      const { agentId } = req.query;
-      let agent = await User.findOne({
-        attributes: ["id", "firstName", "lastName", "rating", "image"],
-        where: { id: agentId },
-      });
-      console.log(agent);
-      Property.findAndCountAll({ where: { agentId: agentId,status:status } }).then((data) => {
-        let page = req.params.page; // page number
-        let pages = Math.ceil(data.count / limit);
-        offset = limit * (page - 1);
-  
-        Property.findAll({
-          attributes: [
-            "id",
-            "title",
-            "description",
-            "price",
-            "room",
-            "size",
-            "location",
-            "city",
-            "images",
-            "agentId",
-            "createdAt",
-            "categoryId",
-            "status",
-          ],
-          order: [["id", "DESC"]],
-          include: {
-            model: db.category,
-            attributes: ["id", "name"],
-          },
-          where: { agentId: agentId, status:status },
-          limit: limit,
-          offset: offset,
-        }).then((property) => {
-          return res.status(200).json({
-            user: agent,
-            result: property,
-            count: data.count,
-            pages: pages,
-          });
+  try {
+    let limit = 8;
+    let offset = 0;
+    const { agentId } = req.query;
+    let agent = await User.findOne({
+      attributes: ["id", "firstName", "lastName", "rating", "image"],
+      where: { id: agentId },
+    });
+    console.log(agent);
+    Property.findAndCountAll({
+      where: { agentId: agentId, status: status },
+    }).then((data) => {
+      let page = req.params.page; // page number
+      let pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+
+      Property.findAll({
+        attributes: [
+          "id",
+          "title",
+          "description",
+          "price",
+          "room",
+          "size",
+          "location",
+          "city",
+          "images",
+          "agentId",
+          "createdAt",
+          "categoryId",
+          "status",
+        ],
+        order: [["id", "DESC"]],
+        include: {
+          model: db.category,
+          attributes: ["id", "name"],
+        },
+        where: { agentId: agentId, status: status },
+        limit: limit,
+        offset: offset,
+      }).then((property) => {
+        return res.status(200).json({
+          user: agent,
+          result: property,
+          count: data.count,
+          pages: pages,
         });
       });
-    } catch (err) {
-      return res.status(500).json({ error: err.message });
-    }
-  };
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
 
 /******************************************************Admin Dashboard***********************************/
 

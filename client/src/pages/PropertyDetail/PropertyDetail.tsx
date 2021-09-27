@@ -2,131 +2,118 @@ import React from "react";
 import { useHistory } from "react-router";
 import { useState, useEffect } from "react";
 import CarouselComponent from "../../components/Carousel/Carousel";
-import { Property, User } from "../../store/properties/types";
+import { Property } from "../../store/properties/types";
 import "./PropertyDetail.scss";
 import SellerProfile from "../../components/SellerProfile/SellerProfile";
-import { getUserInfo } from "../../api/user";
+import { getUserInfo, UserRoles } from "../../api/user";
 import LoaderComponent from "../../components/CustomLoader/CustomLoader";
-import { useAuth } from "../../hooks/auth";
-import jwtDecode from "jwt-decode";
 import { BASE_URL } from "../../constants/constants";
+import { createContractRequest } from "../../api/contracts";
+import { AppState } from "../../store/rootReducer";
+import { connect, ConnectedProps } from "react-redux";
+import { setLoadingState } from "../../store/loader/actions";
+import { AppRoutes } from "../../containers/Router/routes";
 
-const PropertyDetail: React.FC<any> = () => {
-    const history = useHistory();
-    const property: Property = (history.location.state as any).property;
-    const [isLoading, setIsLoading] = useState(false);
-    const [userInfo, setUserInfo] = useState({
-        firstName: "",
-        lastName: "",
-        companyName: "",
-        rating: 0,
-        image: "",
-    });
-    const { token } = useAuth();
+const PropertyDetail: React.FC<PropsFromRedux> = ({
+  user: appUser,
+  dispatch,
+}) => {
+  const history = useHistory();
+  const property: Property = (history.location.state as any).property;
+  const [isLoading, setIsLoading] = useState(false);
+  const [agentInfo, setAgentInfo] = useState({
+    firstName: "",
+    lastName: "",
+    companyName: "",
+    rating: 0,
+    image: "",
+    id: -1,
+  });
 
-    const loadUserData = async () => {
-        setIsLoading(true);
-        let obj: any;
-        obj = jwtDecode(token);
-        const user = await getUserInfo(obj.id);
-        setUserInfo(user);
-        setIsLoading(false);
-        console.log(user, "user");
-    };
-    useEffect(() => {
-        loadUserData();
-    }, []);
+  const loadUserData = async () => {
+    if (property.agentId) {
+      setIsLoading(true);
+      const user = await getUserInfo(parseInt(property.agentId));
+      setAgentInfo(user);
+      setIsLoading(false);
+    }
+  };
 
-    console.log(userInfo, "userInfo");
-    return (
-        <div className="property-detail-page app-page">
-            <div className="aside">
-                <div className="seller-info">
-                    {isLoading && (
-                        <LoaderComponent title="sit tight!"></LoaderComponent>
-                    )}
-                    <SellerProfile
-                        image={`${BASE_URL}/${userInfo.image}`}
-                        stars={userInfo.rating}
-                        sellerName={
-                            userInfo.firstName + " " + userInfo.lastName
-                        }
-                        sellerCompany={userInfo.companyName}
-                        actions={[
-                            "message-agent",
-                            "create-contact",
-                            "get-average-price",
-                            "add-to-compare",
-                        ]}
-                    />
-                </div>
-                <div className="property-tags">
-                    <div className="property-tags__tag">€ {property.price}</div>
-                    <div className="property-tags__tag">
-                        {property.category.name}
-                    </div>
-                    <div className="property-tags__tag">
-                        Area: {property.size} m²
-                    </div>
-                    <div className="property-tags__tag">
-                        {property.location}
-                    </div>
-                </div>
-            </div>
 
-            <div className="center">
-                <h3 className="property-detail-page__title">
-                    {property.title}
-                </h3>
-                <div className="image-gallery-wrapper">
-                    <CarouselComponent
-                        rounded
-                        images={[
-                            property.images,
-                            "assests/uploads/propertyImage/image-1624801866564.jpg",
-                            "assests/uploads/propertyImage/image-1624803117211.jpg",
-                            "assests/uploads/propertyImage/image-1624803387547.jpg",
-                        ]}
-                    />
-                </div>
-                <div className="description">
-                    <h3>{property.category.name}</h3>
-                    <p>
-                        {property.description} Lorem, ipsum dolor sit amet
-                        consectetur adipisicing elit. Pariatur aut voluptatem,
-                        illo accusantium consectetur blanditiis, eius beatae non
-                        dolore quo similique facilis molestias quas. Dicta, cum.
-                        Pariatur quas natus temporibus. Recusandae amet
-                        voluptatem sapiente sequi expedita impedit vitae
-                        adipisci culpa quo dolore maiores dignissimos deserunt,
-                        ex asperiores. Unde autem, tempora ab itaque voluptatum
-                        neque doloribus impedit molestias dolorum animi iste!
-                        Accusantium, maxime ipsam nihil eveniet suscipit ullam
-                        assumenda nisi distinctio aut deserunt et nam inventore
-                        nulla voluptatum obcaecati commodi vitae quaerat
-                        voluptas. Impedit aliquam iusto quam ratione harum culpa
-                        porro. Dignissimos exercitationem maiores ad fugiat
-                        ipsum harum minima modi porro? Delectus, ea illo.
-                        Architecto nesciunt assumenda hic dolores maiores
-                        excepturi? Autem omnis explicabo beatae, architecto
-                        eligendi quisquam minima a commodi? Molestias sed
-                        commodi nemo, enim vel totam inventore placeat iste
-                        deserunt, magnam architecto iure minus quisquam nisi
-                        facere voluptatem consectetur vero dolor laboriosam
-                        tempora debitis natus repudiandae nobis animi. Quas?
-                        Distinctio molestiae labore sit perspiciatis vitae animi
-                        vel amet debitis, natus error porro numquam voluptatibus
-                        minus quod ipsa vero provident sapiente harum hic iste
-                        quia libero, at nulla magnam. Quod. Quo, reprehenderit
-                        corporis! Aspernatur, autem omnis? Magni velit minima ea
-                        ullam, fuga impedit eligendi doloremque corrupti nulla
-                        quasi quas laborum, molestiae dicta? Minima a quod
-                        pariatur. Sit, nobis! Voluptatibus,
-                    </p>
-                </div>
-            </div>
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
+  const handleRequestContract = async () => {
+    try {
+      dispatch(setLoadingState(true));
+      await createContractRequest(
+        property.id,
+        agentInfo.id.toString(),
+        appUser.id
+      );
+      dispatch(setLoadingState(false));
+    } catch (e) {
+      dispatch(setLoadingState(false));
+    }
+  };
+
+  const handleViewContractRequests = () => {
+    history.push(AppRoutes.Contracts);
+  };
+
+  return (
+    <div className='property-detail-page app-page'>
+      <div className='aside'>
+        <div className='seller-info'>
+          {isLoading && <LoaderComponent title='sit tight!'></LoaderComponent>}
+          <SellerProfile
+            image={`${BASE_URL}/${agentInfo.image}`}
+            stars={agentInfo.rating}
+            sellerName={agentInfo.firstName + " " + agentInfo.lastName}
+            sellerCompany={agentInfo.companyName}
+            sellerId={agentInfo.id}
+            onRequestContract={handleRequestContract}
+            onViewContractRequests={
+              appUser.role === UserRoles.Agent
+                ? handleViewContractRequests
+                : undefined
+            }
+          />
         </div>
-    );
+        <div className='property-tags'>
+          <div className='property-tags__tag'>€ {property.price}</div>
+          <div className='property-tags__tag'>{property.category.name}</div>
+          <div className='property-tags__tag'>Area: {property.size} m²</div>
+          <div className='property-tags__tag'>{property.location}</div>
+        </div>
+      </div>
+
+      <div className='center'>
+        <h3 className='property-detail-page__title'>{property.title}</h3>
+        <div className='image-gallery-wrapper'>
+          <CarouselComponent
+            rounded
+            images={
+              property.imageProperties.length
+                ? property.imageProperties.map((prop) => prop.image)
+                : [property.images]
+            }
+          />
+        </div>
+        <div className='description'>
+          <h3>{property.category.name}</h3>
+          <p>{property.description}</p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default PropertyDetail;
+const mapStateToProps = (state: AppState) => ({
+  user: state.user,
+});
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(PropertyDetail);

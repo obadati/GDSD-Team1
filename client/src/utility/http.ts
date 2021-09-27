@@ -6,14 +6,14 @@ import axios, { AxiosResponse } from "axios";
  * @returns {Promise<AxiosResponse>} promise based response
  */
 export const httpGET = (url: string): Promise<any> => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const data = await axios.get(url);
-            resolve(data);
-        } catch (e) {
-            reject(e);
-        }
-    });
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await axios.get(url);
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
 };
 
 /**
@@ -23,54 +23,69 @@ export const httpGET = (url: string): Promise<any> => {
  * @returns {Promise<AxiosResponse>} promise based response
  */
 export const httpPOST = (
-    url: string,
-    body: object,
-    headers?: object
+  url: string,
+  body: object,
+  headers?: object
 ): Promise<AxiosResponse> => {
-    let params = new URLSearchParams();
-    if (Object.keys(body).length) {
-        Object.keys(body).forEach((key) =>
-            params.append(key, (body as any)[key])
-        );
-    }
+  let params = new URLSearchParams();
+  if (Object.keys(body).length) {
+    Object.keys(body).forEach((key) => params.append(key, (body as any)[key]));
+  }
 
-    return new Promise(async (resolve, reject) => {
-        try {
-            const data = await axios.post(url, body, {
-                headers: headers || {
-                    "Content-Type": "application/json",
-                },
-            });
-            resolve(data);
-        } catch (e) {
-            reject(e);
-        }
-    });
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await axios.post(url, body, {
+        headers: headers || {
+          "Content-Type": "application/json",
+        },
+      });
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
 };
-export const httpPUT = (
-    url: string,
-    body: object,
-    headers?: object
-): Promise<AxiosResponse> => {
-    let params = new URLSearchParams();
-    if (Object.keys(body).length) {
-        Object.keys(body).forEach((key) =>
-            params.append(key, (body as any)[key])
-        );
-    }
 
-    return new Promise(async (resolve, reject) => {
-        try {
-            const data = await axios.put(url, body, {
-                headers: headers || {
-                    "Content-Type": "application/json",
-                },
-            });
-            resolve(data);
-        } catch (e) {
-            reject(e);
-        }
-    });
+export const httpPUT = (
+  url: string,
+  body: object,
+  headers?: object
+): Promise<AxiosResponse> => {
+  let params = new URLSearchParams();
+  if (Object.keys(body).length) {
+    Object.keys(body).forEach((key) => params.append(key, (body as any)[key]));
+  }
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await axios.put(url, body, {
+        headers: headers || {
+          "Content-Type": "application/json",
+        },
+      });
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+export const httpPatch = (
+  url: string,
+  body?: any,
+  headers?: object
+): Promise<AxiosResponse> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await axios.patch(url, body, {
+        headers: headers || {
+          "Content-Type": "application/json",
+        },
+      });
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
 };
 
 // Response Interceptor
