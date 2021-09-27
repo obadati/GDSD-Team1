@@ -7,6 +7,9 @@
     height: 150px;
     width: auto;
   }
+  .center {
+    flex: 1;
+  }
 }
 
 .container {
@@ -27,10 +30,6 @@
 
     .aside {
       width: 100%;
-    }
-
-    .center {
-      flex: 1;
     }
   }
 }
