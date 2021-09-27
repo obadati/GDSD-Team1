@@ -94,25 +94,22 @@ const Navigation: React.FC<PropsFromRedux> = ({
       <div
         key={`navigation-tab-${index}`}
         onClick={() => handleUserAction(tab.label)}
-        className={`app-navigation__tab app-navigation__tab${
-          activeTab.label === tab.label ? "--selected" : ""
-        } ${
-          tab.label === username
+        className={`app-navigation__tab app-navigation__tab${activeTab.label === tab.label ? "--selected" : ""
+          } ${tab.label === username
             ? `app-navigation__tab--username`
             : tab.label.toLowerCase() === "log out"
-            ? `app-navigation__tab--logout`
-            : ""
-        }`}>
+              ? `app-navigation__tab--logout`
+              : ""
+          }`}>
         {tab.label}
       </div>
     ));
 
   const renderIntro = (): JSX.Element => (
     <div className='app-intro'>
-      <h3>Global Distributed Software Development</h3>
+      <h3>Fulda University Software Engineering</h3>
       <h3>Summer 2021</h3>
-      <h3>Team 1</h3>
-      <h3>Milestone 3</h3>
+      <h3>For Demonstration Only</h3>
     </div>
   );
 
