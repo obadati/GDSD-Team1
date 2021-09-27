@@ -16,12 +16,13 @@ exports.edit = async (req, res) => {
     if (contract == null) {
       return res.status(404).json({ message: "No Contract Found" });
     } else {
-      let {
-        dateCreate,
-        dateValid,
-        status,
-       
-      } = req.body;
+      let {dateValid,status} = req.body;
+      if(status == "rejected"){
+        await Contract.destroy({
+          where: { id: id },
+        });
+        return res.status(200).json({ message: "Contrat Rejected Successfully" });
+      }
       await Contract.update(
         {
           status: status,
