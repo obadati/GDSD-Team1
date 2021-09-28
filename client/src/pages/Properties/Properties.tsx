@@ -102,9 +102,12 @@ const PropertiesPage: React.FC<OwnProps> = ({
           <SearchBoxComponent
             list={properties}
             searchFor={["location", "title", "category.name"]}
-            onSearchComplete={(list: Property[]) =>
-              setFilteredProps(list.length > 0 ? list : properties)
-            }
+            onSearchComplete={(list: Property[]) => {
+              {
+                setFilteredProps(list.length > 0 ? list : properties);
+                setResetFilters(true);
+              }
+            }}
           />
           {role === UserRoles.Agent && (
             <div
