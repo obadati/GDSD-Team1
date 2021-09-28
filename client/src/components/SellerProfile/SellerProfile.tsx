@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./SellerProfile.scss";
 import ReactStars from "react-stars";
-import Avatar from "../../assets/images/avatar.png";
 import { AppState } from "../../store/rootReducer";
 import { httpPOST } from "../../utility/http";
 import { connect, ConnectedProps } from "react-redux";

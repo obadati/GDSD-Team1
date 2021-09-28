@@ -8,7 +8,7 @@ export enum ContactEndpoints {
   DeleteQueries = "/api/contactUs/",
 }
 
-export const craeteContact = (user: any) => {
+export const createContact = (user: any) => {
   return axios.post(`${BASE_URL}${ContactEndpoints.CreateContact}`, user);
 };
 
