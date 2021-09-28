@@ -56,11 +56,10 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
                 setUser({ ...user, role: role });
               }}
               key={`user-roles-${role}`}
-              className={`user-roles-wrapper__role action-item ${
-                user.role.toLowerCase() === role.toLowerCase()
-                  ? "user-roles-wrapper__role__selected"
-                  : ""
-              }`}>
+              className={`user-roles-wrapper__role action-item ${user.role.toLowerCase() === role.toLowerCase()
+                ? "user-roles-wrapper__role__selected"
+                : ""
+                }`}>
               {role}
             </div>
           ))}
@@ -162,6 +161,16 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
               </div>
             )}
           </form>
+          <span >
+            <span data-i18n="_RegisterInfo_"><span > By registering you agree to the SignUp.com </span></span>
+            <span>
+              <a href="https://signup.com/popup/terms" data-i18n="_TermsOfService_" ><span > Terms</span></a> and
+            </span>
+            <span>
+              <a href="https://signup.com/popup/privacy" data-i18n="_Privacy_" ><span > Privacy</span></a>
+            </span>
+          </span>
+          <p>&nbsp;</p>
           <button
             className='btn btn-primary sign-up-cta'
             onClick={handleSignUp}>

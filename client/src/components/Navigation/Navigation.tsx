@@ -95,10 +95,9 @@ const Navigation: React.FC<PropsFromRedux> = ({
 
   const renderIntro = (): JSX.Element => (
     <div className='app-intro'>
-      <h3>Global Distributed Software Development</h3>
+      <h3>Fulda University Software Engineering</h3>
       <h3>Summer 2021</h3>
-      <h3>Team 1</h3>
-      <h3>Milestone 3</h3>
+      <h3>For Demonstration Only</h3>
     </div>
   );
 
