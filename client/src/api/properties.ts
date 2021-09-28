@@ -116,8 +116,15 @@ export const addPropertyImages = (
   property: Property,
   token: string
 ) => {
-  images.forEach((img) => {
-    const prop = { ...property, images: img };
-    updateProperty(prop, token);
+  return new Promise((resolve: any, reject: any) => {
+    images.forEach(async (img, index) => {
+      const prop = { ...property, images: img };
+      if (index === images.length - 1) {
+        await updateProperty(prop, token);
+        resolve();
+      } else {
+        updateProperty(prop, token);
+      }
+    });
   });
 };
