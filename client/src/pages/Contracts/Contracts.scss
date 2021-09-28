@@ -1,14 +1,18 @@
 .contracts-page {
-    .page-title {
-        font-size: 1.5rem;
-        margin-bottom: 1rem !important;
-        font-weight: bold;
-        text-transform: uppercase;
+  .page-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem !important;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .contracts-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .contracts-group {
+      margin-bottom: 1rem !important;
+      display: flex;
+      flex-wrap: wrap;
     }
-    .contracts-wrapper {
-        display: grid;
-        grid-template-columns: repeat(4, 300px);
-        grid-template-rows: 300px;
-        grid-gap: 1rem;
-    }
+  }
 }
