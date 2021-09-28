@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { BASE_URL } from "../constants/constants";
 import { httpGET, httpPatch, httpPOST } from "../utility/http";
 
@@ -29,8 +30,10 @@ export interface Contract {
   buyer: string;
 }
 
-// Review: Promise should have more specific return type
-export const getBuyerContracts = (uid: string, page = 1): Promise<any> => {
+export const getBuyerContracts = (
+  uid: string,
+  page = 1
+): Promise<Contract[]> => {
   return httpGET(
     `${BASE_URL}${ContractsEndpoints.GetAllBuyerContracts.replace(
       ":page",
@@ -48,12 +51,11 @@ export const getAgentContracts = (uid: string, page = 1): Promise<any> => {
   );
 };
 
-// Review: Add return type to function signature
 export const updateContract = (
   uid: number,
   status: ContractStatus,
   dateValid: string
-) => {
+): Promise<AxiosResponse<any>> => {
   return httpPatch(
     `${BASE_URL}${ContractsEndpoints.UpdateContractStatus.replace(
       ":uid",

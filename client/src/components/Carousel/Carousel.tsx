@@ -4,8 +4,7 @@ import { BASE_URL } from "../../constants/constants";
 import "./Carousel.scss";
 
 interface CarouselProps {
-  // Review: images should have proper types
-  images?: any[];
+  images?: string[];
   rounded?: boolean;
 }
 const CarouselComponent: React.FC<CarouselProps> = ({

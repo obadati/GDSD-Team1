@@ -2,17 +2,16 @@ import axios from "axios";
 import { BASE_URL } from "../constants/constants";
 import { httpGET } from "../utility/http";
 export enum ContactEndpoints {
-  // Review: Fix Spellings
   CreateContact = "/api/contactUs/",
   Queries = "/api/contactUs/",
   DeleteQueries = "/api/contactUs/",
 }
 
-export const craeteContact = (user: any) => {
+export const createContact = (user: any) => {
   return axios.post(`${BASE_URL}${ContactEndpoints.CreateContact}`, user);
 };
 
-export const UserQueries = (page = 1) => {
+export const userQueries = (page = 1) => {
   return httpGET(`${BASE_URL}${ContactEndpoints.Queries}/${page}`);
 };
 

@@ -19,7 +19,8 @@ const MessengerPage: React.FC<any> = () => {
   const scrollRef = useRef<null | HTMLDivElement>(null);
   const { id } = useAuth();
 
-  useEffect(() => { // connect to socket
+  useEffect(() => {
+    // connect to socket
     socket.current = io(
       "wss://" + BASE_URL.split("//")[1].split(":")[0] + ":8900"
     );
@@ -33,17 +34,20 @@ const MessengerPage: React.FC<any> = () => {
     });
   }, []);
 
-  useEffect(() => {   // when recive a real-time massage
+  useEffect(() => {
+    // when recive a real-time massage
     if (receviedMessage && currentChat?.rcvId == receviedMessage.sndId) {
       setMessages((prev) => [...prev, receviedMessage] as any);
     }
   }, [receviedMessage]);
 
-  useEffect(() => { //report the new user as online to the socket server
+  useEffect(() => {
+    //report the new user as online to the socket server
     socket.current.emit("addUser", id);
   }, []);
 
-  useEffect(() => { //retrive the image for the user
+  useEffect(() => {
+    //retrive the image for the user
     const getImage = async () => {
       try {
         const res = await axios.get(BASE_URL + "/api/user/" + id);
@@ -55,7 +59,8 @@ const MessengerPage: React.FC<any> = () => {
     getImage();
   }, []);
 
-  useEffect(() => { //get the user conversations
+  useEffect(() => {
+    //get the user conversations
     const getConversations = async () => {
       try {
         const res = await axios.get(
@@ -69,16 +74,17 @@ const MessengerPage: React.FC<any> = () => {
     getConversations();
   }, []);
 
-  useEffect(() => { // get the user messages
+  useEffect(() => {
+    // get the user messages
     const getMessages = async () => {
       try {
         const res = await axios.get(
-          // Review: Url should be an enum
+          // Review @ Obada: Url should be an enum
           BASE_URL +
-          "/api/message/getMessages/" +
-          id +
-          "?withUser=" +
-          currentChat.rcvId
+            "/api/message/getMessages/" +
+            id +
+            "?withUser=" +
+            currentChat.rcvId
         );
 
         setMessages(res as any);
@@ -93,8 +99,8 @@ const MessengerPage: React.FC<any> = () => {
     getMessages();
   }, [currentChat]);
 
-
-  const handleSubmit = async (e: any) => {  // sending a message
+  const handleSubmit = async (e: any) => {
+    // sending a message
     e.preventDefault();
     const messageSend = {
       sndId: id,
@@ -116,7 +122,8 @@ const MessengerPage: React.FC<any> = () => {
     }
   };
 
-  useEffect(() => {  // for auto scrolling when send a massage or load massages
+  useEffect(() => {
+    // for auto scrolling when send a massage or load massages
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 

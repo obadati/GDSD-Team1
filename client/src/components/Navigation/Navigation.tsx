@@ -6,7 +6,12 @@ import { AppRoutes } from "../../containers/Router/routes";
 import axios from "axios";
 import { NavigationTab, UserActions } from "../../store/navigation/types";
 import { AppState } from "../../store/rootReducer";
-import { BASE_URL, NavigationTabData,API_MSG_URL,LOG_OUT } from "../../constants/constants";
+import {
+  BASE_URL,
+  NavigationTabData,
+  API_MSG_URL,
+  LOG_OUT,
+} from "../../constants/constants";
 import msgIcon from "../../assets/images/messenger.png";
 
 import "./Navigation.scss";
@@ -19,17 +24,14 @@ const Navigation: React.FC<PropsFromRedux> = ({
   user,
 }) => {
   const { id, token, username } = user;
-  // Review: use proper typings
-  const [newMessages, setNewMessages] = useState([] as any);
+  const [newMessages, setNewMessages] = useState<any[]>([]);
 
   const tabs: NavigationTab[] = NavigationTabData;
   const [userActions, setUserActions] = useState<UserActions[]>([]);
   useEffect(() => {
     const getNewMassages = async () => {
       try {
-        const res = await axios.get(
-          BASE_URL + API_MSG_URL + id
-        );
+        const res = await axios.get(BASE_URL + API_MSG_URL + id);
         setNewMessages(res as any);
       } catch (err) {
         console.log(err);
@@ -67,7 +69,6 @@ const Navigation: React.FC<PropsFromRedux> = ({
   };
 
   const handleUserAction = (label: string) => {
-
     if (label === LOG_OUT) {
       localStorage.clear();
       dispatch(setAppUser(dummyUser));
@@ -82,13 +83,15 @@ const Navigation: React.FC<PropsFromRedux> = ({
       <div
         key={`navigation-tab-${index}`}
         onClick={() => handleUserAction(tab.label)}
-        className={`app-navigation__tab app-navigation__tab${activeTab.label === tab.label ? "--selected" : ""
-          } ${tab.label === username
+        className={`app-navigation__tab app-navigation__tab${
+          activeTab.label === tab.label ? "--selected" : ""
+        } ${
+          tab.label === username
             ? `app-navigation__tab--username`
             : tab.label.toLowerCase() === "log out"
-              ? `app-navigation__tab--logout`
-              : ""
-          }`}>
+            ? `app-navigation__tab--logout`
+            : ""
+        }`}>
         {tab.label}
       </div>
     ));
@@ -111,19 +114,15 @@ const Navigation: React.FC<PropsFromRedux> = ({
         <div className='user-actions'>
           {username ? (
             <>
-              {/**
-               * Review: fix spellings
-               * Review: class name should be more descriptive
-               */}
               <div
-                className='topbarIconItem'
+                className='chat-bubble-icon'
                 onClick={() => history.push(AppRoutes.Messenger)}>
                 <img
                   style={{ height: "20px", width: "20px" }}
                   src={msgIcon}
                   alt=''
                 />
-                <span className='topbarIconBadge'>
+                <span className='chat-icon-badge-count'>
                   {newMessages.map((m: any) => m.unread)}
                 </span>
               </div>

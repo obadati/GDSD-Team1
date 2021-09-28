@@ -3,7 +3,7 @@ import { format } from "timeago.js";
 import { BASE_URL } from "../../constants/constants";
 
 /**
- * Review: Component name should be more descriptive.
+ * Review @Obada : Component name should be more descriptive.
  * Review: Use proper types for components.
  * Review: Folder name to be capitalized
  * Review: Missing import React

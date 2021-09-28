@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { craeteContact } from "../../../api/contact";
+import { createContact } from "../../../api/contact";
 const ContactUs: React.FC<any> = () => {
   let history = useHistory();
   var val = Math.floor(1000 + Math.random() * 9000);
@@ -19,7 +19,7 @@ const ContactUs: React.FC<any> = () => {
   };
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    await craeteContact(user);
+    await createContact(user);
     history.push("/");
   };
   return (
