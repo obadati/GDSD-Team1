@@ -38,15 +38,6 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
     }
   }, [list]);
 
-  const handleCustomSearch = async (event: any) => {
-    event.preventDefault();
-    if (inputRef.current) {
-      const query = (inputRef.current as HTMLInputElement).value;
-      const { result } = await searchForProperties(query);
-      onSearchComplete(result);
-    }
-  };
-
   return (
     <div className='search-box-component'>
       <input
@@ -58,7 +49,6 @@ const SearchBoxComponent: React.FC<OwnProps> = ({
           placeholderText || "Type to start searching (40 characters max)"
         }
       />
-      <button onClick={handleCustomSearch}>Go!</button>
     </div>
   );
 };

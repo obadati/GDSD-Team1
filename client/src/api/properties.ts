@@ -28,7 +28,7 @@ export interface CreatePropertyParams {
 }
 
 export const getAllProperties = (page: number = 1) => {
-  return httpGET(`${BASE_URL}${PropertiesEndpoints.GetAll}${page}`);
+  return httpGET(`${BASE_URL}${PropertiesEndpoints.GetAll}${-1}`);
 };
 
 export const getAgentProperties = (agentId: string, page: number = 1) => {

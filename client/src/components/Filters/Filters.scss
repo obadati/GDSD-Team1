@@ -18,6 +18,25 @@
     &--selected {
       background: lightgray;
     }
+
+    &.price-filter {
+      display: flex;
+      flex-direction: column;
+
+      .price-filter__ranges {
+        display: flex;
+        justify-content: space-between;
+
+        align-items: center;
+        input {
+          outline: none;
+          padding: 0.5rem;
+          max-width: 30%;
+          max-width: 80px;
+          border: 2px solid var(--app-color-border);
+        }
+      }
+    }
   }
 }
 
@@ -25,6 +44,7 @@
   .app-filters {
     display: flex;
     margin: 1rem 0;
+    align-items: center;
     border-bottom: 2px solid var(--app-color-border);
     flex-wrap: wrap;
 
@@ -32,6 +52,11 @@
       font-size: 0.75rem;
       padding: 0.5rem 1rem;
       border-bottom: none;
+
+      &.price-filter {
+        flex-direction: row;
+        align-items: center;
+      }
     }
   }
 }
