@@ -4,7 +4,6 @@ import { BASE_URL } from "../../constants/constants";
 import "./Carousel.scss";
 
 interface CarouselProps {
-  // Review: images should have proper types
   images?: string[];
   rounded?: boolean;
 }

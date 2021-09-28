@@ -119,7 +119,7 @@ const Navigation: React.FC<PropsFromRedux> = ({
                * Review: class name should be more descriptive
                */}
               <div
-                className='topbarIconItem'
+                className='chat-bubble-icon'
                 onClick={() => history.push(AppRoutes.Messenger)}>
                 <img
                   style={{ height: "20px", width: "20px" }}
