@@ -25,11 +25,6 @@ const PropertyList: React.FC<OwnProps> = ({
               />
             ))
           : "No Records"}
-        {hasMoreProperties && (
-          <button className='load-more-button app-button' onClick={onLoadMore}>
-            Load more
-          </button>
-        )}
       </div>
     </>
   );

@@ -55,7 +55,9 @@ const PropertiesPage: React.FC<OwnProps> = ({
 
   const handleFilterSelection = async (selected: number) => {
     if (selected > -1 && selected !== null) {
-      const { result } = await searchByCategory(selected + 1);
+      const result = properties.filter((property) =>
+        Boolean(property.category.id == (selected + 1).toString())
+      );
       if (result) {
         setFilteredProps(result);
       }
@@ -72,12 +74,27 @@ const PropertiesPage: React.FC<OwnProps> = ({
     setPageNumber(pageNumber + 1);
   };
 
+  const handleFilterByPrice = (range: { min?: number; max?: number }) => {
+    const filteredByPrice = properties.filter((property) => {
+      if (range.min && range.max) {
+        return property.price >= range.min && property.price <= range.max;
+      } else if (range.min) {
+        return property.price >= range.min;
+      } else if (range.max) {
+        return property.price >= range.max;
+      }
+    });
+    setFilteredProps(filteredByPrice);
+  };
+
   return (
     <div className='properties-page app-page'>
       <div className='aside'>
         <Filters
+          priceFilter
           reset={resetFilters}
           onFilterSelected={handleFilterSelection}
+          onFilterByPrice={handleFilterByPrice}
         />
       </div>
       <div className='center'>
