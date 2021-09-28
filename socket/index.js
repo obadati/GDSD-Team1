@@ -1,17 +1,24 @@
-const io = require("socket.io")(8900, {
-    cors: {
-        origin: "http://localhost:3000",
-    },
+const fs = require('fs');
+const httpsServer = require("https").createServer({
+    key: fs.readFileSync("/etc/letsencrypt/live/homeforme-aws.de/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/homeforme-aws.de/fullchain.pem")
 });
 
-//define online user array that store open sessions as object {userID,SocketID} 
-let users = [];
+const options = {
+    cors: {
+        origin: "https://www.homeforme-aws.de",
+    },
+};
 
-//Add user that open a socket to the user array
+const io = require("socket.io")(httpsServer, options);
+console.log("server is up ");
+//define online user array
+let users = [];
+//add user to array
 const addUser = (userId, socketId) => { users.push({ userId, socketId }); };
 //remove user that closed a socket from array
 const removeUser = (socketId) => { users = users.filter((user) => user.socketId !== socketId); }
-//find if the user who shoul receiver the massage have an open socket to return it
+//get users that are online and revivers of the massage
 const getUser = (userId) => { return users.filter(user => user.userId === userId); }
 
 // when the user connect the application will add the user to array and send bordcast to all users to notifiy it's online
@@ -43,3 +50,4 @@ io.on("connection", (socket) => {
     });
 });
 
+httpsServer.listen(8900);
