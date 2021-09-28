@@ -6,6 +6,8 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  max-height: 300px;
+  box-sizing: border-box;
 
   &--pending {
     opacity: 0.5;
@@ -47,17 +49,23 @@
     word-break: break-word;
     font-size: 0.75rem;
     font-weight: bold;
+    padding-left: 1rem !important;
+    margin-top: 0.5rem !important;
+  }
+
+  .contract-details {
+    padding: 0.5rem 1rem !important;
   }
 
   p {
-    padding: 0.5rem 0.5rem 0 !important;
+    padding: 0 !important;
     max-width: 100%;
     word-break: break-word;
     font-size: 0.75rem;
   }
 
   .created-at {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
   }
 
   .valid-till {

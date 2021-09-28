@@ -153,13 +153,14 @@ const ContractCard: React.FC<OwnProps> = ({
         </div>
         <p className='title'>{contract.title}</p>
         {contract.status === "approved" && (
-          <>
+          <div className='contract-details'>
+            <p className='created-at'>Buyer: {contract.buyer}</p>
             <p className='created-at'>Created at: {contract.dateCreate}</p>
             <p className='valid-till'>Valid till: {contract.dateValid}</p>
-          </>
+          </div>
         )}
         {contract.status !== "approved" && (
-          <>
+          <div className='contract-details'>
             <p className='created-at'>
               {appUser.role === UserRoles.Agent
                 ? `Requested from ${contract.buyer}`
@@ -167,7 +168,7 @@ const ContractCard: React.FC<OwnProps> = ({
                 ? `Approval request sent to agent: ${contract.seller}`
                 : ""}
             </p>
-          </>
+          </div>
         )}
       </div>
       {appUser.role === UserRoles.Agent && detailModal()}
