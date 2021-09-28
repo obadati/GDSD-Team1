@@ -19,7 +19,7 @@ const CarouselComponent: React.FC<CarouselProps> = ({
       }`}>
       <Carousel
         animation='slide'
-        interval={3000}
+        interval={2000}
         cycleNavigation
         autoPlay
         indicators={false}>

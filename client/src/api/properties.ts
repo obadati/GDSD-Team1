@@ -11,6 +11,7 @@ export enum PropertiesEndpoints {
   UpdateProperty = "/api/properties/:uid",
   GetAllByAdminStatus = "/api/properties/getAllPropertyByAdminStatus",
   CreateProperty = "/api/properties/",
+  PropertyImages = "/api/properties/:uid/images",
 }
 
 export interface CreatePropertyParams {
@@ -109,4 +110,14 @@ export const createProperty = (params: CreatePropertyParams) => {
       Authorization: `Bearer ${token}`,
     }
   );
+};
+export const addPropertyImages = (
+  images: any[],
+  property: Property,
+  token: string
+) => {
+  images.forEach((img) => {
+    const prop = { ...property, images: img };
+    updateProperty(prop, token);
+  });
 };

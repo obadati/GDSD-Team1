@@ -13,12 +13,15 @@ import { AppState } from "../../store/rootReducer";
 import { connect, ConnectedProps } from "react-redux";
 import { setLoadingState } from "../../store/loader/actions";
 import { AppRoutes } from "../../containers/Router/routes";
+import { addPropertyImages } from "../../api/properties";
+import { useAuth } from "../../hooks/auth";
 
 const PropertyDetail: React.FC<PropsFromRedux> = ({
   user: appUser,
   dispatch,
 }) => {
   const history = useHistory();
+  const { token } = useAuth();
   const property: Property = (history.location.state as any).property;
   const [isLoading, setIsLoading] = useState(false);
   const [agentInfo, setAgentInfo] = useState({
@@ -60,6 +63,10 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
     history.push(AppRoutes.Contracts);
   };
 
+  const uploadSelectedImages = (images: any[]) => {
+    addPropertyImages(images, property, token);
+  };
+
   return (
     <div className='property-detail-page app-page'>
       <div className='aside'>
@@ -77,6 +84,8 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
                 ? handleViewContractRequests
                 : undefined
             }
+            onImagesSelected={uploadSelectedImages}
+            propertyId={property.id}
           />
         </div>
         <div className='property-tags'>

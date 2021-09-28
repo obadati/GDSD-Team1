@@ -3,13 +3,13 @@ import { BASE_URL } from "../constants/constants";
 import { httpGET } from "../utility/http";
 export enum ContactEndpoints {
   // Review: Fix Spellings
-  CraeteContact = "/api/contactUs/",
+  CreateContact = "/api/contactUs/",
   Queries = "/api/contactUs/",
   DeleteQueries = "/api/contactUs/",
 }
 
 export const craeteContact = (user: any) => {
-  return axios.post(`${BASE_URL}${ContactEndpoints.CraeteContact}`, user);
+  return axios.post(`${BASE_URL}${ContactEndpoints.CreateContact}`, user);
 };
 
 export const UserQueries = (page = 1) => {
