@@ -3,12 +3,10 @@ import { connect, ConnectedProps } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import AppLogo from "../../assets/images/logo.png";
 import { AppRoutes } from "../../containers/Router/routes";
-// Review: Remove unused import
-import { useAuth } from "../../hooks/auth";
 import axios from "axios";
 import { NavigationTab, UserActions } from "../../store/navigation/types";
 import { AppState } from "../../store/rootReducer";
-import { BASE_URL } from "../../constants/constants";
+import { BASE_URL, NavigationTabData,API_MSG_URL,LOG_OUT } from "../../constants/constants";
 import msgIcon from "../../assets/images/messenger.png";
 
 import "./Navigation.scss";
@@ -24,23 +22,13 @@ const Navigation: React.FC<PropsFromRedux> = ({
   // Review: use proper typings
   const [newMessages, setNewMessages] = useState([] as any);
 
-  // Review: extract these to a constants.ts or types.ts file
-  const tabs: NavigationTab[] = [
-    { label: "home", to: AppRoutes.Landing },
-    { label: "properties", to: AppRoutes.Properties },
-    { label: "average price", to: AppRoutes.AvgPrice },
-    { label: "Dashboard", to: AppRoutes.Dashboard },
-    { label: "companies", to: AppRoutes.Companies },
-    { label: "about us", to: AppRoutes.AboutUs },
-  ];
-
+  const tabs: NavigationTab[] = NavigationTabData;
   const [userActions, setUserActions] = useState<UserActions[]>([]);
   useEffect(() => {
     const getNewMassages = async () => {
       try {
         const res = await axios.get(
-          // Review: URL should be an enum
-          BASE_URL + "/api/message/getNewMessages/" + id
+          BASE_URL + API_MSG_URL + id
         );
         setNewMessages(res as any);
       } catch (err) {
@@ -79,8 +67,8 @@ const Navigation: React.FC<PropsFromRedux> = ({
   };
 
   const handleUserAction = (label: string) => {
-    // Review: Direct string comparisons are discouraged, this should be abstracted as an enum if possible
-    if (label === "Log Out") {
+
+    if (label === LOG_OUT) {
       localStorage.clear();
       dispatch(setAppUser(dummyUser));
       history.push(AppRoutes.Landing);
