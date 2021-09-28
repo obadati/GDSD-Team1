@@ -23,13 +23,6 @@ body {
     @include resetMargins;
     @include resetPaddings;
 
-    * {
-      ::-webkit-scrollbar {
-        width: 0px;
-        background: transparent;
-      }
-    }
-
     .app-page {
       height: 100%;
       width: 100%;

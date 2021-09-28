@@ -96,3 +96,26 @@
     }
   }
 }
+
+@media (max-width: 740px) {
+  .property-detail-page {
+    flex-direction: column;
+
+    .aside {
+      max-width: 100%;
+      width: 100%;
+      order: 2;
+    }
+
+    .center {
+      max-width: 100%;
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 0.5rem;
+
+      .image-gallery-wrapper {
+        height: unset;
+      }
+    }
+  }
+}
