@@ -366,55 +366,103 @@ exports.updateProperty = async (req, res) => {
 /*Get All Property Approved By Admin*/
 exports.getAllProperty = (req, res) => {
   try {
+   
     let limit = 8;
     let offset = 0;
-    Property.findAndCountAll({ where: { status: status } }).then((data) => {
-      let page = req.params.page; // page number
-      let pages = Math.ceil(data.count / limit);
-      offset = limit * (page - 1);
 
-      Property.findAll({
-        attributes: [
-          "id",
-          "title",
-          "agentId",
-          "description",
-          "price",
-          "room",
-          "size",
-          "location",
-          "city",
-          "images",
-          "createdAt",
-          "categoryId",
-          "status",
-        ],
-        order: [["id", "DESC"]],
-        include: [
-          {
-            model: db.category,
-            attributes: ["id", "name"],
-          },
-          {
-            model: db.user,
-            attributes: ["id", "firstName", "lastName", "rating"],
-          },
-          {
-            model: db.imageProperty,
-            attributes: ["image"],
-          },
-        ],
-        limit: limit,
-        offset: offset,
-        where: { status: status },
-      }).then((property) => {
-        return res.status(200).json({
-          result: property,
-          count: data.count,
-          pages: pages,
+    let page = req.params.page; // page number
+
+    if (page < 0) {
+      Property.findAndCountAll({ where: { status: status } }).then((data) => {
+        Property.findAll({
+          attributes: [
+            "id",
+            "title",
+            "agentId",
+            "description",
+            "price",
+            "room",
+            "size",
+            "location",
+            "city",
+            "images",
+            "createdAt",
+            "categoryId",
+            "status",
+          ],
+          order: [["id", "DESC"]],
+          include: [
+            {
+              model: db.category,
+              attributes: ["id", "name"],
+            },
+            {
+              model: db.user,
+              attributes: ["id", "firstName", "lastName", "rating"],
+            },
+            {
+              model: db.imageProperty,
+              attributes: ["image"],
+            },
+          ],
+
+          where: { status: status },
+        }).then((property) => {
+          return res.status(200).json({
+            result: property,
+            count: data.count,
+            pages: 1,
+          });
         });
       });
-    });
+    } else {
+      Property.findAndCountAll({ where: { status: status } }).then((data) => {
+        let pages = Math.ceil(data.count / limit);
+        offset = limit * (page - 1);
+
+        Property.findAll({
+          attributes: [
+            "id",
+            "title",
+            "agentId",
+            "description",
+            "price",
+            "room",
+            "size",
+            "location",
+            "city",
+            "images",
+            "createdAt",
+            "categoryId",
+            "status",
+          ],
+          order: [["id", "DESC"]],
+          include: [
+            {
+              model: db.category,
+              attributes: ["id", "name"],
+            },
+            {
+              model: db.user,
+              attributes: ["id", "firstName", "lastName", "rating"],
+            },
+            {
+              model: db.imageProperty,
+              attributes: ["image"],
+            },
+          ],
+          limit: limit,
+          offset: offset,
+          where: { status: status },
+        }).then((property) => {
+          return res.status(200).json({
+            result: property,
+            count: data.count,
+            pages: pages,
+          });
+        });
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -598,14 +646,14 @@ exports.findAvgPrice = async (req, res) => {
         avgPrice: avgPrice,
       });
     } else {
-      this.computeApproxAvgPrice(req, res,city);
+      this.computeApproxAvgPrice(req, res, city);
     }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-exports.computeApproxAvgPrice = (req, res,c) => {
+exports.computeApproxAvgPrice = (req, res, c) => {
   const { city = c, categoryId = -1, room = 1, size = 10 } = req.query;
   const AVG_SIZE_RENT = 18;
   const AVG_SIZE_APARTMENT = 91;

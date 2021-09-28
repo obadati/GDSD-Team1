@@ -30,10 +30,6 @@ router.patch("/:id",controller.endContract);
 router.post("/",controller.createRequest);
 
 
-
-/*Accept Contract */
-router.patch("/buyer/contract",controller.contract);
-
 /*2. Get Contract of Buyer */
 router.get("/buyer/:page/",controller.getAllContractByBuyer);
 

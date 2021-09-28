@@ -30,8 +30,7 @@
   }
   .action {
     background: var(--app-color-primary);
-    // Review: Use css variables
-    color: #ffffff;
+    color: var(--app-color-background);
     font-weight: bold;
     border: none;
     width: 80%;
