@@ -1,14 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import Message from "../../components/message/Message";
-
-// Review: Remove unused imports
-import { dummyDeveloper, getRandomBg } from "../../utility/static";
-import ChatOnline from "../../components/chatOnline/ChatOnline";
 import Conversation from "../../components/conversations/Conversation";
-
 import "./Messenger.scss";
-import axios, { AxiosResponse } from "axios";
-import { httpGET, httpPOST } from "../../utility/http";
+import axios from "axios";
+import { httpPOST } from "../../utility/http";
 import { useAuth } from "../../hooks/auth";
 import { io } from "socket.io-client";
 import { BASE_URL } from "../../constants/constants";
@@ -16,9 +11,6 @@ import { BASE_URL } from "../../constants/constants";
 const MessengerPage: React.FC<any> = () => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null as any);
-  // Review: Remove Dead code
-  //const [socket, setsocket] = useState(null as any);
-
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [userImage, setUserImage] = useState([]);
@@ -27,12 +19,11 @@ const MessengerPage: React.FC<any> = () => {
   const scrollRef = useRef<null | HTMLDivElement>(null);
   const { id } = useAuth();
 
-  useEffect(() => {
+  useEffect(() => { // connect to socket
     socket.current = io(
-      "ws://" + BASE_URL.split("//")[1].split(":")[0] + ":8900"
+      "wss://" + BASE_URL.split("//")[1].split(":")[0] + ":8900"
     );
     socket.current.on("getMessage", (data) => {
-      // Review: Fix spellings
       setReceviedMessage({
         sndId: data.sndId,
         rcvId: data.rcvId,
@@ -42,22 +33,20 @@ const MessengerPage: React.FC<any> = () => {
     });
   }, []);
 
-  useEffect(() => {
-    // Review: Fix spellings
+  useEffect(() => {   // when recive a real-time massage
     if (receviedMessage && currentChat?.rcvId == receviedMessage.sndId) {
       setMessages((prev) => [...prev, receviedMessage] as any);
     }
   }, [receviedMessage]);
 
-  useEffect(() => {
+  useEffect(() => { //report the new user as online to the socket server
     socket.current.emit("addUser", id);
-    //  socket.current.on("getUsers", users => { console.log(users) });
   }, []);
-  useEffect(() => {
+
+  useEffect(() => { //retrive the image for the user
     const getImage = async () => {
       try {
-        // Review: Url should be an enum
-        const res = await axios.get(BASE_URL + "/api/user/userImage/" + id);
+        const res = await axios.get(BASE_URL + "/api/user/" + id);
         setUserImage(res as any);
       } catch (err) {
         console.log(err);
@@ -65,12 +54,11 @@ const MessengerPage: React.FC<any> = () => {
     };
     getImage();
   }, []);
-  useEffect(() => {
-    // Review: Extract these functions into a service and import into component. The React component should only have presentational logic
+
+  useEffect(() => { //get the user conversations
     const getConversations = async () => {
       try {
         const res = await axios.get(
-          // Review: Url should be an enum
           BASE_URL + "/api/message/Conversation/" + id
         );
         setConversations(res as any);
@@ -80,16 +68,17 @@ const MessengerPage: React.FC<any> = () => {
     };
     getConversations();
   }, []);
-  useEffect(() => {
+
+  useEffect(() => { // get the user messages
     const getMessages = async () => {
       try {
         const res = await axios.get(
           // Review: Url should be an enum
           BASE_URL +
-            "/api/message/getMessages/" +
-            id +
-            "?withUser=" +
-            currentChat.rcvId
+          "/api/message/getMessages/" +
+          id +
+          "?withUser=" +
+          currentChat.rcvId
         );
 
         setMessages(res as any);
@@ -104,22 +93,8 @@ const MessengerPage: React.FC<any> = () => {
     getMessages();
   }, [currentChat]);
 
-  useEffect(() => {
-    const getConversations = async () => {
-      try {
-        const res = await axios.get(
-          BASE_URL + "/api/message/Conversation/" + id
-        );
-        // console.log(res);
-        setConversations(res as any);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getConversations();
-  }, []);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: any) => {  // sending a message
     e.preventDefault();
     const messageSend = {
       sndId: id,
@@ -141,12 +116,10 @@ const MessengerPage: React.FC<any> = () => {
     }
   };
 
-  useEffect(() => {
-    // Review: should have a nullish check, also any variable accessed inside a useEffect should also be added to the dependency list
+  useEffect(() => {  // for auto scrolling when send a massage or load massages
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // We use Kebab-case for our css classes and camelCase for jsx variables. Almost all classes below violate this convention
   return (
     <div className='messenger'>
       <div className='chatMenu'>
@@ -157,9 +130,6 @@ const MessengerPage: React.FC<any> = () => {
           />
         </div>
         <div className='chatMenuWrapper'>
-          {/**
-           * Review: variable should be descriptive 'c' doesn't convey clear intent
-           */}
           {conversations.map((c) => (
             <div onClick={() => setCurrentChat(c)}>
               <Conversation conversation={c} />
@@ -172,15 +142,12 @@ const MessengerPage: React.FC<any> = () => {
           {currentChat ? (
             <>
               <div className='chatBoxTop'>
-                {/**
-                 * Review: variable should be descriptive 'm' doesn't convey clear intent
-                 */}
-                {messages.map((m: any) => (
+                {messages.map((massage: any) => (
                   <div ref={scrollRef}>
                     <Message
-                      message={m}
-                      own={m.rcvId !== id}
-                      image={m.rcvId !== id ? userImage : currentChat}
+                      message={massage}
+                      own={massage.rcvId !== id}
+                      image={massage.rcvId !== id ? userImage : currentChat}
                     />
                   </div>
                 ))}

@@ -3,17 +3,20 @@ import "./SellerProfile.scss";
 import ReactStars from "react-stars";
 import Avatar from "../../assets/images/avatar.png";
 import { AppState } from "../../store/rootReducer";
+import { httpPOST } from "../../utility/http";
 import { connect, ConnectedProps } from "react-redux";
 import { UserRoles } from "../../api/user";
 import { useHistory } from "react-router";
 import { AppRoutes } from "../../containers/Router/routes";
+import { BASE_URL } from "../../constants/constants";
+import { useAuth } from "../../hooks/auth";
 
 interface SellerProfileProps extends PropsFromRedux {
   image: string;
+  sellerId: number;
   stars: number;
   sellerName: string;
   sellerCompany: string;
-  sellerId: number;
   propertyId: string;
   onRequestContract: () => void;
   onViewContractRequests?: () => void;
@@ -22,6 +25,7 @@ interface SellerProfileProps extends PropsFromRedux {
 
 const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   image,
+  sellerId,
   stars,
   sellerName,
   sellerCompany,
@@ -31,6 +35,23 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   onImagesSelected,
   propertyId,
 }) => {
+  const { id } = useAuth();
+  const handleMessageAgent = async (e: any) => {
+    e.preventDefault();
+    const makeConversation = {
+      sndId: id,
+      rcvId: sellerId,
+    };
+    try {
+      const res = await httpPOST(
+        BASE_URL + "/api/message/conversation",
+        makeConversation
+      );
+      history.push(AppRoutes.Messenger);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const [images, setImages] = useState<any[]>([]);
   const history = useHistory();
   const handleImageSelection = (e: any) => {
@@ -118,9 +139,7 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
       <div>
         {appUser.role === UserRoles.Buyer && (
           <>
-            <button
-              className='action'
-              onClick={() => history.push(AppRoutes.Messenger)}>
+            <button className='action' onClick={handleMessageAgent}>
               Message Agent
             </button>
 

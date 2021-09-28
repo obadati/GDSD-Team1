@@ -41,6 +41,8 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
       setIsLoading(false);
     }
   };
+
+
   useEffect(() => {
     loadUserData();
   }, []);
