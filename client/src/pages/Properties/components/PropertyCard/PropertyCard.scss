@@ -13,6 +13,30 @@
   border-radius: 8px;
   overflow: hidden;
 
+  .property-card__actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #ffffffad;
+    position: absolute;
+    padding: 1rem 2rem;
+    top: 0%;
+    right: 0;
+    border-bottom-left-radius: 8px;
+
+    .card-action {
+      height: 20px;
+      width: 20px;
+      width: 50px;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
   &:hover {
     width: 100%;
   }
@@ -80,26 +104,10 @@
   font-size: 0.4rem;
   transform: translateY(10px);
 }
+
 .tags-and-actions {
   display: flex;
   align-items: center;
-
-  .property-card__actions {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-
-    .card-action {
-      height: 20px;
-      width: 20px;
-
-      img {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-      }
-    }
-  }
 }
 
 @media (max-width: 1205px) {

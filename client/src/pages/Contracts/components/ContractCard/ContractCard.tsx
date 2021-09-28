@@ -116,13 +116,13 @@ const ContractCard: React.FC<OwnProps> = ({
                       type='text'
                       value={expirationDate}
                       onChange={(e) => setExpirationDate(e.target.value)}
-                      placeholder='expiry date'></input>
+                      placeholder='expiry date (MM/DD/YYYY)'></input>
                   </div>
                 </div>
               </div>
               <div className='modal-footer'>
                 <button
-                  className='app-button'
+                  className={`app-button ${!expirationDate ? "disabled" : ""}`}
                   data-dismiss='modal'
                   disabled={!expirationDate}
                   onClick={handleUpdateContract}>
@@ -154,7 +154,12 @@ const ContractCard: React.FC<OwnProps> = ({
         <p className='title'>{contract.title}</p>
         {contract.status === "approved" && (
           <div className='contract-details'>
-            <p className='created-at'>Buyer: {contract.buyer}</p>
+            {appUser.role === UserRoles.Buyer && (
+              <p className='created-at'>Agent: {contract.seller}</p>
+            )}
+            {appUser.role === UserRoles.Agent && (
+              <p className='created-at'>Buyer: {contract.buyer}</p>
+            )}
             <p className='created-at'>Created at: {contract.dateCreate}</p>
             <p className='valid-till'>Valid till: {contract.dateValid}</p>
           </div>

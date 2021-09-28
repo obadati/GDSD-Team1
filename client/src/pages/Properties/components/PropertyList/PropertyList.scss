@@ -11,3 +11,9 @@
     margin: auto;
   }
 }
+
+@media (max-width: 768px) {
+  .properties-list {
+    margin: 1rem 0 !important;
+  }
+}

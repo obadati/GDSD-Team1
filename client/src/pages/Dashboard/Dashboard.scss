@@ -3,27 +3,25 @@
   padding: 5rem 10rem 0;
 
   &__tiles {
-    display: grid;
     width: 100%;
-    grid-template-columns: repeat(3, 250px);
-    grid-template-rows: 250px;
-    grid-gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
     a {
-      max-height: 250px;
       text-decoration: none;
     }
 
     &__tile {
       color: var(--app-color-text);
-      height: 100%;
+      height: 250px;
+      width: 250px;
       display: flex;
       font-weight: bold;
       border: 2px solid var(--app-color-border);
       border-radius: 10px;
       padding: 1rem;
       box-shadow: 0 2px 12px 1px #1174da4a;
-      max-height: 250px;
       background-color: var(--app-color-background);
+      margin-left: 1rem !important;
 
       .tile-content-wrapper {
         display: flex;
@@ -58,25 +56,5 @@
   .user-dashboard {
     padding: 1rem !important;
     display: flex;
-
-    &__tiles {
-      grid-template-columns: repeat(5, 120px) !important;
-      grid-template-rows: 120px;
-
-      &__tile {
-        max-height: 120px;
-      }
-
-      .tile-content-wrapper {
-        p {
-          font-size: 0.65rem;
-        }
-
-        img {
-          margin: unset;
-          height: 30px;
-        }
-      }
-    }
   }
 }
