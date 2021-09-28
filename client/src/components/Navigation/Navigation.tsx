@@ -114,10 +114,6 @@ const Navigation: React.FC<PropsFromRedux> = ({
         <div className='user-actions'>
           {username ? (
             <>
-              {/**
-               * Review: fix spellings
-               * Review: class name should be more descriptive
-               */}
               <div
                 className='chat-bubble-icon'
                 onClick={() => history.push(AppRoutes.Messenger)}>
@@ -126,7 +122,7 @@ const Navigation: React.FC<PropsFromRedux> = ({
                   src={msgIcon}
                   alt=''
                 />
-                <span className='topbarIconBadge'>
+                <span className='chat-icon-badge-count'>
                   {newMessages.map((m: any) => m.unread)}
                 </span>
               </div>
