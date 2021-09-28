@@ -12,6 +12,7 @@ import { AppRoutes } from "../../containers/Router/routes";
 
 const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
   const history = useHistory();
+  const [error, setError] = useState<string>("");
   const [user, setUser] = useState<{
     email: string;
     firstName: string;
@@ -28,6 +29,7 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
   });
 
   const handleSignUp = async () => {
+    setError("");
     try {
       dispatch(setLoadingState(true));
       await signUpUser(
@@ -40,7 +42,10 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
       );
       history.push(AppRoutes.Login);
       dispatch(setLoadingState(false));
-    } catch (e) {
+    } catch (e: any) {
+      setError(
+        "Hmm! thats doesn't look quite right, try again with different email address"
+      );
       dispatch(setLoadingState(false));
     }
   };
@@ -56,10 +61,11 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
                 setUser({ ...user, role: role });
               }}
               key={`user-roles-${role}`}
-              className={`user-roles-wrapper__role action-item ${user.role.toLowerCase() === role.toLowerCase()
-                ? "user-roles-wrapper__role__selected"
-                : ""
-                }`}>
+              className={`user-roles-wrapper__role action-item ${
+                user.role.toLowerCase() === role.toLowerCase()
+                  ? "user-roles-wrapper__role__selected"
+                  : ""
+              }`}>
               {role}
             </div>
           ))}
@@ -73,6 +79,10 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
         <img src={logo} alt='' />
         <p className='tag-line'>Join us now!</p>
         {renderUserRoles()}
+        {error.trim() && (
+          <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>
+        )}
+
         <div className='sign-up-page__form'>
           <form className='form-group'>
             <input
@@ -161,13 +171,22 @@ const SignUpPage: React.FC<PropsFromRedux> = ({ dispatch, companies }) => {
               </div>
             )}
           </form>
-          <span >
-            <span data-i18n="_RegisterInfo_"><span > By registering you agree to the SignUp.com </span></span>
-            <span>
-              <a href="https://signup.com/popup/terms" data-i18n="_TermsOfService_" ><span > Terms</span></a> and
+          <span>
+            <span data-i18n='_RegisterInfo_'>
+              <span> By registering you agree to the SignUp.com </span>
             </span>
             <span>
-              <a href="https://signup.com/popup/privacy" data-i18n="_Privacy_" ><span > Privacy</span></a>
+              <a
+                href='https://signup.com/popup/terms'
+                data-i18n='_TermsOfService_'>
+                <span> Terms</span>
+              </a>{" "}
+              and
+            </span>
+            <span>
+              <a href='https://signup.com/popup/privacy' data-i18n='_Privacy_'>
+                <span> Privacy</span>
+              </a>
             </span>
           </span>
           <p>&nbsp;</p>
