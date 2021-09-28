@@ -7,7 +7,7 @@ import LoaderComponent from "../../../components/CustomLoader/CustomLoader";
 import { BASE_URL } from "../../../constants/constants";
 
 const AgentApproval: React.FC<any> = () => {
-  // Review: Correctly add types to useState
+  // Review @ Taha: Correctly add types to useState
   const [agent, setAgent] = useState([]);
   // Review: variable name should be descriptive
   const [disp, setDisp] = useState(false);
