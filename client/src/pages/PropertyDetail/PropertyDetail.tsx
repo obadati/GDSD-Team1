@@ -64,7 +64,6 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
   };
 
   const uploadSelectedImages = (images: any[]) => {
-    debugger;
     addPropertyImages(images, property, token);
   };
 
