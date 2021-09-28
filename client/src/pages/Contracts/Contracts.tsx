@@ -52,7 +52,7 @@ const ContractsPage: React.FC<PropsFromRedux> = ({ properties }) => {
       <div className='contracts-wrapper'>
         {approvedContracts.length ? (
           <>
-            <h5>Approved</h5>
+            <h5>Approved Contracts</h5>
             <div className='contracts-group'>
               {approvedContracts.map((contract) => (
                 <ContractCard
@@ -67,7 +67,7 @@ const ContractsPage: React.FC<PropsFromRedux> = ({ properties }) => {
         )}
         {pendingContracts.length ? (
           <>
-            <h5>Pending</h5>
+            <h5>Pending Contracts</h5>
             <div className='contracts-group'>
               {pendingContracts.map((contract) => (
                 <ContractCard

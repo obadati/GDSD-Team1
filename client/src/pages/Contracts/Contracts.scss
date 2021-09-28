@@ -8,6 +8,9 @@
   .contracts-wrapper {
     display: flex;
     flex-direction: column;
+    h5 {
+      margin-bottom: 0.5rem !important;
+    }
 
     .contracts-group {
       margin-bottom: 1rem !important;
