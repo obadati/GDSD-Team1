@@ -61,12 +61,6 @@ const PropertyCard: React.FC<OwnProps> = ({ property, userRole }) => {
           <div className='card-action' onClick={handleEditProperty}>
             <img src={editIcon}></img>
           </div>
-          <div
-            style={{ marginLeft: "10px" }}
-            className='card-action'
-            onClick={handleCreateContract}>
-            <img src={contract}></img>
-          </div>
         </div>
       )}
     </div>
