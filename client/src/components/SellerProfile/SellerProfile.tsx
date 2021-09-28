@@ -40,7 +40,6 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   };
 
   const handleUpload = () => {
-    debugger;
     onImagesSelected([...images]);
   };
   console.log({ images });
