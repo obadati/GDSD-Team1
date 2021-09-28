@@ -11,18 +11,17 @@ import { AppRoutes } from "../../containers/Router/routes";
 import { BASE_URL } from "../../constants/constants";
 import { useAuth } from "../../hooks/auth";
 
-
 interface SellerProfileProps extends PropsFromRedux {
   image: string;
   sellerId: number;
   stars: number;
   sellerName: string;
   sellerCompany: string;
+  propertyId: string;
   onRequestContract: () => void;
   onViewContractRequests?: () => void;
+  onImagesSelected: (a: any[]) => void;
 }
-
-
 
 const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   image,
@@ -33,10 +32,11 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
   user: appUser,
   onRequestContract,
   onViewContractRequests,
+  onImagesSelected,
+  propertyId,
 }) => {
   const { id } = useAuth();
-  const history = useHistory();
-  const handleSubmit = async (e: any) => {
+  const handleMessageAgent = async (e: any) => {
     e.preventDefault();
     const makeConversation = {
       sndId: id,
@@ -44,12 +44,78 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
     };
     try {
       const res = await httpPOST(
-        BASE_URL + "/api/message/conversation", makeConversation);
-      history.push(AppRoutes.Messenger)
+        BASE_URL + "/api/message/conversation",
+        makeConversation
+      );
+      history.push(AppRoutes.Messenger);
     } catch (err) {
       console.log(err);
     }
   };
+  const [images, setImages] = useState<any[]>([]);
+  const history = useHistory();
+  const handleImageSelection = (e: any) => {
+    if (e.target.files.length > 0) {
+      setImages(e.target.files);
+    }
+  };
+
+  const handleUpload = () => {
+    onImagesSelected([...images]);
+  };
+  console.log({ images });
+  const renderModal = () => {
+    return (
+      <>
+        <div
+          className='modal fade'
+          id={`contract-detail-${propertyId}`}
+          role='dialog'
+          tabIndex={-1}
+          data-backdrop='static'
+          data-keyboard='false'
+          aria-labelledby={`contract-detail-label-${propertyId}`}
+          aria-hidden='true'>
+          <div className='modal-dialog modal-dialog-centered ' role='document'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <h3>Add Images</h3>
+                <button
+                  type='button'
+                  className='close'
+                  data-dismiss='modal'
+                  aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div className='modal-body'>
+                <input
+                  onChange={handleImageSelection}
+                  placeholder='images'
+                  multiple
+                  id='images'
+                  type='file'
+                  name='myImage'
+                  accept='image/png, image/gif, image/jpeg'
+                  max={20000}
+                />
+              </div>
+              <div className='modal-footer'>
+                <button
+                  onClick={handleUpload}
+                  className={`app-button ${!images.length ? "disabled" : ""}`}
+                  data-dismiss='modal'
+                  disabled={!images.length}>
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className='seller-info-card'>
       <div className='avatar'>
@@ -73,9 +139,7 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
       <div>
         {appUser.role === UserRoles.Buyer && (
           <>
-            <button
-              className='action'
-              onClick={handleSubmit}>
+            <button className='action' onClick={handleMessageAgent}>
               Message Agent
             </button>
 
@@ -89,6 +153,13 @@ const SellerProfileComponent: React.FC<SellerProfileProps> = ({
             <button className='action' onClick={onViewContractRequests}>
               View Requests
             </button>
+            <button
+              data-toggle='modal'
+              data-target={`#contract-detail-${propertyId}`}
+              className='action add-more-images'>
+              Add images
+            </button>
+            {renderModal()}
           </>
         )}
       </div>

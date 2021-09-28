@@ -4,7 +4,6 @@ import { httpGET } from "../utility/http";
 export enum AvgPricePropertiesEndpoints {
   GetAvgPrice = "/api/properties/user/findAvgPrice",
 }
-// Review: use descriptive variable names like city, categoryId ..
 export const AvgPrice = (
   query1: string,
   query2: number,
