@@ -54,9 +54,13 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
         agentInfo.id.toString(),
         appUser.id
       );
-      dispatch(setLoadingState(false));
+      setTimeout(() => {
+        dispatch(setLoadingState(false));
+      }, 500);
     } catch (e) {
-      dispatch(setLoadingState(false));
+      setTimeout(() => {
+        dispatch(setLoadingState(false));
+      }, 500);
     }
   };
 
