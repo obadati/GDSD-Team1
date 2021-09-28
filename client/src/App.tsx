@@ -14,7 +14,6 @@ import { getFromLocalStorage } from "./utility/localStorage";
 import { AUTH_USER_KEY } from "./constants/constants";
 import { getAllCompanies } from "./api/companies";
 import { setAllCompanies } from "./store/companies/actions";
-import { useAuth } from "./hooks/auth";
 import { UserRoles } from "./api/user";
 
 interface OwnProps extends PropsFromRedux {}

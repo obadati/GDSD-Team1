@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { useHistory } from "react-router";
 import { GuestRoute, PrivateRoute } from "../../components/Route/Route";
 import {
   HomePage,
@@ -31,6 +32,16 @@ import ContractsPage from "../../pages/Contracts/Contracts";
 import CreateContract from "../../pages/CreateContract/CreateContract";
 import CreateProperty from "../../pages/CreateProperty/CreateProperty";
 const AppRouter: React.FC<any> = () => {
+  const history = useHistory();
+  useEffect(() => redirectToHomeOnReload(), []);
+
+  const redirectToHomeOnReload = () => {
+    const currentRoute = window.location.href.split(window.location.origin)[1];
+    if (currentRoute !== AppRoutes.Landing) {
+      history.push(AppRoutes.Landing);
+    }
+  };
+
   return (
     <Switch>
       <GuestRoute path={AppRoutes.Login} component={Login}></GuestRoute>
