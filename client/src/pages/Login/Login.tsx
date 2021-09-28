@@ -10,6 +10,7 @@ import { loginUser, UserRoles } from "../../api/user";
 import { setAppUser } from "../../store/user/actions";
 
 const LoginPage: React.FC<PropsFromRedux> = ({ dispatch }) => {
+  const [error, setError] = useState<string>("");
   const [user, setUser] = useState<{
     username: string;
     password: string;
@@ -23,14 +24,21 @@ const LoginPage: React.FC<PropsFromRedux> = ({ dispatch }) => {
 
   const loginHandler = async (event: any) => {
     event.preventDefault();
-    const authenticatedUser = await loginUser(
-      user.username,
-      user.password,
-      user.role
-    );
-    dispatch(setAppUser(authenticatedUser as any));
-    localStorage.setItem("auth-user", JSON.stringify(authenticatedUser));
-    history.push(AppRoutes.Landing);
+    if (error) {
+      setError("");
+    }
+    try {
+      const authenticatedUser = await loginUser(
+        user.username,
+        user.password,
+        user.role
+      );
+      dispatch(setAppUser(authenticatedUser as any));
+      localStorage.setItem("auth-user", JSON.stringify(authenticatedUser));
+      history.push(AppRoutes.Landing);
+    } catch (e) {
+      setError("Incorrect username/password/role");
+    }
   };
 
   const renderUserRoles = () => {
@@ -60,6 +68,7 @@ const LoginPage: React.FC<PropsFromRedux> = ({ dispatch }) => {
         <img src={logo} alt='' />
         <p className='tag-line'>Home for me!</p>
         {renderUserRoles()}
+        {error.trim() && <p style={{ color: "red" }}>{error}</p>}
         <div className='login-page__form'>
           <form className='form-group'>
             <label htmlFor='username'></label>
