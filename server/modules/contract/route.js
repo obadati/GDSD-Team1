@@ -16,25 +16,16 @@ router.get("/agent/",controller.getAllContractByAgent);
 /*Get Contract By Id */
 router.get("/:id",controller.getById);
 
-/*Get Contract By Status */
-router.get("/agent/status/:page",controller.getAllContractByAgentStatus);
 
 /*Delete Contract */
 router.delete("/:id",controller.delete);
 
-/*Edit Contract */
-router.patch("/:id",controller.endContract);
-
 /*************************************************Buyer Route**********************************************/
- /*1. Create Contract Request */
+ /*Create Contract Request */
 router.post("/",controller.createRequest);
 
-
-/*2. Get Contract of Buyer */
+/*Get Contract of Buyer */
 router.get("/buyer/:page/",controller.getAllContractByBuyer);
-
-/*Get Contract By Status */
-router.get("/buyer/status/:page",controller.getAllContractByBuyerStatus);
 
 /*Export  Router*/
 module.exports = router;

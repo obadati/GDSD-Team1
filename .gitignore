@@ -2,8 +2,7 @@
 
 /server/node_modules/
 /server/assests/uploads/
-/server/config/
-/server/migrations/
+
 .vscode/
 # Client
 # dependencies
