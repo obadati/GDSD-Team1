@@ -70,7 +70,6 @@ exports.create = async (req, res) => {
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
-    console.log(date);
     if (companyId == 0) {
       let userData = {
         firstName,
@@ -131,8 +130,6 @@ exports.create = async (req, res) => {
        if (role === Agent) {
       return res.status(200).json({message:"Waiting For Admin Approval"});  
       }
-      
-     
     }
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -149,7 +146,7 @@ exports.login = async (req, res) => {
           .status(400)
           .json({ message: "Not all fields have been entered." });
       }
-      console.log(username);
+
       const admin = await Admin.findOne({ username: username });
 
       if (admin.username != username) {
@@ -302,7 +299,6 @@ exports.updateImage = async (req, res) => {
           await User.update({ image: path }, { where: { id: id } });
           return res.status(200).json({ message: "Image Upload Successfully" });
         } else {
-          console.log("312");
           let userImage = await User.findOne({ where: { id: id } });
           await User.update({ image: path }, { where: { id: id } });
           await fs.unlink(userImage.image, (err) => {
