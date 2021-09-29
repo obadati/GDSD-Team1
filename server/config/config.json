@@ -1,0 +1,32 @@
+{
+  "test1": {
+    "username": "umair",
+    "password": "Umair1234",
+    "database": "dev_real_state",
+    "host": "18.185.96.197",
+    "dialect": "mysql" ,
+    "port":"3306"
+  },
+  "development": {
+    "username": "Team1",
+    "password": "GDSD@1234",
+    "database": "dev_real_state",
+    "host": "52.57.71.189",
+    "dialect": "mysql",
+    "port":"3306"
+  },
+  "development1": { 
+    "username": "root",
+    "password": "",
+    "database": "test_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "",
+    "database": "dev_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

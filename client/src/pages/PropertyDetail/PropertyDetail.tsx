@@ -13,15 +13,20 @@ import { AppState } from "../../store/rootReducer";
 import { connect, ConnectedProps } from "react-redux";
 import { setLoadingState } from "../../store/loader/actions";
 import { AppRoutes } from "../../containers/Router/routes";
-import { addPropertyImages } from "../../api/properties";
+import {
+  addPropertyImages,
+  getAgentProperties,
+  getAllProperties,
+} from "../../api/properties";
 import { useAuth } from "../../hooks/auth";
+import { setAllProperties } from "../../store/properties/actions";
 
 const PropertyDetail: React.FC<PropsFromRedux> = ({
   user: appUser,
   dispatch,
 }) => {
   const history = useHistory();
-  const { token } = useAuth();
+  const { token, role, id } = useAuth();
   const property: Property = (history.location.state as any).property;
   const [isLoading, setIsLoading] = useState(false);
   const [agentInfo, setAgentInfo] = useState({
@@ -39,6 +44,16 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
       const user = await getUserInfo(parseInt(property.agentId));
       setAgentInfo(user);
       setIsLoading(false);
+    }
+  };
+
+  const loadProperties = async () => {
+    const { result: properties } = await (role === UserRoles.Agent
+      ? getAgentProperties(id.toString())
+      : getAllProperties());
+
+    if (properties) {
+      dispatch(setAllProperties(properties));
     }
   };
 
@@ -68,8 +83,16 @@ const PropertyDetail: React.FC<PropsFromRedux> = ({
     history.push(AppRoutes.Contracts);
   };
 
-  const uploadSelectedImages = (images: any[]) => {
-    addPropertyImages(images, property, token);
+  const uploadSelectedImages = async (images: any[]) => {
+    try {
+      dispatch(setLoadingState(true));
+      await addPropertyImages(images, property, token);
+      dispatch(setLoadingState(false));
+      loadProperties();
+      history.push(AppRoutes.Properties);
+    } catch (e) {
+      dispatch(setLoadingState(false));
+    }
   };
 
   return (
