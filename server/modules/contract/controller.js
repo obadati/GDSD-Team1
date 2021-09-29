@@ -8,7 +8,7 @@ const User = db.user;
 
 /**********************************************************Agent Dashboard ******************************/
 
-/*4. Edit Contract*/
+/*Edit Contract*/
 exports.edit = async (req, res) => {
   try {
     let id = req.params.id;
@@ -175,77 +175,10 @@ exports.getAllContractByAgent = async (req, res) => {
   }
 };
 
-/*List Of All Contrct By Status */
-exports.getAllContractByAgentStatus = async (req, res) => {
-  try {
-    let limit = 8;
-    let offset = 0;
-    let { agentId, status } = req.query;
-    let page = req.params.page;
-    Contract.findAndCountAll({
-      where: { agentId: agentId, status: status },
-    }).then((data) => {
-      let pages = Math.ceil(data.count / limit);
-      offset = limit * (page - 1);
 
-      Contract.findAll({
-        attributes: [
-          "id",
-          "propertyId",
-          "title",
-          "description",
-          "dateCreate",
-          "dateValid",
-          "agentId",
-          "seller",
-          "buyerId",
-          "buyer",
-          "status",
-        ],
-        order: [["id", "DESC"]],
-        where: { agentId: agentId, status: status },
-        limit: limit,
-        offset: offset,
-      }).then((property) => {
-        if (property.length > 0) {
-          return res
-            .status(200)
-            .json({ result: property, count: data.count, pages: pages });
-        } else {
-          return res.status(404).json({ message: "Data Not Found" });
-        }
-      });
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-};
-
-/*End Contract*/
-exports.endContract = async (req, res) => {
-  try {
-    const { id, status } = req.query;
-    let contract = await Contract.findOne({ where: { id: id } });
-    if (contract == null) {
-      return res.status(404).json({ message: "No Contract Found" });
-    } else {
-      await Contract.update(
-        {
-          status: status,
-        },
-        { where: { id: id } }
-      );
-      return res.status(200).json({
-        message: "Contract End Successfully",
-      });
-    }
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-};
 /**********************************************************Buyer Dashboard ******************************/
 
-/*1. Create Contract Request By Buyer*/
+/*Create Contract Request By Buyer*/
 exports.createRequest = async (req, res) => {
   try {
     let { propertyId, agentId,buyerId } = req.body;
@@ -279,8 +212,7 @@ exports.createRequest = async (req, res) => {
   }
 };
 
-
-/*2. List Of All Contrct By Buyer*/
+/*List Of All Contrct By Buyer*/
 exports.getAllContractByBuyer = async (req, res) => {
   try {
     let limit = 8;
@@ -377,44 +309,3 @@ exports.getAllContractByBuyer = async (req, res) => {
   }
 };
 
-/*List Of All Contrct By Status Buyer */
-exports.getAllContractByBuyerStatus = async (req, res) => {
-  try {
-    let limit = 8;
-    let offset = 0;
-    let { buyerId, status } = req.query;
-    let page = req.params.page;
-    Contract.findAndCountAll({
-      where: { buyerId: buyerId, status: status },
-    }).then((data) => {
-      let pages = Math.ceil(data.count / limit);
-      offset = limit * (page - 1);
-
-      Contract.findAll({
-        attributes: [
-          "id",
-          "title",
-          "description",
-          "dateCreate",
-          "dateValid",
-          "buyerId",
-          "status",
-        ],
-        order: [["id", "DESC"]],
-        where: { buyerId: buyerId, status: status },
-        limit: limit,
-        offset: offset,
-      }).then((property) => {
-        if (property.length > 0) {
-          return res
-            .status(200)
-            .json({ result: property, count: data.count, pages: pages });
-        } else {
-          return res.status(404).json({ message: "Data Not Found" });
-        }
-      });
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-};
