@@ -28,8 +28,6 @@ app.use(express.json());
 
 /*Access For Frontend To Consume Backend Server*/
 app.use(cors());
-// app.use(auth);
-
 
 /*Register Route For End Points*/
 app.use('/api/categories', category);
